@@ -3,4 +3,27 @@
 
 <header class="Header">
     <div>Header</div>
+    <div>
+        <a href="{% url 'index' %}">{% trans 'Главная' %}</a>
+    </div>
+    <div>
+        {% if request.user.is_authenticated %}
+            <div>
+                <a href="{% url 'profile' %}">
+                    {% trans "Личный кабинет" %}
+                </a>
+            </div>
+            <div>
+                <a href="{% url 'logout' %}">
+                    {% trans "Выйти" %}
+                </a>
+            </div>
+        {% else %}
+            <div>
+                <a href="{% url 'login' %}">
+                    {% trans "Вход / Регистрация" %}
+                </a>
+            </div>
+        {% endif %}
+    </div>
 </header>
