@@ -11,6 +11,11 @@
                     {% for error in form.non_field_errors %}
                         <div>{{ error|escape }}</div>
                     {% endfor %}
+                    <div>
+                        {% trans "Забыли пароль?" %}
+                        <a href="{% url 'password_reset' %}">{% trans "Нажмите" %}</a>
+                        {% trans "для отправки ссылки восстановления доступа" %}
+                    </div>
                 {% endif %}
                 <div>
                     <label for="{{ form.username.id_for_username }}">E-mail</label>
@@ -36,11 +41,12 @@
                     <div>
                         <button class="btn btn_success" type="submit">{% trans 'Войти' %}</button>
                     </div>
-                    <div>{% trans "У меня еще нет аккаунта." %}
-                        <a href="{% url 'signup' %}">{% trans "Зарегистрироваться" %}</a>
-                    </div>
-                    <div>{% trans "Не помню свой пароль." %}
-                        <a href="{% url 'password_reset' %}">{% trans "Восстановить" %}</a>
+                    <div>
+                        <div>
+                            {% trans "Фрилансеру для регистрации нужна" %}
+                            <a href="#">{% trans "Реферальныя ссылка" %}</a>
+                        </div>
+                        <div>{% trans "Заказчик регистрируется в момент Заказа" %}</div>
                     </div>
                 </div>
             </form>
