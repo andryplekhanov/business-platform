@@ -2,5 +2,118 @@
 {% load i18n %}
 
 <footer class="Footer">
-    <div>Footer</div>
+    <div>FOOTER</div>
+
+    <!--    ЛЕВАЯ КОЛОНКА ССЫЛОК begin  -->
+    <div>
+        Left column links
+        <ul>
+            <li>
+                <a href="#">link</a>
+            </li>
+            <li>
+                <a href="#">link</a>
+            </li>
+            <li>
+                <a href="#">link</a>
+            </li>
+            <li>
+                <a href="#">link</a>
+            </li>
+        </ul>
+    </div>
+    <!--    ЛЕВАЯ КОЛОНКА ССЫЛОК finish  -->
+
+    <!--    ФОРМА ОБРАТНОЙ СВЯЗИ begin  -->
+    <div>
+        {% trans 'Форма обратной связи' %}
+        <form action="#" method="post">
+            <input name="name" type="text" placeholder="{% trans 'Ваше имя' %}"/>
+            <input name="email" type="text" placeholder="{% trans 'Ваш email' %}"/>
+            <input name="message" type="text" placeholder="{% trans 'Ваше сообщение' %}"/>
+            <button type="submit">
+                {% trans 'Отправить' %}
+            </button>
+        </form>
+    </div>
+    <!--    ФОРМА ОБРАТНОЙ СВЯЗИ finish  -->
+
+    <!--    ПРАВАЯ КОЛОНКА ССЫЛОК begin  -->
+    <div>
+        Right column links
+        <ul>
+            <li>
+                <a href="#">link</a>
+            </li>
+            <li>
+                <a href="#">link</a>
+            </li>
+            <li>
+                <a href="#">link</a>
+            </li>
+            <li>
+                <a href="#">link</a>
+            </li>
+        </ul>
+    </div>
+    <!--    ПРАВАЯ КОЛОНКА ССЫЛОК finish  -->
+
+    <!--    ССЫЛКА ДЛЯ ВХОДА begin  -->
+    <div>
+        <a href="{% url 'login' %}">
+            {% trans "Вход" %}
+        </a>
+    </div>
+    <!--    ССЫЛКА ДЛЯ ВХОДА finish  -->
+
+    <!--    ССЫЛКИ НА СОЦСЕТИ begin  -->
+    <div>
+        Social media list
+        <ul>
+            <li>
+                <a href="#">media</a>
+            </li>
+            <li>
+                <a href="#">media</a>
+            </li>
+            <li>
+                <a href="#">media</a>
+            </li>
+            <li>
+                <a href="#">media</a>
+            </li>
+        </ul>
+    </div>
+    <!--    ССЫЛКИ НА СОЦСЕТИ finish  -->
 </footer>
+
+
+
+
+<!--    !!! ВЕРСТАЛЬЩИКУ: удалить отсюда эти стили при вёрстке  -->
+<style>
+    footer div {
+        display: inline-block;
+    }
+
+    footer div:last-child {
+        display: block;
+    }
+
+    footer div ul {
+        list-style: none;
+    }
+
+    footer div:last-child ul li {
+        display: inline-block;
+    }
+
+    footer div:first-child {
+        display: block;
+    }
+
+    footer div form input {
+        display: block;
+    }
+</style>
+<!--    !!! ВЕРСТАЛЬЩИКУ: удалить отсюда эти стили при вёрстке  -->
