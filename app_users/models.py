@@ -17,7 +17,7 @@ class User(AbstractBaseUser, PermissionsMixin):
     email = models.EmailField(_('email'), unique=True)
     full_name = models.CharField(_('ФИО'), max_length=255, blank=True)
     date_joined = models.DateTimeField(_('дата регистрации'), auto_now_add=True)
-    is_active = models.BooleanField(_('является активным'), default=True)
+    is_active = models.BooleanField(_('является активным'), default=False)
     is_staff = models.BooleanField(default=False, verbose_name=_('является сотрудником'))
     image_validator = FileExtensionValidator(
         allowed_extensions=['png', 'jpg', 'gif'],
@@ -28,7 +28,7 @@ class User(AbstractBaseUser, PermissionsMixin):
     phone_regex = RegexValidator(regex=r'^\+\d{11,15}',
                                  message=_("Номер телефона должен быть в формате: '+79012345678'."))
     phone_number = models.CharField(validators=[phone_regex], max_length=17, blank=True,
-                                    verbose_name=_('номер телефона'), unique=True)
+                                    verbose_name=_('номер телефона'))
     objects = UserManager()
 
     USERNAME_FIELD = 'email'

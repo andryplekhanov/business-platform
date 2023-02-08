@@ -10,55 +10,12 @@
                         <div>{{ error|escape }}</div>
                     {% endfor %}
                 {% endif %}
-                    <div class="row-block">
-                        <div class="form-group">
-                            <label class="form-label" for="{{ form.avatar.id_for_avatar }}">
-                                {% trans 'Аватар' %}
-                            </label>
-                            <div class="Profile-avatar Profile-avatar_noimg">
-                                <div class="Profile-img">
-                                    <img src="{% static 'assets/img/no_img.jpg' %}" alt="нет аватара"/>
-                                </div>
-                                <label class="Profile-fileLabel" for="{{ form.avatar.id_for_avatar }}">
-                                    {% trans 'Выберите аватар' %}
-                                </label>
-                                {{ form.avatar }}
-                                {% if form.avatar.errors %}
-                                    {% for error in form.avatar.errors %}
-                                        <div class="form-error">{{ error|escape }}</div>
-                                    {% endfor %}
-                                {% endif %}
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <label class="form-label" for="{{ form.full_name.id_for_full_name }}">
-                                {% trans 'ФИО' %}
-                            </label>
-                            {{ form.full_name }}
-                            {% if form.full_name.errors %}
-                                {% for error in form.full_name.errors %}
-                                    <div class="form-error">{{ error|escape }}</div>
-                                {% endfor %}
-                            {% endif %}
-                        </div>
-                    </div>
                     <div>
                         <div>
                             <label for="{{ form.email.id_for_email }}">E-mail</label>
                             {{ form.email }}
                             {% if form.email.errors %}
                                 {% for error in form.email.errors %}
-                                    <div>{{ error|escape }}</div>
-                                {% endfor %}
-                            {% endif %}
-                        </div>
-                        <div>
-                            <label for="{{ form.phone_number.id_for_phone_number }}">
-                                {% trans 'Телефон' %}
-                            </label>
-                            {{ form.phone_number }}
-                            {% if form.phone_number.errors %}
-                                {% for error in form.phone_number.errors %}
                                     <div>{{ error|escape }}</div>
                                 {% endfor %}
                             {% endif %}
@@ -88,6 +45,13 @@
                         <div>
                             <div>
                                 <button type="submit">{% trans 'Зарегистрироваться' %}</button>
+                            </div>
+                            <div>
+                                <input type="radio" id="agreement" name="agreement" value="yes" required>
+                                <label for="agreement">
+                                    {% trans 'Я даю согласие на обработку персональных данных для формирования' %}
+                                    <a href="#">{% trans 'договора пайщика - члена Клуба' %}</a>
+                                </label>
                             </div>
                             <div>{% trans "Я уже зарегистрирован." %}
                                 <a href="{% url 'login' %}">{% trans "Войти" %}</a>

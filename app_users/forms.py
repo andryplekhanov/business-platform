@@ -6,20 +6,6 @@ from django.utils.translation import gettext_lazy as _
 
 
 class CreationUserForm(UserCreationForm):
-    full_name = forms.CharField(max_length=255, required=False, label=_('ФИО'),
-                                widget=forms.TextInput(attrs={
-                                    'class': 'form-input',
-                                    'data-validate': 'require',
-                                    'placeholder': _('Введите ФИО'),
-                                    'maxlength': '255'
-                                }))
-    avatar = forms.ImageField(required=False, label=_('Аватар'),
-                              widget=forms.ClearableFileInput(attrs={
-                                  'class': 'Profile-file form-input',
-                                  'type': 'file',
-                                  'accept': '.jpg,.gif,.png',
-                                  'data-validate': 'onlyImgAvatar'
-                              }))
     email = forms.EmailField(max_length=250, label='email', required=True,
                              widget=forms.TextInput(attrs={
                                  'class': 'form-input',
@@ -42,12 +28,10 @@ class CreationUserForm(UserCreationForm):
                                     'autocomplete': 'new-password',
                                     'maxlength': '150'
                                 }))
-    phone_number = forms.CharField(required=False, label=_('Номер телефона'),
-                                   widget=forms.TextInput(attrs={'class': 'form-input'}))
 
     class Meta:
         model = get_user_model()
-        fields = ('email', 'password1', 'password2', 'full_name', 'phone_number', 'avatar')
+        fields = ('email', 'password1', 'password2')
 
 
 class UserChangingForm(UserChangeForm):
