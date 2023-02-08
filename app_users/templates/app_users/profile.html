@@ -1,0 +1,19 @@
+{% extends 'app_users/app_users_base.html' %}
+{% load i18n %}
+{% load static %}
+
+{% block content %}
+    <div>
+        <div>{{ user.full_name }}</div>
+        <a href="{% url 'edit_profile' %}">{% trans 'Редактировать профиль' %}</a>
+    </div>
+    <div>
+        {% if user.avatar %}
+            <div><img src="{{ user.avatar.url }}" alt="card.jpg"/></div>
+        {% else %}
+            <div>
+                <img src="{% static 'assets/img/no_img.jpg' %}" alt="card.jpg"/>
+            </div>
+        {% endif %}
+    </div>
+{% endblock %}

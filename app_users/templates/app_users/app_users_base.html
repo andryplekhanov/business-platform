@@ -1,0 +1,9 @@
+{% extends 'app_main/base.html' %}
+{% load i18n %}
+{% load static %}
+
+{% block middle %}
+    <h1 class="Middle-title">{{ title }}</h1>
+    {% block content %}
+    {% endblock %}
+{% endblock %}

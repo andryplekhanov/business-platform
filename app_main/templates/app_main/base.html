@@ -27,5 +27,39 @@
 
 {#        <script src="{% static 'assets/plg/jQuery/jquery-3.5.0.slim.min.js' %}"></script>#}
 {#        <script src="{% static 'assets/js/scripts.js' %}"></script>#}
+
+
+        <!--    !!! ВЕРСТАЛЬЩИКУ: удалить отсюда эти стили при вёрстке  -->
+        <style>
+            * {
+                box-sizing: border-box;
+                margin: 0;
+                padding: 0;
+            }
+
+            .clearfix {
+                *zoom: 1;
+            }
+
+            .clearfix:before,
+            .clearfix:after {
+                display: table;
+                content: "";
+                line-height: 0;
+            }
+
+            .clearfix:after {
+                clear: both;
+            }
+
+            html,
+            body {
+                width: 1020px;
+                height: 100%;
+                margin: 0 auto;
+            }
+
+        </style>
+        <!--    !!! ВЕРСТАЛЬЩИКУ: удалить отсюда эти стили при вёрстке  -->
     </body>
 </html>
