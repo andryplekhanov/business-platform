@@ -1,11 +1,12 @@
 from django.contrib import admin
 from django.contrib.flatpages.admin import FlatPageAdmin
 from .models import *
+from django.utils.translation import gettext_lazy as _
 
 
 class StaticPageInline(admin.StackedInline):
     model = StaticPage
-    verbose_name = "Содержание"
+    verbose_name = _("содержание")
 
 
 class StaticPageAdmin(FlatPageAdmin):
