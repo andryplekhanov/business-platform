@@ -5,21 +5,15 @@
 
     <!--    ЛЕВАЯ КОЛОНКА ССЫЛОК begin  -->
     <div>
-        Left column links
+        {% if footer_pages_left.footer_pages.all %}
         <ul>
-            <li>
-                <a href="#">link</a>
-            </li>
-            <li>
-                <a href="#">link</a>
-            </li>
-            <li>
-                <a href="#">link</a>
-            </li>
-            <li>
-                <a href="#">link</a>
-            </li>
+            {% for page in footer_pages_left.footer_pages.all %}
+                <li>
+                    <a href="{{ page.flatpage.get_absolute_url }}">{{ page.flatpage.title }}</a>
+                </li>
+            {% endfor %}
         </ul>
+        {% endif %}
     </div>
     <!--    ЛЕВАЯ КОЛОНКА ССЫЛОК finish  -->
 
@@ -88,6 +82,10 @@
 
 <!--    !!! ВЕРСТАЛЬЩИКУ: удалить отсюда нижеследующие стили при вёрстке  -->
 <style>
+    footer {
+        background-color: lightblue;
+    }
+
     footer div {
         display: inline-block;
     }
@@ -102,10 +100,6 @@
 
     footer div:last-child ul li {
         display: inline-block;
-    }
-
-    footer div:first-child {
-        display: block;
     }
 
     footer div form input {
