@@ -41,10 +41,11 @@ INSTALLED_APPS = [
     'ckeditor',
     'django.contrib.sites',
     'django.contrib.flatpages',
-    'app_static_pages.apps.AppStaticPagesConfig',
 
+    'app_static_pages.apps.AppStaticPagesConfig',
     'app_main.apps.AppMainConfig',
-    'app_users.apps.AppUsersConfig'
+    'app_users.apps.AppUsersConfig',
+    'app_settings'
 ]
 
 SITE_ID = 1
@@ -76,6 +77,8 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
+
+                'app_settings.context_proccessors.load_settings',
             ],
         },
     },
