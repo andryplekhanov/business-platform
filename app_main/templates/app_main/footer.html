@@ -59,21 +59,17 @@
 
     <!--    ССЫЛКИ НА СОЦСЕТИ begin  -->
     <div>
-        Social media list
+        {% if social_media.social_media_item.all %}
         <ul>
-            <li>
-                <a href="#">media</a>
-            </li>
-            <li>
-                <a href="#">media</a>
-            </li>
-            <li>
-                <a href="#">media</a>
-            </li>
-            <li>
-                <a href="#">media</a>
-            </li>
+            {% for item in social_media.social_media_item.all %}
+                <li>
+                    <a title="{{ item.name }}" target="_blank" href="{{ item.link }}">
+                        <img alt="{{ item.name }}-logo" src="{{ item.icon.url }}">
+                    </a>
+                </li>
+            {% endfor %}
         </ul>
+        {% endif %}
     </div>
     <!--    ССЫЛКИ НА СОЦСЕТИ finish  -->
 
@@ -104,6 +100,11 @@
 
     footer div form input {
         display: block;
+    }
+
+    footer div ul li a img {
+        width: 32px;
+        height: 32px;
     }
 </style>
 <!--    !!! ВЕРСТАЛЬЩИКУ: удалить отсюда эти стили при вёрстке  -->
