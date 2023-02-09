@@ -1,0 +1,8 @@
+{% extends 'app_main/base.html' %}
+
+{% block middle %}
+    <div>
+        {{ flatpage.staticpage.description|safe }}
+        {{ flatpage.staticpage.text_block|safe }}
+    </div>
+{% endblock %}
