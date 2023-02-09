@@ -5,5 +5,5 @@ def load_settings(request):
     return {
         'contact_settings': ContactSettings.load(),
         'company_settings': CompanySettings.load(),
-        'footer_pages': FooterPagesSet.load(),
+        'footer_pages_right': FooterPagesSet.load(),
     }

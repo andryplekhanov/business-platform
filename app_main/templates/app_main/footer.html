@@ -1,8 +1,7 @@
 {% load static %}
 {% load i18n %}
 
-<footer class="Footer">
-    <div>FOOTER</div>
+<footer>
 
     <!--    ЛЕВАЯ КОЛОНКА ССЫЛОК begin  -->
     <div>
@@ -24,6 +23,7 @@
     </div>
     <!--    ЛЕВАЯ КОЛОНКА ССЫЛОК finish  -->
 
+
     <!--    ФОРМА ОБРАТНОЙ СВЯЗИ begin  -->
     <div>
         {% trans 'Форма обратной связи' %}
@@ -38,25 +38,21 @@
     </div>
     <!--    ФОРМА ОБРАТНОЙ СВЯЗИ finish  -->
 
+
     <!--    ПРАВАЯ КОЛОНКА ССЫЛОК begin  -->
     <div>
-        Right column links
+        {% if footer_pages_right.footer_pages.all %}
         <ul>
-            <li>
-                <a href="#">link</a>
-            </li>
-            <li>
-                <a href="#">link</a>
-            </li>
-            <li>
-                <a href="#">link</a>
-            </li>
-            <li>
-                <a href="#">link</a>
-            </li>
+            {% for page in footer_pages_right.footer_pages.all %}
+                <li>
+                    <a href="{{ page.flatpage.get_absolute_url }}">{{ page.flatpage.title }}</a>
+                </li>
+            {% endfor %}
         </ul>
+        {% endif %}
     </div>
     <!--    ПРАВАЯ КОЛОНКА ССЫЛОК finish  -->
+
 
     <!--    ССЫЛКА ДЛЯ ВХОДА begin  -->
     <div>
@@ -65,6 +61,7 @@
         </a>
     </div>
     <!--    ССЫЛКА ДЛЯ ВХОДА finish  -->
+
 
     <!--    ССЫЛКИ НА СОЦСЕТИ begin  -->
     <div>
@@ -85,12 +82,11 @@
         </ul>
     </div>
     <!--    ССЫЛКИ НА СОЦСЕТИ finish  -->
+
 </footer>
 
 
-
-
-<!--    !!! ВЕРСТАЛЬЩИКУ: удалить отсюда эти стили при вёрстке  -->
+<!--    !!! ВЕРСТАЛЬЩИКУ: удалить отсюда нижеследующие стили при вёрстке  -->
 <style>
     footer div {
         display: inline-block;
