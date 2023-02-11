@@ -1,0 +1,27 @@
+{% extends 'app_users/_base.html' %}
+{% load i18n %}
+{% load static %}
+
+{% block middle %}
+    <div>
+        <div>{{ user.full_name }}</div>
+        <a href="{% url 'edit_profile' %}">{% trans 'Редактировать профиль' %}</a>
+    </div>
+    <div>
+        {% if user.avatar %}
+            <div><img src="{{ user.avatar.url }}" alt="card.jpg"/></div>
+        {% else %}
+            <div>
+                <img src="{% static 'assets/img/no_img.jpg' %}" alt="profile-image.jpg"/>
+            </div>
+        {% endif %}
+    </div>
+
+    <!--    !!! ВЕРСТАЛЬЩИКУ: удалить отсюда эти стили при вёрстке  -->
+    <style>
+    div img {
+        width: 175px;
+    }
+    </style>
+    <!--    !!! ВЕРСТАЛЬЩИКУ: удалить отсюда эти стили при вёрстке  -->
+{% endblock %}
