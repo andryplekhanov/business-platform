@@ -2,7 +2,7 @@ from django.contrib.auth.models import AbstractBaseUser
 from django.contrib.auth.models import PermissionsMixin
 from django.core.validators import FileExtensionValidator, RegexValidator
 from django.db import models
-from django.db.models import Count
+from django.urls import reverse
 from django.utils.translation import gettext_lazy as _
 
 from .managers import CustomUserManager
@@ -39,6 +39,11 @@ class CustomUser(AbstractBaseUser, PermissionsMixin):
 
     def __str__(self):
         return self.email
+
+    def get_referral_url(self):
+        if self.can_invite_referrals:
+            return reverse('signup', args=[self.pk])
+        return None
 
     @property
     def count_referrals(self):

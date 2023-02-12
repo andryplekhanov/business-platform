@@ -5,7 +5,7 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth.views import LogoutView, LoginView, PasswordResetView, PasswordResetDoneView, \
     PasswordResetConfirmView, PasswordResetCompleteView
-from django.core.exceptions import PermissionDenied
+from django.core.exceptions import PermissionDenied, ObjectDoesNotExist
 from django.shortcuts import render, redirect
 from django.urls import reverse_lazy, reverse
 from django.utils.translation import gettext_lazy as _
@@ -33,12 +33,17 @@ class SignUp(generic.CreateView):
     extra_context = {'title': _('Регистрация'), 'current_elem': 'signup'}
 
     def get(self, request, *args, **kwargs):
-        referrer = User.objects.get(id=kwargs.get('pk'))
-        if request.user.id == referrer.id:
-            return redirect('profile')
+        try:
+            referrer = User.objects.get(id=kwargs.get('pk'))
+        except ObjectDoesNotExist:
+            return redirect('signup_error')
+
         if not referrer.can_invite_referrals:
-            raise PermissionDenied(_('Данная ссылка-приглашение невалидна'))
-        self.object = None
+            return redirect('signup_error')
+
+        if request.user.id == referrer.id:
+            return redirect('home')
+
         return super().get(request, *args, **kwargs)
 
     def post(self, request, *args, **kwargs):
@@ -67,6 +72,14 @@ def account_view(request):
         request,
         'app_users/profile.html',
         {'user': request.user, 'title': _('Личный кабинет'), 'current_elem': 'profile'}
+    )
+
+
+def signup_error(request):
+    return render(
+        request,
+        'app_users/signup_error.html',
+        {'title': _('Регистрация не возможна'), 'current_elem': 'signup_error'}
     )
 
 

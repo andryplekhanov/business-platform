@@ -1,0 +1,12 @@
+{% extends 'app_users/_base.html' %}
+{% load i18n %}
+{% load static %}
+
+{% block middle %}
+    <div>
+        <p>{% trans 'Данная ссылка-приглашение невалидна' %}</p>
+    </div>
+    <div>
+        <button onclick='window.location.href = "{% url 'home' %}";'>{% trans 'На главную' %}</button>
+    </div>
+{% endblock %}
