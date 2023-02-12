@@ -5,7 +5,8 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth.views import LogoutView, LoginView, PasswordResetView, PasswordResetDoneView, \
     PasswordResetConfirmView, PasswordResetCompleteView
-from django.shortcuts import render
+from django.core.exceptions import PermissionDenied
+from django.shortcuts import render, redirect
 from django.urls import reverse_lazy, reverse
 from django.utils.translation import gettext_lazy as _
 from django.views import generic
@@ -31,6 +32,27 @@ class SignUp(generic.CreateView):
     template_name = "app_users/signup.html"
     extra_context = {'title': _('Регистрация'), 'current_elem': 'signup'}
 
+    def get(self, request, *args, **kwargs):
+        referrer = User.objects.get(id=kwargs.get('pk'))
+        if request.user.id == referrer.id:
+            return redirect('profile')
+        if not referrer.can_invite_referrals:
+            raise PermissionDenied(_('Данная ссылка-приглашение невалидна'))
+        self.object = None
+        return super().get(request, *args, **kwargs)
+
+    def post(self, request, *args, **kwargs):
+        form = CustomUserCreationForm(request.POST)
+        referrer = User.objects.get(id=kwargs.get('pk'))
+        if not referrer.can_invite_referrals:
+            raise PermissionDenied(_('Данная ссылка-приглашение невалидна'))
+        if form.is_valid():
+            instance = form.save(commit=False)
+            instance.referer = referrer
+            instance.save()
+            return redirect('login')
+        return super().post(request, *args, **kwargs)
+
 
 class LogInView(LoginView):
     template_name = 'app_users/login.html'
@@ -44,7 +66,7 @@ def account_view(request):
     return render(
         request,
         'app_users/profile.html',
-        {'user': request.user, 'title': _('Регистрация'), 'current_elem': 'profile'}
+        {'user': request.user, 'title': _('Личный кабинет'), 'current_elem': 'profile'}
     )
 
 
