@@ -47,7 +47,8 @@ INSTALLED_APPS = [
 
     'app_users.apps.AppUsersConfig',
     'app_ads.apps.AppAdsConfig',
-    'app_static_pages',
+    'app_static_pages.apps.AppStaticPagesConfig',
+    'app_settings.apps.AppSettingsConfig',
 
 ]
 
@@ -78,6 +79,8 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
+
+                'app_settings.context_proccessors.load_settings'  # настройки из админки
             ],
         },
     },
