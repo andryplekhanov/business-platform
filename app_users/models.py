@@ -46,6 +46,6 @@ class CustomUser(AbstractBaseUser, PermissionsMixin):
         return None
 
     @property
-    def count_referrals(self):
-        ref = CustomUser.objects.filter(referer_id=self.id).count()
-        return ref
+    def level_1_referrals(self):
+        return CustomUser.objects.filter(referer_id=self.id).only('id', )
+
