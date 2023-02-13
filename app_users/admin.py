@@ -6,16 +6,16 @@ from django.utils.translation import gettext_lazy as _
 from .models import CustomUser
 
 
-class CustomUserAdmin(admin.ModelAdmin):
+class CustomUserAdmin(admin.ModelAdmin):  # чтобы в админке отобразить древовидную структуру, нужно унаследовать от DjangoMpttAdmin
     list_display = ('id', 'email', 'full_name', 'get_referer', 'is_verified', 'is_freelancer', 'can_invite_referrals', 'date_joined')
     list_filter = ('date_joined', 'is_staff', 'is_active', 'is_verified', 'is_freelancer', 'can_invite_referrals')
-    fieldsets = (
-        (None, {'fields': ('email', 'full_name', 'password', 'phone_number', 'avatar', 'date_joined')}),
-        (_('Разрешения'), {'fields': ('is_staff', 'is_active', 'is_verified', 'is_freelancer', 'can_invite_referrals')}),
-        (_('Реферальная система'), {'fields': ('parent', 'get_level_1_referrals', 'get_level_2_referrals', 'get_level_3_referrals', 'referral_url')}),
-    )
+    # fieldsets = (
+    #     (None, {'fields': ('email', 'full_name', 'password', 'phone_number', 'avatar', 'date_joined')}),
+    #     (_('Разрешения'), {'fields': ('is_staff', 'is_active', 'is_verified', 'is_freelancer', 'can_invite_referrals')}),
+    #     (_('Реферальная система'), {'fields': ('parent', 'get_level_1_referrals', 'get_level_2_referrals', 'get_level_3_referrals', 'referral_url')}),
+    # )
 
-    search_fields = ('id', 'email', 'full_name')
+    search_fields = ('id', 'email', 'full_name', 'parent__full_name', 'parent__email')
     readonly_fields = ['date_joined', 'get_level_1_referrals', 'get_level_2_referrals', 'get_level_3_referrals', 'referral_url']
     save_on_top = True
     actions = ['make_active', 'make_inactive']
