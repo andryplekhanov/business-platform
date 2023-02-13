@@ -1,0 +1,65 @@
+{% extends 'app_users/_base.html' %}
+{% load i18n %}
+{% load static %}
+
+{% block middle %}
+    <div>
+        <div>{{ user.full_name }}</div>
+        <a href="{% url 'edit_profile' %}">{% trans 'Редактировать профиль' %}</a>
+    </div>
+    <div>
+        {% if user.avatar %}
+            <div><img src="{{ user.avatar.url }}" alt="card.jpg"/></div>
+        {% else %}
+            <div>
+                <img src="{% static 'assets/img/no_img.jpg' %}" alt="profile-image.jpg"/>
+            </div>
+        {% endif %}
+    </div>
+    <div>
+        {% if user.can_invite_referrals %}
+            <div>
+                <p>{% trans 'Ваша ссылка-приглашение:' %}</p>
+                <input type="url" value="http://127.0.0.1:8000{{ user.get_referral_url }}" id="refLink" readonly>
+                <p id="copySuccess">{% trans 'Ссылка скопирована' %}</p>
+            </div>
+            <button onclick="copyLink()">{% trans 'Скопировать ссылку' %}</button>
+        {% else %}
+            <div>
+                <p>{% trans 'Вы не можете приглашать рефералов' %}</p>
+            </div>
+        {% endif %}
+    </div>
+
+
+    <!--    !!! ВЕРСТАЛЬЩИКУ: удалить отсюда эти скрипты и стили при вёрстке  -->
+    <script>
+        function copyLink() {
+            /* Находим текстовое поле */
+            var copyText = document.getElementById("refLink");
+
+            /* Выбираем текстовое поле */
+            copyText.select();
+            copyText.setSelectionRange(0, 99999); /* Для мобильных устройств */
+
+            /* Копируем текст из текстового поля */
+            navigator.clipboard.writeText(copyText.value);
+
+            /* Выводим сообщение об успешном копировании */
+            document.getElementById("copySuccess").style.display = 'inline';
+        }
+    </script>
+
+
+    <style>
+        div img {
+            width: 175px;
+        }
+
+        #copySuccess {
+            display: none;
+            color: green;
+        }
+    </style>
+    <!--    !!! ВЕРСТАЛЬЩИКУ: удалить отсюда эти скрипты и стили при вёрстке  -->
+{% endblock %}

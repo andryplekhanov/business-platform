@@ -1,0 +1,111 @@
+{% load static %}
+{% load i18n %}
+
+<footer>
+
+    <!--    ЛЕВАЯ КОЛОНКА ССЫЛОК begin  -->
+    <div>
+        {% if footer_pages_left.footer_pages.all %}
+        <ul>
+            {% for page in footer_pages_left.footer_pages.all %}
+                <li>
+                    <a href="{{ page.flatpage.get_absolute_url }}">{{ page.flatpage.title }}</a>
+                </li>
+            {% endfor %}
+        </ul>
+        {% endif %}
+    </div>
+    <!--    ЛЕВАЯ КОЛОНКА ССЫЛОК finish  -->
+
+
+    <!--    ФОРМА ОБРАТНОЙ СВЯЗИ begin  -->
+    <div>
+        {% trans 'Форма обратной связи' %}
+        <form action="#" method="post">
+            <input name="name" type="text" placeholder="{% trans 'Ваше имя' %}"/>
+            <input name="email" type="text" placeholder="{% trans 'Ваш email' %}"/>
+            <input name="message" type="text" placeholder="{% trans 'Ваше сообщение' %}"/>
+            <button type="submit">
+                {% trans 'Отправить' %}
+            </button>
+        </form>
+    </div>
+    <!--    ФОРМА ОБРАТНОЙ СВЯЗИ finish  -->
+
+
+    <!--    ПРАВАЯ КОЛОНКА ССЫЛОК begin  -->
+    <div>
+        {% if footer_pages_right.footer_pages.all %}
+        <ul>
+            {% for page in footer_pages_right.footer_pages.all %}
+                <li>
+                    <a href="{{ page.flatpage.get_absolute_url }}">{{ page.flatpage.title }}</a>
+                </li>
+            {% endfor %}
+        </ul>
+        {% endif %}
+    </div>
+    <!--    ПРАВАЯ КОЛОНКА ССЫЛОК finish  -->
+
+
+    <!--    ССЫЛКА ДЛЯ ВХОДА begin  -->
+    <div>
+        <a href="{% url 'login' %}">
+            {% trans "Вход" %}
+        </a>
+    </div>
+    <!--    ССЫЛКА ДЛЯ ВХОДА finish  -->
+
+
+    <!--    ССЫЛКИ НА СОЦСЕТИ begin  -->
+    <div>
+        {% if social_media.social_media_item.all %}
+        <ul>
+            {% for item in social_media.social_media_item.all %}
+                <li>
+                    <a title="{{ item.name }}" target="_blank" href="{{ item.link }}">
+                        <img alt="{{ item.name }}-logo" src="{{ item.icon.url }}">
+                    </a>
+                </li>
+            {% endfor %}
+        </ul>
+        {% endif %}
+    </div>
+    <!--    ССЫЛКИ НА СОЦСЕТИ finish  -->
+
+</footer>
+
+
+<!--    !!! ВЕРСТАЛЬЩИКУ: удалить отсюда нижеследующие стили при вёрстке  -->
+<style>
+    footer {
+        background-color: lightblue;
+    }
+
+    footer div {
+        display: inline-block;
+        margin: 20px;
+    }
+
+    footer div:last-child {
+        display: block;
+    }
+
+    footer div ul {
+        list-style: none;
+    }
+
+    footer div:last-child ul li {
+        display: inline-block;
+    }
+
+    footer div form input {
+        display: block;
+    }
+
+    footer div ul li a img {
+        width: 32px;
+        height: 32px;
+    }
+</style>
+<!--    !!! ВЕРСТАЛЬЩИКУ: удалить отсюда эти стили при вёрстке  -->

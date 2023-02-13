@@ -1,0 +1,49 @@
+{% load static %}
+{% load i18n %}
+
+<header>
+    <div>
+        <a href="{% url 'home' %}">{% trans 'Главная' %}</a>
+    </div>
+    <div>
+        <form action="{% url 'set_language' %}" method="post">
+            {% csrf_token %}
+            {% get_current_language as LANGUAGE_CODE %}
+            {% get_available_languages as LANGUAGES %}
+            {% get_language_info_list for LANGUAGES as languages %}
+            {% for language in languages %}
+                <div>
+                    <input type="radio" id="language" name="language" value="{{ language.code }}"
+                            {% if language.code == LANGUAGE_CODE %} checked{% endif %} onclick="submit()">
+                    <label for="language">{{ language.code }}</label>
+                </div>
+            {% endfor %}
+        </form>
+    </div>
+    <div>
+        {% if request.user.is_authenticated %}
+            <div>
+                {% if request.user.full_name %}
+                    <a href="{% url 'profile' %}">
+                        {{ request.user.full_name }}
+                    </a>
+                {% else %}
+                    <a href="{% url 'profile' %}">
+                        {% trans "Личный кабинет" %}
+                    </a>
+                {% endif %}
+            </div>
+            <div>
+                <a href="{% url 'logout' %}">
+                    {% trans "Выйти" %}
+                </a>
+            </div>
+        {% else %}
+            <div>
+                <a href="{% url 'login' %}">
+                    {% trans "Вход" %}
+                </a>
+            </div>
+        {% endif %}
+    </div>
+</header>

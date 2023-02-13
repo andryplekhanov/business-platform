@@ -37,16 +37,33 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+
+    'django.contrib.sites',  # это нужно для корректной работы flatpages.
+    'django.contrib.flatpages',
+    'ckeditor',
+    'ckeditor_uploader',
+    'mptt',
+    'django_mptt_admin',
+
+    'app_users.apps.AppUsersConfig',
+    'app_ads.apps.AppAdsConfig',
+    'app_static_pages.apps.AppStaticPagesConfig',
+    'app_settings.apps.AppSettingsConfig',
+
 ]
+
+SITE_ID = 1  # это нужно для корректной работы flatpages.
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
+    'django.middleware.locale.LocaleMiddleware',  # локализация
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'django.contrib.flatpages.middleware.FlatpageFallbackMiddleware',  # flatpages
 ]
 
 ROOT_URLCONF = 'DjBusinessPlatform.urls'
@@ -62,6 +79,8 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
+
+                'app_settings.context_proccessors.load_settings'  # настройки из админки
             ],
         },
     },
@@ -98,12 +117,13 @@ AUTH_PASSWORD_VALIDATORS = [
         'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator',
     },
 ]
-
-
+AUTH_USER_MODEL = 'app_users.CustomUser'
+EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'  # Убрать на продакшн
+DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 # Internationalization
 # https://docs.djangoproject.com/en/2.2/topics/i18n/
 
-LANGUAGE_CODE = 'ru-ru'
+LANGUAGE_CODE = 'ru-RU'
 
 TIME_ZONE = 'Europe/Moscow'
 
@@ -113,8 +133,39 @@ USE_L10N = True
 
 USE_TZ = True
 
+LANGUAGES = [
+    ('ru', 'rus'),
+    ('en', 'eng'),
+]
+
+LOCALE_PATHS = [os.path.join(BASE_DIR, 'locale/')]
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/2.2/howto/static-files/
 
 STATIC_URL = '/static/'
+STATICFILES_DIRS = [
+    os.path.join(BASE_DIR, "static"),
+]
+# STATIC_ROOT = os.path.join(BASE_DIR, "static")
+
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media/')
+MEDIA_URL = '/media/'
+
+
+# CKEditor Settings
+CKEDITOR_UPLOAD_PATH = 'uploads/'
+# CKEDITOR_BASEPATH = "/assets/ckeditor/ckeditor/"
+CKEDITOR_IMAGE_BACKEND = "pillow"
+CKEDITOR_JQUERY_URL = '//ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js'
+
+CKEDITOR_CONFIGS = {
+    'default':
+        {
+            'toolbar': 'full',
+            'width': 'auto',
+            'extraPlugins': ','.join([
+                'codesnippet',
+            ]),
+        },
+}

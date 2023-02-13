@@ -1,0 +1,65 @@
+{% load static %}
+{% load i18n %}
+<!DOCTYPE html>
+
+<html lang="ru">
+
+    <head>
+        <title>Django Business Platform</title>
+        <meta name="description" content="Описание страницы">
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0">
+        <link href="{% static 'assets/favicon.ico' %}" rel="shortcut icon">
+{#        <link rel="preload" href="{% static 'assets/fonts/Roboto/Roboto-Regular.woff' %}" as="font">#}
+{#        <link rel="stylesheet" href="{% static 'assets/css/basic.css' %}">#}
+{#        <script src="{% static 'assets/plg/CountDown/countdown.js' %}"></script>#}
+    </head>
+
+    <body>
+
+        {% include 'app_users/header.html' %}
+        <hr>
+
+        {% block middle %}
+        {% endblock middle %}
+        <hr>
+        {% include 'app_users/footer.html' %}
+
+{#        <script src="{% static 'assets/plg/jQuery/jquery-3.5.0.slim.min.js' %}"></script>#}
+{#        <script src="{% static 'assets/js/scripts.js' %}"></script>#}
+
+
+        <!--    !!! ВЕРСТАЛЬЩИКУ: удалить отсюда эти стили при вёрстке  -->
+        <style>
+            * {
+                box-sizing: border-box;
+                margin: 0;
+                padding: 0;
+            }
+
+            .clearfix {
+                *zoom: 1;
+            }
+
+            .clearfix:before,
+            .clearfix:after {
+                display: table;
+                content: "";
+                line-height: 0;
+            }
+
+            .clearfix:after {
+                clear: both;
+            }
+
+            html,
+            body {
+                width: 1020px;
+                height: 100%;
+                margin: 0 auto;
+            }
+
+        </style>
+        <!--    !!! ВЕРСТАЛЬЩИКУ: удалить отсюда эти стили при вёрстке  -->
+    </body>
+</html>
