@@ -1,0 +1,12 @@
+{% extends 'app_users/_base.html' %}
+<!--
+    Весь контент содержится в тегах flatpage. Им нельзя задать классы. Стили прописываются для тегов: <h1><p><ul><ol> и т.д.
+    Обёрток можно добавлять сколько угодно.
+    Если нужен title, то он в теге flatpage.title
+-->
+{% block middle %}
+    <div>
+        {{ flatpage.staticpage.description|safe }}
+        {{ flatpage.staticpage.text_block|safe }} <!-- Может быть пустым -->
+    </div>
+{% endblock %}
