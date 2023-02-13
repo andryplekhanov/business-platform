@@ -12,11 +12,11 @@ class CustomUserAdmin(admin.ModelAdmin):
     fieldsets = (
         (None, {'fields': ('email', 'full_name', 'password', 'phone_number', 'avatar', 'date_joined')}),
         (_('Разрешения'), {'fields': ('is_staff', 'is_active', 'is_verified', 'is_freelancer', 'can_invite_referrals')}),
-        (_('Реферальная система'), {'fields': ('referer', 'get_level_1_referrals', 'referral_url')}),
+        (_('Реферальная система'), {'fields': ('parent', 'get_level_1_referrals', 'get_level_2_referrals', 'get_level_3_referrals', 'referral_url')}),
     )
 
     search_fields = ('id', 'email', 'full_name')
-    readonly_fields = ['date_joined', 'get_level_1_referrals', 'referral_url']
+    readonly_fields = ['date_joined', 'get_level_1_referrals', 'get_level_2_referrals', 'get_level_3_referrals', 'referral_url']
     save_on_top = True
     actions = ['make_active', 'make_inactive']
 
@@ -36,9 +36,17 @@ class CustomUserAdmin(admin.ModelAdmin):
         return obj.level_1_referrals.count()
     get_level_1_referrals.short_description = _('рефералов 1го уровня')
 
+    def get_level_2_referrals(self, obj):
+        return obj.level_2_referrals.count()
+    get_level_2_referrals.short_description = _('рефералов 2го уровня')
+
+    def get_level_3_referrals(self, obj):
+        return obj.level_3_referrals.count()
+    get_level_3_referrals.short_description = _('рефералов 3го уровня')
+
     def get_referer(self, obj):
-        link = reverse("admin:app_users_customuser_change", args=[obj.referer_id])
-        return format_html('<a href="{}">{}</a>', link, obj.referer)
+        link = reverse("admin:app_users_customuser_change", args=[obj.parent_id])
+        return format_html('<a href="{}">{}</a>', link, obj.parent)
     get_referer.short_description = _('реферер')
 
 

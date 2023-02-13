@@ -53,7 +53,7 @@ class SignUp(generic.CreateView):
             raise PermissionDenied(_('Данная ссылка-приглашение невалидна'))
         if form.is_valid():
             instance = form.save(commit=False)
-            instance.referer = referrer
+            instance.parent = referrer
             instance.save()
             return redirect('login')
         return super().post(request, *args, **kwargs)

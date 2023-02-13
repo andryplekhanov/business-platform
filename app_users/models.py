@@ -2,14 +2,17 @@ from django.contrib.auth.models import AbstractBaseUser
 from django.contrib.auth.models import PermissionsMixin
 from django.core.validators import FileExtensionValidator, RegexValidator
 from django.db import models
+from django.db.models import Prefetch
 from django.urls import reverse
 from django.utils.translation import gettext_lazy as _
+from mptt.fields import TreeForeignKey
+from mptt.models import MPTTModel
 
 from .managers import CustomUserManager
 from .validators import avatar_size_validate
 
 
-class CustomUser(AbstractBaseUser, PermissionsMixin):
+class CustomUser(AbstractBaseUser, MPTTModel, PermissionsMixin):
     email = models.EmailField(_('email'), unique=True, db_index=True)
     full_name = models.CharField(_('ФИО'), max_length=255, blank=True, db_index=True)
     date_joined = models.DateTimeField(_('дата регистрации'), auto_now_add=True, db_index=True)
@@ -18,7 +21,8 @@ class CustomUser(AbstractBaseUser, PermissionsMixin):
     is_staff = models.BooleanField(default=False, verbose_name=_('является сотрудником'))
     is_freelancer = models.BooleanField(default=False, verbose_name=_('является фрилансером'), db_index=True)
     can_invite_referrals = models.BooleanField(default=False, verbose_name=_('может приглашать рефералов'), db_index=True)
-    referer = models.ForeignKey("CustomUser", blank=True, null=True, on_delete=models.PROTECT, db_index=True, verbose_name=_('реферер'))
+    parent = TreeForeignKey('self', on_delete=models.PROTECT, null=True, blank=True, related_name='children',
+                            db_index=True, verbose_name=_('родитель'))
     image_validator = FileExtensionValidator(
         allowed_extensions=['png', 'jpg', 'gif'],
         message=_('Ошибка загрузки: допускаются только файлы с расширением .jpg .gif .png')
@@ -32,6 +36,9 @@ class CustomUser(AbstractBaseUser, PermissionsMixin):
     USERNAME_FIELD = 'email'
     REQUIRED_FIELDS = []
     objects = CustomUserManager()
+
+    class MPTTMeta:
+        user_insertion_by = ['email']
 
     class Meta:
         verbose_name = _('пользователь')
@@ -47,5 +54,12 @@ class CustomUser(AbstractBaseUser, PermissionsMixin):
 
     @property
     def level_1_referrals(self):
-        return CustomUser.objects.filter(referer_id=self.id).only('id', )
+        return CustomUser.objects.filter(parent=self)
 
+    @property
+    def level_2_referrals(self):
+        return CustomUser.objects.filter(parent__in=self.level_1_referrals)
+
+    @property
+    def level_3_referrals(self):
+        return CustomUser.objects.filter(parent__in=self.level_2_referrals)
