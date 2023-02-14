@@ -5,5 +5,16 @@
 {% block middle %}
 {#    {% include 'app_main/topmiddle.html' %}#}
 
-    <div>Middle content</div>
+    <div id="middle">Middle content</div>
+
+    <!--    !!! ВЕРСТАЛЬЩИКУ: удалить отсюда нижеследующие стили при вёрстке  -->
+    <style>
+        #middle {
+            background-color: lightcyan;
+            min-height: 315px;
+        }
+
+    </style>
+<!--    !!! ВЕРСТАЛЬЩИКУ: удалить отсюда эти стили при вёрстке  -->
+
 {% endblock %}

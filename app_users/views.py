@@ -54,6 +54,7 @@ class SignUp(generic.CreateView):
         if form.is_valid():
             instance = form.save(commit=False)
             instance.parent = referrer
+            instance.is_freelancer = True
             instance.save()
             return redirect('login')
         return super().post(request, *args, **kwargs)
