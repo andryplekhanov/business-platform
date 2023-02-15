@@ -12,14 +12,18 @@ from .validators import avatar_size_validate
 
 
 class CustomUser(AbstractBaseUser, MPTTModel, PermissionsMixin):
+    STATUS_CHOICES = (
+        ("0", _("Участник Заказчик")),
+        ("1", _("Кандидат")),
+        ("2", _("Участник Фрилансер")),
+    )
+
     email = models.EmailField(_('email'), unique=True, db_index=True)
     full_name = models.CharField(_('ФИО'), max_length=255, blank=True, db_index=True)
+    status = models.CharField(_('статус'), max_length=30, choices=STATUS_CHOICES, default="0", db_index=True)
     date_joined = models.DateTimeField(_('дата регистрации'), auto_now_add=True, db_index=True)
     is_active = models.BooleanField(_('является активным'), default=True)
-    is_verified = models.BooleanField(_('прошел верификацию личности'), default=False)
     is_staff = models.BooleanField(default=False, verbose_name=_('является сотрудником'))
-    is_freelancer = models.BooleanField(default=False, verbose_name=_('является фрилансером'), db_index=True)
-    can_invite_referrals = models.BooleanField(default=False, verbose_name=_('может приглашать рефералов'), db_index=True)
     is_core = models.BooleanField(default=False, verbose_name=_('входит в ядро'), db_index=True)
     parent = TreeForeignKey('self', on_delete=models.PROTECT, null=True, blank=True, related_name='children',
                             db_index=True, verbose_name=_('родитель'))
@@ -48,7 +52,7 @@ class CustomUser(AbstractBaseUser, MPTTModel, PermissionsMixin):
         return self.email
 
     def get_referral_url(self):
-        if self.can_invite_referrals:
+        if self.status == '2' or self.is_core:
             return reverse('signup', args=[self.pk])
         return None
 

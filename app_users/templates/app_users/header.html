@@ -3,26 +3,35 @@
 
 <header>
     <div>
-        <a href="{% url 'home' %}">{% trans 'Главная' %}</a>
+        <div>
+            <a href="{% url 'home' %}">logo</a>
+        </div>
+        <div>
+            <a href="{% url 'home' %}">menu</a>
+        </div>
+        <div>
+            {% if request.user.is_authenticated %}
+                {% if request.user.is_core %}
+                    <div>{% trans "Участник ядра" %}</div>
+                {% else %}
+                    <div>{{ request.user.get_status_display }}</div>
+                {% endif %}
+                <div>{{ request.user.id }}</div>
+            {% endif %}
+        </div>
     </div>
+
     <div>
-        <form action="{% url 'set_language' %}" method="post">
-            {% csrf_token %}
-            {% get_current_language as LANGUAGE_CODE %}
-            {% get_available_languages as LANGUAGES %}
-            {% get_language_info_list for LANGUAGES as languages %}
-            {% for language in languages %}
-                <div>
-                    <input type="radio" id="language" name="language" value="{{ language.code }}"
-                            {% if language.code == LANGUAGE_CODE %} checked{% endif %} onclick="submit()">
-                    <label for="language">{{ language.code }}</label>
-                </div>
-            {% endfor %}
-        </form>
-    </div>
-    <div>
-        {% if request.user.is_authenticated %}
-            <div>
+        <div><a href="#">{% trans "Тикеты" %}</a></div>
+
+        <div><a href="#">{% trans "Новости" %}</a></div>
+
+        <div><a href="{% url 'polls-list' %}">{% trans "Голосование" %}</a></div>
+
+        <div><a href="#">{% trans "Рреферальная программа" %}</a></div>
+
+        <div>
+            {% if request.user.is_authenticated %}
                 {% if request.user.full_name %}
                     <a href="{% url 'profile' %}">
                         {{ request.user.full_name }}
@@ -32,31 +41,62 @@
                         {% trans "Личный кабинет" %}
                     </a>
                 {% endif %}
-            </div>
-            <div>
-                <a href="{% url 'logout' %}">
-                    {% trans "Выйти" %}
-                </a>
-            </div>
-        {% else %}
-            <div>
-                <a href="{% url 'login' %}">
-                    {% trans "Вход" %}
-                </a>
-            </div>
-        {% endif %}
-    </div>
+            {% endif %}
+        </div>
 
+        <div>
+            <form action="{% url 'set_language' %}" method="post">
+                {% csrf_token %}
+                {% get_current_language as LANGUAGE_CODE %}
+                {% get_available_languages as LANGUAGES %}
+                {% get_language_info_list for LANGUAGES as languages %}
+                {% for language in languages %}
+                    <div>
+                        <input type="radio" id="language" name="language" value="{{ language.code }}"
+                                {% if language.code == LANGUAGE_CODE %} checked{% endif %} onclick="submit()">
+                        <label for="language">{{ language.code }}</label>
+                    </div>
+                {% endfor %}
+            </form>
+        </div>
+
+        <div>
+            {% if request.user.is_authenticated %}
+                <div>
+                    <a href="{% url 'logout' %}">
+                        {% trans "Выйти" %}
+                    </a>
+                </div>
+            {% else %}
+                <div>
+                    <a href="{% url 'login' %}">
+                        {% trans "Вход" %}
+                    </a>
+                </div>
+            {% endif %}
+        </div>
+    </div>
 
 
 <!--    !!! ВЕРСТАЛЬЩИКУ: удалить отсюда нижеследующие стили при вёрстке  -->
     <style>
         header {
+            {#position: fixed;#}
+            {#z-index: 1;#}
+            min-height: 100px;
+            max-width: 1920px;
+            width: 100%;
             background-color: lightblue;
+            margin: 0 auto;
         }
 
         header div {
-            display: inline-block;
+            display: inline;
+            margin: 20px;
+        }
+
+        header div form {
+            display: inline;
             margin: 20px;
         }
 
