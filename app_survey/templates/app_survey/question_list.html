@@ -1,0 +1,13 @@
+{% extends 'app_users/_base.html' %}
+{% load i18n %}
+{% load static %}
+
+{% block middle %}
+{% for poll in object_list %}
+    <div>
+        <p><a href="{{ poll.get_absolute_url }}">{{ poll.title }}</a></p>
+        <p>{% trans 'Начало' %}: {{ poll.pub_date }}</p>
+        <p>{% trans 'Окончание' %}: {{ poll.end_date }}</p>
+    </div>
+{% endfor %}
+{% endblock %}

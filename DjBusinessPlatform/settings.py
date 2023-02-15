@@ -49,6 +49,7 @@ INSTALLED_APPS = [
     'app_ads.apps.AppAdsConfig',
     'app_static_pages.apps.AppStaticPagesConfig',
     'app_settings.apps.AppSettingsConfig',
+    'app_survey.apps.AppSurveyConfig',
 
 ]
 
