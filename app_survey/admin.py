@@ -8,7 +8,8 @@ class ChoiceInline(admin.TabularInline):
 
 
 class QuestionAdmin(admin.ModelAdmin):
-    list_display = ('id', 'title', 'visible', 'pub_date', 'end_date')
+    list_display = ('title', 'visible', 'pub_date', 'end_date')
+    search_fields = ('title',)
     list_filter = ('pub_date', 'end_date', 'visible', )
     readonly_fields = ['get_result', ]
     inlines = [ChoiceInline]
@@ -21,7 +22,6 @@ class QuestionAdmin(admin.ModelAdmin):
 
 class AnswerAdmin(admin.ModelAdmin):
     list_display = ('user', 'question', 'choice', )
-    list_filter = ('user__email', 'question__title')
     search_fields = ('user__full_name', 'user__email', 'question__title')
     readonly_fields = ['user', 'question', 'choice']
 
