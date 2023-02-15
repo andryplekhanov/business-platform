@@ -53,13 +53,8 @@ class CustomUser(AbstractBaseUser, MPTTModel, PermissionsMixin):
         return None
 
     @property
-    def level_1_referrals(self):
-        return CustomUser.objects.filter(parent=self)
-
-    @property
-    def level_2_referrals(self):
-        return CustomUser.objects.filter(parent__in=self.level_1_referrals)
-
-    @property
-    def level_3_referrals(self):
-        return CustomUser.objects.filter(parent__in=self.level_2_referrals)
+    def referrals(self):
+        level1 = CustomUser.objects.filter(parent=self)
+        level2 = CustomUser.objects.filter(parent__in=level1)
+        level3 = CustomUser.objects.filter(parent__in=level2)
+        return {'level1': level1, 'level2': level2, 'level3': level3}
