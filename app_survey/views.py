@@ -1,6 +1,6 @@
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin
-from django.core.exceptions import ObjectDoesNotExist
+from django.core.exceptions import ObjectDoesNotExist, PermissionDenied
 from django.http import HttpResponseRedirect
 from django.shortcuts import render, get_object_or_404
 from django.urls import reverse
@@ -28,7 +28,7 @@ class PollDetailView(LoginRequiredMixin, DetailView):
 
     def get(self, request, *args, **kwargs):
         question = self.get_object()
-        if question.end_date < timezone.now():
+        if question.end_date < timezone.now() or not self.request.user.is_core:
             return HttpResponseRedirect(reverse('polls-results', args=(kwargs.get('pk'),)))
         try:
             answer = self.request.user.answer_set.get(question=question)
@@ -38,7 +38,6 @@ class PollDetailView(LoginRequiredMixin, DetailView):
 
     # def get_context_data(self, **kwargs):
     #     context = super(PollDetailView, self).get_context_data(**kwargs)
-    #     context['poll'].votable = self.object.can_vote(self.request.user)
     #     return context
 
 
@@ -52,13 +51,18 @@ class PollResultsView(LoginRequiredMixin, DetailView):
         try:
             context['users_answer'] = self.request.user.answer_set.get(question=question)
         except ObjectDoesNotExist:
-            context['users_answer'] = _('Вы не успели проголосовать')
+            if self.request.user.is_core:
+                context['users_answer'] = _('Вы не успели проголосовать')
+            else:
+                context['users_answer'] = _('У вас нет права голоса')
         context['is_finished'] = question.end_date < timezone.now()
         return context
 
 
 @login_required
 def vote(request, question_id):
+    if not request.user.is_core:
+        raise PermissionDenied
     question = get_object_or_404(Question, pk=question_id)
     try:
         answer = request.user.answer_set.get(question=question)

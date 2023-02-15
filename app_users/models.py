@@ -20,6 +20,7 @@ class CustomUser(AbstractBaseUser, MPTTModel, PermissionsMixin):
     is_staff = models.BooleanField(default=False, verbose_name=_('является сотрудником'))
     is_freelancer = models.BooleanField(default=False, verbose_name=_('является фрилансером'), db_index=True)
     can_invite_referrals = models.BooleanField(default=False, verbose_name=_('может приглашать рефералов'), db_index=True)
+    is_core = models.BooleanField(default=False, verbose_name=_('входит в ядро'), db_index=True)
     parent = TreeForeignKey('self', on_delete=models.PROTECT, null=True, blank=True, related_name='children',
                             db_index=True, verbose_name=_('родитель'))
     image_validator = FileExtensionValidator(
