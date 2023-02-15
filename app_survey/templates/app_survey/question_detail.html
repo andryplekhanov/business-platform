@@ -8,7 +8,7 @@
     <form action="{% url 'polls-vote' object.id %}" method="post">
         {% csrf_token %}
         <h1>{{ object.title }}</h1>
-        <p>{{ object.text }}</p>
+        <div>{{ object.text|linebreaks }}</div>
         {% for choice in object.choice_set.all %}
             <input type="radio" name="choice" id="choice{{ forloop.counter }}" value="{{ choice.id }}">
             <label for="choice{{ forloop.counter }}">{{ choice.text }}</label><br>

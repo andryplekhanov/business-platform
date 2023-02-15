@@ -81,7 +81,8 @@ TEMPLATES = [
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
 
-                'app_settings.context_proccessors.load_settings'  # настройки из админки
+                'app_settings.context_proccessors.load_settings',  # настройки из админки
+                'app_survey.context_proccessors.load_number_polls'  # кол-во новых голосований
             ],
         },
     },

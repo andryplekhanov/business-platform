@@ -11,7 +11,7 @@ from django.views.generic import ListView, DetailView
 from app_survey.models import Question, Choice, Answer
 
 
-class PollListView(LoginRequiredMixin, ListView):
+class PollListView(ListView):
     model = Question
 
     def get_queryset(self):
@@ -19,7 +19,7 @@ class PollListView(LoginRequiredMixin, ListView):
         return queryset
 
 
-class PollDetailView(LoginRequiredMixin, DetailView):
+class PollDetailView(DetailView):
     model = Question
 
     def get_queryset(self):
@@ -28,6 +28,8 @@ class PollDetailView(LoginRequiredMixin, DetailView):
 
     def get(self, request, *args, **kwargs):
         question = self.get_object()
+        if self.request.user.is_anonymous:
+            return HttpResponseRedirect(reverse('polls-results', args=(kwargs.get('pk'),)))
         if question.end_date < timezone.now() or not self.request.user.is_core:
             return HttpResponseRedirect(reverse('polls-results', args=(kwargs.get('pk'),)))
         try:

@@ -5,7 +5,7 @@
 {% block middle %}
 
     <h1>{{ object.title }}</h1>
-    <p>{{ object.text }}</p>
+    <div>{{ object.text|linebreaks }}</div>
 
     <ul>
     {% for choice in object.choice_set.all %}

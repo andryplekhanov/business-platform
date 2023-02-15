@@ -32,14 +32,14 @@ class Question(models.Model):
         return reverse('polls-detail', args=[str(self.id)])
 
     class Meta:
-        # ordering = ['-pub_date']
+        ordering = ['-pub_date']
         verbose_name = _("вопрос")
         verbose_name_plural = _("вопросы")
 
 
 class Choice(models.Model):
     question = models.ForeignKey(Question, on_delete=models.CASCADE, verbose_name=_('вопрос'))
-    text = models.TextField(max_length=4096, verbose_name=_('текст'))
+    text = models.CharField(max_length=255, verbose_name=_('текст'))
     votes = models.IntegerField(default=0, verbose_name=_('количество голосов'))
 
     def __str__(self):

@@ -26,9 +26,14 @@
 
         <div><a href="#">{% trans "Новости" %}</a></div>
 
-        <div><a href="{% url 'polls-list' %}">{% trans "Голосование" %}</a></div>
+        <div>
+            <a href="{% url 'polls-list' %}">
+                {% trans "Голосование" %}
+                {% if number_polls > 0 %}({{ number_polls }}){% endif %}
+            </a>
+        </div>
 
-        <div><a href="#">{% trans "Рреферальная программа" %}</a></div>
+        <div><a href="#">{% trans "Реферальная программа" %}</a></div>
 
         <div>
             {% if request.user.is_authenticated %}

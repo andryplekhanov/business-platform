@@ -5,9 +5,14 @@
 {% block middle %}
 {% for poll in object_list %}
     <div>
-        <p><a href="{{ poll.get_absolute_url }}">{{ poll.title }}</a></p>
-        <p>{% trans 'Начало' %}: {{ poll.pub_date }}</p>
-        <p>{% trans 'Окончание' %}: {{ poll.end_date }}</p>
+        <div>
+            <a href="{{ poll.get_absolute_url }}">
+                {% if poll in new_polls %}NEW -- {% endif %}
+                {{ poll.title }}
+            </a>
+        </div>
+        <div>{% trans 'Начало' %}: {{ poll.pub_date }}</div>
+        <div>{% trans 'Окончание' %}: {{ poll.end_date }}</div>
     </div>
 {% endfor %}
 {% endblock %}

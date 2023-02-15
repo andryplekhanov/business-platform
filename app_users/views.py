@@ -12,6 +12,7 @@ from django.utils.translation import gettext_lazy as _
 from django.views import generic
 from django.views.generic import TemplateView, UpdateView
 
+from app_survey.models import Question
 from .forms import CustomUserCreationForm, UserLoginForm, PasswordSetForm, CustomUserChangeForm, ResetPasswordForm
 
 User = get_user_model()
@@ -23,7 +24,6 @@ class IndexView(TemplateView):
 
     def get_context_data(self, *, object_list=None, **kwargs):
         context = super().get_context_data(**kwargs)
-        # print('\n', self.request.user.status.value)
         return context
 
 
