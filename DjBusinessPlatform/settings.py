@@ -82,7 +82,8 @@ TEMPLATES = [
                 'django.contrib.messages.context_processors.messages',
 
                 'app_settings.context_proccessors.load_settings',  # настройки из админки
-                'app_survey.context_proccessors.load_number_polls'  # кол-во новых голосований
+                'app_survey.context_proccessors.load_number_polls',  # кол-во новых голосований
+                'app_ads.context_proccessors.load_menu',  # меню для хедера
             ],
         },
     },
