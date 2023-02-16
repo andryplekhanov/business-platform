@@ -1,8 +1,8 @@
-{% extends 'app_users/_base.html' %}
+{% extends 'app_users/profile/_profile_base.html' %}
 {% load i18n %}
 {% load static %}
 
-{% block middle %}
+{% block content %}
     <div>
         <div>{{ user.full_name }}</div>
         <a href="{% url 'edit_profile' %}">{% trans 'Редактировать профиль' %}</a>
@@ -17,7 +17,7 @@
         {% endif %}
     </div>
     <div>
-        {% if user.can_invite_referrals %}
+        {% if user.status == '2' %}
             <div>
                 <p>{% trans 'Ваша ссылка-приглашение:' %}</p>
                 <input type="url" value="http://127.0.0.1:8000{{ user.get_referral_url }}" id="refLink" readonly>

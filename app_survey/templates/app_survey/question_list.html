@@ -1,0 +1,21 @@
+{% extends 'app_users/_base.html' %}
+{% load i18n %}
+{% load static %}
+
+{% block middle %}
+    <div>
+        {% trans 'Голосование' %}: {{ number_polls }} {% trans 'непросмотренных предложений, требующих вашего участия' %}
+    </div>
+{% for poll in object_list %}
+    <div>
+        <div>
+            <a href="{{ poll.get_absolute_url }}">
+                {% if poll in new_polls %}NEW -- {% endif %}
+                {{ poll.title }}
+            </a>
+        </div>
+        <div>{% trans 'Начало' %}: {{ poll.pub_date }}</div>
+        <div>{% trans 'Окончание' %}: {{ poll.end_date }}</div>
+    </div>
+{% endfor %}
+{% endblock %}

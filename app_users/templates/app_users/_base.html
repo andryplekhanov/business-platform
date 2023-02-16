@@ -18,7 +18,6 @@
     <body>
 
         {% include 'app_users/header.html' %}
-        <hr>
 
         {% block middle %}
         {% endblock middle %}
@@ -37,24 +36,9 @@
                 padding: 0;
             }
 
-            .clearfix {
-                *zoom: 1;
-            }
-
-            .clearfix:before,
-            .clearfix:after {
-                display: table;
-                content: "";
-                line-height: 0;
-            }
-
-            .clearfix:after {
-                clear: both;
-            }
-
             html,
             body {
-                width: 1020px;
+                max-width: 1920px;
                 height: 100%;
                 margin: 0 auto;
             }

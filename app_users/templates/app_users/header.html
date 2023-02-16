@@ -1,28 +1,78 @@
+{% load flatpages %}
 {% load static %}
 {% load i18n %}
+{% load mptt_tags %}
+{% load app_users_tags %}
+{% get_flatpages '/referral-program/' as referral_program %}
 
 <header>
     <div>
-        <a href="{% url 'home' %}">{% trans 'Главная' %}</a>
-    </div>
-    <div>
-        <form action="{% url 'set_language' %}" method="post">
-            {% csrf_token %}
-            {% get_current_language as LANGUAGE_CODE %}
-            {% get_available_languages as LANGUAGES %}
-            {% get_language_info_list for LANGUAGES as languages %}
-            {% for language in languages %}
-                <div>
-                    <input type="radio" id="language" name="language" value="{{ language.code }}"
-                            {% if language.code == LANGUAGE_CODE %} checked{% endif %} onclick="submit()">
-                    <label for="language">{{ language.code }}</label>
+        <div>
+            <a href="{% url 'home' %}">logo</a>
+        </div>
+
+        <details>
+            <summary>menu</summary>
+            {% load_menu as main_menu %}
+            {% recursetree main_menu.main_menu %}
+                <div id="main_menu">
+                    <a href="#">
+                        {{ node.name }}
+                    </a>
+
+                    {% if not node.is_leaf_node %}
+                        <a href="#"></a>
+                        <div>
+                            {{ children }}
+                        </div>
+                    {% endif %}
                 </div>
-            {% endfor %}
-        </form>
+            {% endrecursetree %}
+        </details>
+
+        <div>
+            {% if request.user.is_authenticated %}
+                <div>
+                    {% if request.user.avatar %}
+                        <div class="header-avatar">
+                        </div>
+                    {% else %}
+                        <div class="header-avatar">
+                        </div>
+                    {% endif %}
+                </div>
+                {% if request.user.is_core %}
+                    <div>{% trans "Участник ядра" %}</div>
+                {% else %}
+                    <div>{{ request.user.get_status_display }}</div>
+                {% endif %}
+                <div>{{ request.user.id }}</div>
+            {% endif %}
+        </div>
     </div>
+
     <div>
-        {% if request.user.is_authenticated %}
-            <div>
+        <div>
+            <a href="#">{% trans "Тикеты" %}</a>
+        </div>
+
+        <div>
+            <a href="#">{% trans "Новости" %}</a>
+        </div>
+
+        <div>
+            <a href="{% url 'polls-list' %}">
+                {% trans "Голосование" %}
+                {% if number_polls > 0 %}({{ number_polls }}){% endif %}
+            </a>
+        </div>
+
+        <div>
+            <a href="{{ referral_program.first.url }}">{% trans "Реферальная программа" %}</a>
+        </div>
+
+        <div>
+            {% if request.user.is_authenticated %}
                 {% if request.user.full_name %}
                     <a href="{% url 'profile' %}">
                         {{ request.user.full_name }}
@@ -32,32 +82,78 @@
                         {% trans "Личный кабинет" %}
                     </a>
                 {% endif %}
-            </div>
-            <div>
-                <a href="{% url 'logout' %}">
-                    {% trans "Выйти" %}
-                </a>
-            </div>
-        {% else %}
-            <div>
-                <a href="{% url 'login' %}">
-                    {% trans "Вход" %}
-                </a>
-            </div>
-        {% endif %}
-    </div>
+            {% endif %}
+        </div>
 
+        <div>
+            <form action="{% url 'set_language' %}" method="post">
+                {% csrf_token %}
+                {% get_current_language as LANGUAGE_CODE %}
+                {% get_available_languages as LANGUAGES %}
+                {% get_language_info_list for LANGUAGES as languages %}
+                {% for language in languages %}
+                    <div>
+                        <input type="radio" id="language" name="language" value="{{ language.code }}"
+                                {% if language.code == LANGUAGE_CODE %} checked{% endif %} onclick="submit()">
+                        <label for="language">{{ language.code }}</label>
+                    </div>
+                {% endfor %}
+            </form>
+        </div>
+
+        <div>
+            {% if request.user.is_authenticated %}
+                <div>
+                    <a href="{% url 'logout' %}">
+                        {% trans "Выйти" %}
+                    </a>
+                </div>
+            {% else %}
+                <div>
+                    <a href="{% url 'login' %}">
+                        {% trans "Вход" %}
+                    </a>
+                </div>
+            {% endif %}
+        </div>
+    </div>
 
 
 <!--    !!! ВЕРСТАЛЬЩИКУ: удалить отсюда нижеследующие стили при вёрстке  -->
     <style>
         header {
+            min-height: 100px;
+            max-width: 1920px;
+            width: 100%;
             background-color: lightblue;
+            margin: 0 auto;
         }
 
         header div {
-            display: inline-block;
+            display: inline;
             margin: 20px;
+        }
+
+        header details {
+            display: inline;
+            margin: 20px;
+        }
+
+        #main_menu {
+            display: block;
+        }
+
+        header div form {
+            display: inline;
+            margin: 20px;
+        }
+
+        .header-avatar {
+            width: 55px;
+            height: 55px;
+            border-radius: 50px;
+            background: url('{{ request.user.avatar.url }}');
+            background-size: auto 55px;
         }
 
     </style>

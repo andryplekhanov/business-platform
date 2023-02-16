@@ -1,0 +1,19 @@
+{% extends 'app_users/_base.html' %}
+{% load i18n %}
+{% load static %}
+
+{% block middle %}
+
+    <h1>{{ object.title }}</h1>
+    <div>{{ object.text|linebreaks }}</div>
+
+    <ul>
+    {% for choice in object.choice_set.all %}
+        <li>{{ choice.text }} -- {{ choice.votes }}</li>
+    {% endfor %}
+    </ul>
+    <div>
+        {% if is_finished %}<p>{% trans 'Голосование окончено' %}</p>{% endif %}
+        {% trans 'Ваш голос' %}: {{ users_answer }}
+    </div>
+{% endblock %}
