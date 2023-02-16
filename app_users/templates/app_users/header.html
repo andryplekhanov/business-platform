@@ -52,9 +52,13 @@
     </div>
 
     <div>
-        <div><a href="#">{% trans "Тикеты" %}</a></div>
+        <div>
+            <a href="#">{% trans "Тикеты" %}</a>
+        </div>
 
-        <div><a href="#">{% trans "Новости" %}</a></div>
+        <div>
+            <a href="#">{% trans "Новости" %}</a>
+        </div>
 
         <div>
             <a href="{% url 'polls-list' %}">
@@ -63,7 +67,9 @@
             </a>
         </div>
 
-        <div><a href="{{ referral_program.first.url }}">{% trans "Реферальная программа" %}</a></div>
+        <div>
+            <a href="{{ referral_program.first.url }}">{% trans "Реферальная программа" %}</a>
+        </div>
 
         <div>
             {% if request.user.is_authenticated %}

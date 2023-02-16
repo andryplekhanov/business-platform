@@ -3,6 +3,9 @@
 {% load static %}
 
 {% block middle %}
+    <div>
+        {% trans 'Голосование' %}: {{ number_polls }} {% trans 'непросмотренных предложений, требующих вашего участия' %}
+    </div>
 {% for poll in object_list %}
     <div>
         <div>

@@ -5,7 +5,10 @@
 {% block middle %}
     <div class="column left">
         <div>
-            <a href="{% url 'balance' %}">{% trans 'Баланс' %}</a>
+            <a href="{% url 'balance' %}">
+                {% trans 'Баланс' %}
+                {{ request.user.balance }}
+            </a>
         </div>
         <div>
             <a href="{% url 'topup_withdrawal' %}">{% trans 'Пополнение / Вывод' %}</a>
