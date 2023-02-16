@@ -1,0 +1,36 @@
+{% load static %}
+{% load i18n %}
+
+
+<div class="search-block">
+    <div>
+        <h1>{{ company_settings.company }}</h1>
+        <p>{{ company_settings.slogan }}</p>
+    </div>
+
+    <form action="#" method="get">
+        <input id="id_name" name="name" type="text"
+               placeholder="{% trans 'введите запрос, что нужно сделать, для поиска исполнителя' %}"/>
+        <button type="submit" name="search" id="search">
+            {% trans 'Искать' %}
+        </button>
+    </form>
+
+    <div>
+        {% trans 'или' %}
+        <a href="{% url 'place_contract' %}">{% trans 'сделать заказ' %}</a>
+        <a href="{% url 'announce_contest' %}">{% trans 'объявить конкурс' %}</a>
+        <a href="#">{% trans 'найти заказ' %}</a>
+    </div>
+</div>
+
+<!--    !!! ВЕРСТАЛЬЩИКУ: удалить отсюда эти стили при вёрстке  -->
+<style>
+    .search-block {
+        min-height: 150px;
+        max-width: 1920px;
+        background-color: lightblue;
+        margin: 0 auto;
+    }
+</style>
+<!--    !!! ВЕРСТАЛЬЩИКУ: удалить отсюда эти стили при вёрстке  -->
