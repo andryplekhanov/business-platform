@@ -6,16 +6,29 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth.views import LogoutView, LoginView, PasswordResetView, PasswordResetDoneView, \
     PasswordResetConfirmView, PasswordResetCompleteView
 from django.core.exceptions import PermissionDenied, ObjectDoesNotExist
+from django.http import HttpResponse
 from django.shortcuts import render, redirect
 from django.urls import reverse_lazy, reverse
 from django.utils.translation import gettext_lazy as _
 from django.views import generic
 from django.views.generic import TemplateView, UpdateView
 
-from app_survey.models import Question
 from .forms import CustomUserCreationForm, UserLoginForm, PasswordSetForm, CustomUserChangeForm, ResetPasswordForm
 
 User = get_user_model()
+
+# PROFILE_MENU_ITEMS = [
+#     {'title': _('Баланс'), 'url_name': 'balance'},
+#     {'title': _('Пополнение / Вывод'), 'url_name': 'topup_withdrawal'},
+#     {'title': _('Портфолио'), 'url_name': 'portfolio'},
+#     {'title': _('Заказы'), 'url_name': 'contracts'},
+#     {'title': _('Конкурсы'), 'url_name': 'contests'},
+#     {'title': _('Разместить заказ'), 'url_name': 'place_contract'},
+#     {'title': _('Объявить конкурс'), 'url_name': 'announce_contest'},
+#     {'title': _('Поиск исполнителя'), 'url_name': 'search_contractor'},
+#     {'title': _('Чат'), 'url_name': 'chat'},
+#     {'title': _('Помощь'), 'url_name': 'support'},
+# ]
 
 
 class IndexView(TemplateView):
@@ -143,3 +156,53 @@ class ResetPasswordConfirmView(PasswordResetConfirmView):
 class ResetPasswordCompleteView(PasswordResetCompleteView):
     template_name = 'app_users/profile/password_reset_complete.html'
     extra_context = {'title': _('Новый пароль успешно создан'), 'current_elem': 'password_reset_complete'}
+
+
+@login_required
+def balance(request):
+    return HttpResponse('Баланс')
+
+
+@login_required
+def topup_withdrawal(request):
+    return HttpResponse('Пополнение / Вывод')
+
+
+@login_required
+def portfolio(request):
+    return HttpResponse('Портфолио')
+
+
+@login_required
+def contracts(request):
+    return HttpResponse('Заказы')
+
+
+@login_required
+def contests(request):
+    return HttpResponse('Конкурсы')
+
+
+@login_required
+def place_contract(request):
+    return HttpResponse('Разместить заказ')
+
+
+@login_required
+def announce_contest(request):
+    return HttpResponse('Объявить конкурс')
+
+
+@login_required
+def search_contractor(request):
+    return HttpResponse('Поиск исполнителя')
+
+
+@login_required
+def chat(request):
+    return HttpResponse('Чат')
+
+
+@login_required
+def support(request):
+    return HttpResponse('Помощь')

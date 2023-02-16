@@ -1,0 +1,56 @@
+{% extends 'app_users/_base.html' %}
+{% load i18n %}
+{% load static %}
+
+{% block middle %}
+    <div class="column left">
+        <div>
+            <a href="{% url 'balance' %}">{% trans 'Баланс' %}</a>
+        </div>
+        <div>
+            <a href="{% url 'topup_withdrawal' %}">{% trans 'Пополнение / Вывод' %}</a>
+        </div>
+        <div>
+            <a href="{% url 'portfolio' %}">{% trans 'Портфолио' %}</a>
+        </div>
+        <div>
+            <a href="{% url 'contracts' %}">{% trans 'Заказы' %}</a>
+        </div>
+        <div>
+            <a href="{% url 'contests' %}">{% trans 'Конкурсы' %}</a>
+        </div>
+        <div>
+            <a href="{% url 'place_contract' %}">{% trans 'Разместить заказ' %}</a>
+        </div>
+        <div>
+            <a href="{% url 'announce_contest' %}">{% trans 'Объявить конкурс' %}</a>
+        </div>
+        <div>
+            <a href="{% url 'search_contractor' %}">{% trans 'Поиск исполнителя' %}</a>
+        </div>
+        <div>
+            <a href="{% url 'chat' %}">{% trans 'Чат' %}</a>
+        </div>
+        <div>
+            <a href="{% url 'support' %}">{% trans 'Помощь' %}</a>
+        </div>
+    </div>
+
+    <div class="column right">
+        {% block content %}
+        {% endblock %}
+    </div>
+
+    <!--    !!! ВЕРСТАЛЬЩИКУ: удалить отсюда эти стили при вёрстке  -->
+    <style>
+        .column {
+            display: inline-block;
+
+        }
+        .left {
+            width: 255px;
+            border-right: 1px black solid;
+        }
+    </style>
+    <!--    !!! ВЕРСТАЛЬЩИКУ: удалить отсюда эти стили при вёрстке  -->
+{% endblock %}

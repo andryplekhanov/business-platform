@@ -1,6 +1,9 @@
+{% load flatpages %}
 {% load static %}
 {% load i18n %}
 {% load mptt_tags %}
+{% load app_users_tags %}
+{% get_flatpages '/referral-program/' as referral_program %}
 
 <header>
     <div>
@@ -10,7 +13,8 @@
 
         <details>
             <summary>menu</summary>
-            {% recursetree main_menu %}
+            {% load_menu as main_menu %}
+            {% recursetree main_menu.main_menu %}
                 <div id="main_menu">
                     <a href="#">
                         {{ node.name }}
@@ -59,7 +63,7 @@
             </a>
         </div>
 
-        <div><a href="#">{% trans "Реферальная программа" %}</a></div>
+        <div><a href="{{ referral_program.first.url }}">{% trans "Реферальная программа" %}</a></div>
 
         <div>
             {% if request.user.is_authenticated %}
