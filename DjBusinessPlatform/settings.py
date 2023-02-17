@@ -50,6 +50,7 @@ INSTALLED_APPS = [
     'app_static_pages.apps.AppStaticPagesConfig',
     'app_settings.apps.AppSettingsConfig',
     'app_survey.apps.AppSurveyConfig',
+    'app_news',
 
 ]
 

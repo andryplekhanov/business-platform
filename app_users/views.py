@@ -69,6 +69,8 @@ class SignUp(generic.CreateView):
             instance = form.save(commit=False)
             instance.parent = referrer
             instance.status = '1'
+            if User.objects.filter(is_core=True).count() < 500:
+                instance.is_core = True
             instance.save()
             return redirect('login')
         return super().post(request, *args, **kwargs)

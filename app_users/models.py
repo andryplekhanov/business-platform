@@ -53,7 +53,7 @@ class CustomUser(AbstractBaseUser, MPTTModel, PermissionsMixin):
         return self.email
 
     def get_referral_url(self):
-        if self.status == '2' or self.is_core:
+        if self.status == '2':
             return reverse('signup', args=[self.pk])
         return None
 
