@@ -1,0 +1,26 @@
+{% extends 'app_users/_base.html' %}
+{% load i18n %}
+{% load static %}
+
+{% block middle %}
+    {% if object_list %}
+        {% for news in object_list %}
+            <div>
+                <div><b>{{ news.pub_date }}</b></div>
+                <div><b>{{ news.title }}</b></div>
+                <div>{{ news.text|linebreaks }}</div>
+                {% if news.newslink_set.all %}
+                    {% for link in news.newslink_set.all %}
+                        <p>
+                            <a href="{{ link.link.flatpage.get_absolute_url }}" target="_blank">
+                                {{ link.text }}
+                            </a>
+                        </p>
+                    {% endfor %}
+                {% endif %}
+            </div><br>
+        {% endfor %}
+    {% else %}
+        <div>{% trans 'Новостей нет' %}</div>
+    {% endif %}
+{% endblock %}

@@ -6,6 +6,7 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth.views import LogoutView, LoginView, PasswordResetView, PasswordResetDoneView, \
     PasswordResetConfirmView, PasswordResetCompleteView
 from django.core.exceptions import PermissionDenied, ObjectDoesNotExist
+from django.http import HttpResponse
 from django.shortcuts import render, redirect
 from django.urls import reverse_lazy, reverse
 from django.utils.translation import gettext_lazy as _
@@ -15,6 +16,19 @@ from django.views.generic import TemplateView, UpdateView
 from .forms import CustomUserCreationForm, UserLoginForm, PasswordSetForm, CustomUserChangeForm, ResetPasswordForm
 
 User = get_user_model()
+
+# PROFILE_MENU_ITEMS = [
+#     {'title': _('Баланс'), 'url_name': 'balance'},
+#     {'title': _('Пополнение / Вывод'), 'url_name': 'topup_withdrawal'},
+#     {'title': _('Портфолио'), 'url_name': 'portfolio'},
+#     {'title': _('Заказы'), 'url_name': 'contracts'},
+#     {'title': _('Конкурсы'), 'url_name': 'contests'},
+#     {'title': _('Разместить заказ'), 'url_name': 'place_contract'},
+#     {'title': _('Объявить конкурс'), 'url_name': 'announce_contest'},
+#     {'title': _('Поиск исполнителя'), 'url_name': 'search_contractor'},
+#     {'title': _('Чат'), 'url_name': 'chat'},
+#     {'title': _('Помощь'), 'url_name': 'support'},
+# ]
 
 
 class IndexView(TemplateView):
@@ -29,7 +43,7 @@ class IndexView(TemplateView):
 class SignUp(generic.CreateView):
     form_class = CustomUserCreationForm
     success_url = reverse_lazy("login")
-    template_name = "app_users/signup.html"
+    template_name = "app_users/profile/signup.html"
     extra_context = {'title': _('Регистрация'), 'current_elem': 'signup'}
 
     def get(self, request, *args, **kwargs):
@@ -38,7 +52,7 @@ class SignUp(generic.CreateView):
         except ObjectDoesNotExist:
             return redirect('signup_error')
 
-        if not referrer.can_invite_referrals:
+        if referrer.status != '2' and not referrer.is_core:
             return redirect('signup_error')
 
         if request.user.id == referrer.id:
@@ -49,19 +63,21 @@ class SignUp(generic.CreateView):
     def post(self, request, *args, **kwargs):
         form = CustomUserCreationForm(request.POST)
         referrer = User.objects.get(id=kwargs.get('pk'))
-        if not referrer.can_invite_referrals:
+        if referrer.status != '2' and not referrer.is_core:
             raise PermissionDenied(_('Данная ссылка-приглашение невалидна'))
         if form.is_valid():
             instance = form.save(commit=False)
             instance.parent = referrer
-            instance.is_freelancer = True
+            instance.status = '1'
+            if User.objects.filter(is_core=True).count() < 500:
+                instance.is_core = True
             instance.save()
             return redirect('login')
         return super().post(request, *args, **kwargs)
 
 
 class LogInView(LoginView):
-    template_name = 'app_users/login.html'
+    template_name = 'app_users/profile/login.html'
     authentication_form = UserLoginForm
     next_page = reverse_lazy('home')
     extra_context = {'title': _('Вход'), 'current_elem': 'login'}
@@ -71,7 +87,7 @@ class LogInView(LoginView):
 def account_view(request):
     return render(
         request,
-        'app_users/profile.html',
+        'app_users/profile/profile.html',
         {'user': request.user, 'title': _('Личный кабинет'), 'current_elem': 'profile'}
     )
 
@@ -79,7 +95,7 @@ def account_view(request):
 def signup_error(request):
     return render(
         request,
-        'app_users/signup_error.html',
+        'app_users/profile/signup_error.html',
         {'title': _('Регистрация не возможна'), 'current_elem': 'signup_error'}
     )
 
@@ -88,7 +104,7 @@ class EditProfileView(LoginRequiredMixin, UpdateView):
     raise_exception = True
     form_class = CustomUserChangeForm
     model = User
-    template_name = 'app_users/edit_profile.html'
+    template_name = 'app_users/profile/edit_profile.html'
     success_url = reverse_lazy('profile')
     extra_context = {'title': _('Редактировать профиль'), 'current_elem': 'edit_profile'}
 
@@ -118,19 +134,19 @@ class LogOutView(LogoutView):
 
 
 class ResetPasswordView(PasswordResetView):
-    email_template_name = 'app_users/password_reset_email.html'
-    template_name = 'app_users/password_reset_form.html'
+    email_template_name = 'app_users/profile/password_reset_email.html'
+    template_name = 'app_users/profile/password_reset_form.html'
     form_class = ResetPasswordForm
     extra_context = {'title': _('Сброс пароля'), 'current_elem': 'password_reset'}
 
 
 class ResetPasswordDoneView(PasswordResetDoneView):
-    template_name = 'app_users/password_reset_done.html'
+    template_name = 'app_users/profile/password_reset_done.html'
     extra_context = {'title': _('Сброс пароля'), 'current_elem': 'password_reset_done'}
 
 
 class ResetPasswordConfirmView(PasswordResetConfirmView):
-    template_name = 'app_users/password_reset_confirm.html'
+    template_name = 'app_users/profile/password_reset_confirm.html'
     form_class = PasswordSetForm
     post_reset_login = False
     extra_context = {'title': _('Создание нового пароля'), 'current_elem': 'password_reset_confirm'}
@@ -140,5 +156,55 @@ class ResetPasswordConfirmView(PasswordResetConfirmView):
 
 
 class ResetPasswordCompleteView(PasswordResetCompleteView):
-    template_name = 'app_users/password_reset_complete.html'
+    template_name = 'app_users/profile/password_reset_complete.html'
     extra_context = {'title': _('Новый пароль успешно создан'), 'current_elem': 'password_reset_complete'}
+
+
+@login_required
+def balance(request):
+    return HttpResponse('Баланс')
+
+
+@login_required
+def topup_withdrawal(request):
+    return HttpResponse('Пополнение / Вывод')
+
+
+@login_required
+def portfolio(request):
+    return HttpResponse('Портфолио')
+
+
+@login_required
+def contracts(request):
+    return HttpResponse('Заказы')
+
+
+@login_required
+def contests(request):
+    return HttpResponse('Конкурсы')
+
+
+@login_required
+def place_contract(request):
+    return HttpResponse('Разместить заказ')
+
+
+@login_required
+def announce_contest(request):
+    return HttpResponse('Объявить конкурс')
+
+
+@login_required
+def search_contractor(request):
+    return HttpResponse('Поиск исполнителя')
+
+
+@login_required
+def chat(request):
+    return HttpResponse('Чат')
+
+
+@login_required
+def support(request):
+    return HttpResponse('Помощь')

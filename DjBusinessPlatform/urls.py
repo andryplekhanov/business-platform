@@ -22,7 +22,9 @@ urlpatterns = [
     path("i18n", include("django.conf.urls.i18n")),
     path("admin/", admin.site.urls),
     path('ckeditor/', include('ckeditor_uploader.urls')),
-    path("", include("app_users.urls")),
+    path("", include("app_users.urls")),  # главная и ЛК пользователей
+    path("polls/", include("app_survey.urls")),  # голосование
+    path("news/", include("app_news.urls")),  # новости
     # path("", include("django.contrib.auth.urls")),
 ]
 

@@ -7,16 +7,10 @@ from .models import CustomUser
 
 
 class CustomUserAdmin(admin.ModelAdmin):  # чтобы в админке отобразить древовидную структуру, нужно унаследовать от DjangoMpttAdmin
-    list_display = ('id', 'email', 'full_name', 'get_referer', 'is_verified', 'is_freelancer', 'can_invite_referrals', 'date_joined')
-    list_filter = ('date_joined', 'is_staff', 'is_active', 'is_verified', 'is_freelancer', 'can_invite_referrals')
-    # fieldsets = (
-    #     (None, {'fields': ('email', 'full_name', 'password', 'phone_number', 'avatar', 'date_joined')}),
-    #     (_('Разрешения'), {'fields': ('is_staff', 'is_active', 'is_verified', 'is_freelancer', 'can_invite_referrals')}),
-    #     (_('Реферальная система'), {'fields': ('parent', 'get_level_1_referrals', 'get_level_2_referrals', 'get_level_3_referrals', 'referral_url')}),
-    # )
-
+    list_display = ('id', 'email', 'full_name', 'get_referer', 'status', 'is_core', 'balance', 'date_joined')
+    list_filter = ('date_joined', 'is_staff', 'is_active', 'is_core', 'status')
     search_fields = ('id', 'email', 'full_name', 'parent__full_name', 'parent__email')
-    readonly_fields = ['date_joined', 'get_level_1_referrals', 'get_level_2_referrals', 'get_level_3_referrals', 'referral_url']
+    readonly_fields = ['date_joined', 'get_referrals', 'referral_url', 'parent', 'balance']
     save_on_top = True
     actions = ['make_active', 'make_inactive']
 
@@ -32,17 +26,12 @@ class CustomUserAdmin(admin.ModelAdmin):  # чтобы в админке ото�
         return obj.get_referral_url()
     referral_url.short_description = _('ссылка-приглашение')
 
-    def get_level_1_referrals(self, obj):
-        return obj.level_1_referrals.count()
-    get_level_1_referrals.short_description = _('рефералов 1го уровня')
-
-    def get_level_2_referrals(self, obj):
-        return obj.level_2_referrals.count()
-    get_level_2_referrals.short_description = _('рефералов 2го уровня')
-
-    def get_level_3_referrals(self, obj):
-        return obj.level_3_referrals.count()
-    get_level_3_referrals.short_description = _('рефералов 3го уровня')
+    def get_referrals(self, obj):
+        referrals = obj.referrals
+        return f"1 level: {referrals.get('level1').count()}\n" \
+               f"2 level: {referrals.get('level2').count()}\n" \
+               f"3 level: {referrals.get('level3').count()}"
+    get_referrals.short_description = _('рефералы')
 
     def get_referer(self, obj):
         link = reverse("admin:app_users_customuser_change", args=[obj.parent_id])
