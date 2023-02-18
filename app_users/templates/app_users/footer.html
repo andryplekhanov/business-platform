@@ -1,111 +1,56 @@
 {% load static %}
 {% load i18n %}
 
-<footer>
 
-    <!--    ЛЕВАЯ КОЛОНКА ССЫЛОК begin  -->
-    <div>
+<footer class="footer">
+    <div class="flex">
+
+        <!--    ЛЕВАЯ КОЛОНКА ССЫЛОК begin  -->
         {% if footer_pages_left.footer_pages.all %}
-        <ul>
-            {% for page in footer_pages_left.footer_pages.all %}
-                <li>
-                    <a href="{{ page.flatpage.get_absolute_url }}">{{ page.flatpage.title }}</a>
-                </li>
-            {% endfor %}
-        </ul>
+            <ul>
+                {% for page in footer_pages_left.footer_pages.all %}
+                    <li>
+                        <a href="{{ page.flatpage.get_absolute_url }}">{{ page.flatpage.title }}</a>
+                    </li>
+                {% endfor %}
+            </ul>
         {% endif %}
-    </div>
-    <!--    ЛЕВАЯ КОЛОНКА ССЫЛОК finish  -->
+        <!--    ЛЕВАЯ КОЛОНКА ССЫЛОК finish  -->
 
-
-    <!--    ФОРМА ОБРАТНОЙ СВЯЗИ begin  -->
-    <div>
-        {% trans 'Форма обратной связи' %}
+        <!--    ФОРМА ОБРАТНОЙ СВЯЗИ begin  -->
+        <!--    пока не работает  -->
         <form action="#" method="post">
-            <input name="name" type="text" placeholder="{% trans 'Ваше имя' %}"/>
-            <input name="email" type="text" placeholder="{% trans 'Ваш email' %}"/>
-            <input name="message" type="text" placeholder="{% trans 'Ваше сообщение' %}"/>
-            <button type="submit">
-                {% trans 'Отправить' %}
-            </button>
+            {% csrf_token %}
+            <p>{% trans 'ФОРМА ОБРАТНОЙ СВЯЗИ' %}</p>
+            <input name="name" type="text" placeholder="{% trans 'Введите имя' %}">
+            <input name="email" type="text" placeholder="{% trans 'Ваш E-mail' %}">
+            <textarea name="message" placeholder="{% trans 'Ваше сообщение' %}"></textarea>
+            <button type="submit">{% trans 'Отправить' %}</button>
         </form>
-    </div>
-    <!--    ФОРМА ОБРАТНОЙ СВЯЗИ finish  -->
+        <!--    ФОРМА ОБРАТНОЙ СВЯЗИ finish  -->
 
-
-    <!--    ПРАВАЯ КОЛОНКА ССЫЛОК begin  -->
-    <div>
+        <!--    ПРАВАЯ КОЛОНКА ССЫЛОК begin  -->
         {% if footer_pages_right.footer_pages.all %}
-        <ul>
-            {% for page in footer_pages_right.footer_pages.all %}
-                <li>
-                    <a href="{{ page.flatpage.get_absolute_url }}">{{ page.flatpage.title }}</a>
-                </li>
-            {% endfor %}
-        </ul>
+            <ul class="tar">
+                {% for page in footer_pages_right.footer_pages.all %}
+                    <li>
+                        <a href="{{ page.flatpage.get_absolute_url }}">{{ page.flatpage.title }}</a>
+                    </li>
+                {% endfor %}
+            </ul>
         {% endif %}
+        <!--    ПРАВАЯ КОЛОНКА ССЫЛОК finish  -->
+
     </div>
-    <!--    ПРАВАЯ КОЛОНКА ССЫЛОК finish  -->
-
-
-    <!--    ССЫЛКА ДЛЯ ВХОДА begin  -->
-    <div>
-        <a href="{% url 'login' %}">
-            {% trans "Вход" %}
-        </a>
-    </div>
-    <!--    ССЫЛКА ДЛЯ ВХОДА finish  -->
-
 
     <!--    ССЫЛКИ НА СОЦСЕТИ begin  -->
-    <div>
+    <div class="social">
         {% if social_media.social_media_item.all %}
-        <ul>
             {% for item in social_media.social_media_item.all %}
-                <li>
-                    <a title="{{ item.name }}" target="_blank" href="{{ item.link }}">
-                        <img alt="{{ item.name }}-logo" src="{{ item.icon.url }}">
-                    </a>
-                </li>
+                <a title="{{ item.name }}" target="_blank" href="{{ item.link }}"><img alt="{{ item.name }}-logo" src="{{ item.icon.url }}"></a>
             {% endfor %}
-        </ul>
         {% endif %}
     </div>
     <!--    ССЫЛКИ НА СОЦСЕТИ finish  -->
 
 </footer>
-
-
-<!--    !!! ВЕРСТАЛЬЩИКУ: удалить отсюда нижеследующие стили при вёрстке  -->
-<style>
-    footer {
-        background-color: lightblue;
-    }
-
-    footer div {
-        display: inline-block;
-        margin: 20px;
-    }
-
-    footer div:last-child {
-        display: block;
-    }
-
-    footer div ul {
-        list-style: none;
-    }
-
-    footer div:last-child ul li {
-        display: inline-block;
-    }
-
-    footer div form input {
-        display: block;
-    }
-
-    footer div ul li a img {
-        width: 32px;
-        height: 32px;
-    }
-</style>
-<!--    !!! ВЕРСТАЛЬЩИКУ: удалить отсюда эти стили при вёрстке  -->

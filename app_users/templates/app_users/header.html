@@ -4,160 +4,129 @@
 {% load mptt_tags %}
 {% load app_users_tags %}
 {% get_flatpages '/referral-program/' as referral_program %}
+{% get_flatpages '/about-platform/' as about_platform %}
+{% get_flatpages '/working-rules/' as working_rules %}
 
-<header>
-    <div>
-        <div>
-            <a href="{% url 'home' %}">logo</a>
-        </div>
+{#        <div>#}
+{#            <a href="{% url 'polls-list' %}">#}
+{#                {% trans "Голосование" %}#}
+{#                {% if number_polls > 0 %}({{ number_polls }}){% endif %}#}
+{#            </a>#}
+{#        </div>#}
 
-        <details>
-            <summary>menu</summary>
-            {% load_menu as main_menu %}
-            {% recursetree main_menu.main_menu %}
-                <div id="main_menu">
-                    <a href="#">
-                        {{ node.name }}
-                    </a>
+{#        <div>#}
+{#            <form action="{% url 'set_language' %}" method="post">#}
+{#                {% csrf_token %}#}
+{#                {% get_current_language as LANGUAGE_CODE %}#}
+{#                {% get_available_languages as LANGUAGES %}#}
+{#                {% get_language_info_list for LANGUAGES as languages %}#}
+{#                {% for language in languages %}#}
+{#                    <div>#}
+{#                        <input type="radio" id="language" name="language" value="{{ language.code }}"#}
+{#                                {% if language.code == LANGUAGE_CODE %} checked{% endif %} onclick="submit()">#}
+{#                        <label for="language">{{ language.code }}</label>#}
+{#                    </div>#}
+{#                {% endfor %}#}
+{#            </form>#}
+{#        </div>#}
 
-                    {% if not node.is_leaf_node %}
-                        <a href="#"></a>
-                        <div>
-                            {{ children }}
-                        </div>
-                    {% endif %}
-                </div>
-            {% endrecursetree %}
-        </details>
-
-        <div>
-            {% if request.user.is_authenticated %}
-                <div>
-                    {% if request.user.avatar %}
-                        <div class="header-avatar">
-                        </div>
-                    {% else %}
-                        <div class="header-avatar">
-                        </div>
-                    {% endif %}
-                </div>
-                {% if request.user.is_core %}
-                    <div>{% trans "Участник ядра" %}</div>
-                {% else %}
-                    <div>{{ request.user.get_status_display }}</div>
-                {% endif %}
-                <div>{{ request.user.id }}</div>
-            {% endif %}
-        </div>
+<header class="header flex">
+    <div class="logo">
+        <a href="{% url 'home' %}"><img src="{% static 'assets/img/logo.svg' %}"></a>
+        <a class="menu-button"></a>
+        <ul>
+            <li><a href="{% url 'home' %}">{% trans "ГЛАВНАЯ" %}</a></li>
+            <li><a href="#">{% trans "ВСЕ УСЛУГИ" %}</a></li>
+            <li><a href="#">{% trans "ЗАКАЗЫ" %}</a></li>
+            <li><a href="#">{% trans "СОЗДАТЬ ЗАКАЗ" %}</a></li>
+            <li><a href="#">{% trans "КОНКУРСЫ" %}</a></li>
+            <li><a href="#">{% trans "ОБЪЯВИТЬ КОНКУРС" %}</a></li>
+            <li><a href="#">{% trans "ФРИЛАНСЕРЫ" %}</a></li>
+            <li><a href="{{ about_platform.first.url }}">{% trans "О ПЛАТФОРМЕ" %}</a></li>
+            <li><a href="{{ referral_program.first.url }}">{% trans "РЕФЕРАЛЬНАЯ ПРОГРАММА" %}</a></li>
+            <li><a href="{{ working_rules.first.url }}">{% trans "ПРАВИЛА РАБОТЫ" %}</a></li>
+            <li><a href="{% url 'profile' %}">{% trans "ЛИЧНЫЙ КАБИНЕТ" %}</a></li>
+            <li><a href="{% url 'support' %}">{% trans "ПОМОЩЬ" %}</a></li>
+            <li><a href="#">{% trans "ПОИСК" %}</a></li>
+        </ul>
     </div>
 
-    <div>
-        <div>
-            <a href="#">{% trans "Тикеты" %}</a>
-        </div>
-
-        <div>
-            <a href="{% url 'news_list' %}">{% trans "Новости" %}</a>
-        </div>
-
-        <div>
-            <a href="{% url 'polls-list' %}">
-                {% trans "Голосование" %}
-                {% if number_polls > 0 %}({{ number_polls }}){% endif %}
-            </a>
-        </div>
-
-        <div>
-            <a href="{{ referral_program.first.url }}">{% trans "Реферальная программа" %}</a>
-        </div>
-
-        <div>
-            {% if request.user.is_authenticated %}
-                {% if request.user.full_name %}
-                    <a href="{% url 'profile' %}">
-                        {{ request.user.full_name }}
-                    </a>
-                {% else %}
-                    <a href="{% url 'profile' %}">
-                        {% trans "Личный кабинет" %}
-                    </a>
-                {% endif %}
-            {% endif %}
-        </div>
-
-        <div>
-            <form action="{% url 'set_language' %}" method="post">
-                {% csrf_token %}
-                {% get_current_language as LANGUAGE_CODE %}
-                {% get_available_languages as LANGUAGES %}
-                {% get_language_info_list for LANGUAGES as languages %}
-                {% for language in languages %}
-                    <div>
-                        <input type="radio" id="language" name="language" value="{{ language.code }}"
-                                {% if language.code == LANGUAGE_CODE %} checked{% endif %} onclick="submit()">
-                        <label for="language">{{ language.code }}</label>
-                    </div>
-                {% endfor %}
-            </form>
-        </div>
-
-        <div>
-            {% if request.user.is_authenticated %}
-                <div>
-                    <a href="{% url 'logout' %}">
-                        {% trans "Выйти" %}
-                    </a>
-                </div>
+    {% if request.user.is_authenticated %}
+        <div class="user">
+            {% if request.user.is_core %}
+                {% trans "Участник ядра" %}
             {% else %}
-                <div>
-                    <a href="{% url 'login' %}">
-                        {% trans "Вход" %}
-                    </a>
-                </div>
+                {{ request.user.get_status_display }}
             {% endif %}
+            <a class="play"></a> <a class="round"></a> <i>{% trans "отпуск" %}</i>
         </div>
-    </div>
 
+        <ul>
+            <li><a href="#">{% trans "Тикеты" %}</a></li>
+            <li><a href="{% url 'news_list' %}">{% trans "Новости" %}</a></li>
+            <li><a href="{% url 'polls-list' %}">{% trans "Голосование" %}</a></li>
+            <li><a href="{{ referral_program.first.url }}">{% trans "Реферальная программа" %}</a></li>
+        </ul>
 
-<!--    !!! ВЕРСТАЛЬЩИКУ: удалить отсюда нижеследующие стили при вёрстке  -->
-    <style>
-        header {
-            min-height: 100px;
-            max-width: 1920px;
-            width: 100%;
-            background-color: lightblue;
-            margin: 0 auto;
-        }
+        <div class="langs-block">
+            <a href="#" class="lang">RU <i class="fa fa-angle-down"></i></a>
+            <div class="window">
+                <a href="#">RU</a>
+                <a href="#">EN</a>
+            </div>
+        </div>
 
-        header div {
-            display: inline;
-            margin: 20px;
-        }
+        <a class="search-link"></a>
 
-        header details {
-            display: inline;
-            margin: 20px;
-        }
+        <div class="name">
+            {% if request.user.avatar %}
+                <div class="header-avatar" style="background-image: url('{{ request.user.avatar.url }}')"></div>
+            {% else %}
+                <div class="header-avatar" style="background-image: url('{% static 'assets/img/avatar4.png' %}')"></div>
+            {% endif %}
 
-        #main_menu {
-            display: block;
-        }
+            <div>
+                <a href="#">
+                    {% if request.user.full_name %}
+                        {{ request.user.full_name }}
+                    {% else %}
+                        {% trans "Личный кабинет" %}
+                    {% endif %}
+                    <i class="fa fa-angle-down"></i>
+                </a>
+            </div>
 
-        header div form {
-            display: inline;
-            margin: 20px;
-        }
+            <div class="window">
+                <div class="avatar">
+                    {% if request.user.avatar %}
+                        <div class="header-avatar2"
+                             style="background-image: url('{{ request.user.avatar.url }}')"></div>
+                    {% else %}
+                        <div class="header-avatar2"
+                             style="background-image: url('{% static 'assets/img/avatar4.png' %}')"></div>
+                    {% endif %}
+                    <a href="#" class="edit"></a>
+                </div>
 
-        .header-avatar {
-            width: 55px;
-            height: 55px;
-            border-radius: 50px;
-            background: url('{{ request.user.avatar.url }}');
-            background-size: auto 55px;
-        }
+                <div class="links">
+                    <a href="{% url 'profile' %}">{% trans "Личные данные" %}</a>
+                    <a href="#">{% trans "Верификация" %}</a>
+                    <a href="#">{% trans "Пароль и безопасность" %}</a>
+                    <a href="#">{% trans "Уведомления" %}</a>
+                    <a href="#">{% trans "Договор" %}</a>
+                </div>
 
-    </style>
-<!--    !!! ВЕРСТАЛЬЩИКУ: удалить отсюда эти стили при вёрстке  -->
+                <div class="bottom-link">
+                    <a href="{% url 'logout' %}">{% trans "Выход" %}</a>
+                </div>
+            </div>
+        </div>
 
+    {% endif %}
 
+    {% if request.user.is_authenticated %}
+        <a href="{% url 'logout' %}" class="logout"></a>
+    {% else %}
+        <button class="login-btn" onclick='window.location.href = "{% url 'login' %}";'>{% trans "Вход" %}</button>
+    {% endif %}
 </header>

@@ -17,19 +17,6 @@ from .forms import CustomUserCreationForm, UserLoginForm, PasswordSetForm, Custo
 
 User = get_user_model()
 
-# PROFILE_MENU_ITEMS = [
-#     {'title': _('Баланс'), 'url_name': 'balance'},
-#     {'title': _('Пополнение / Вывод'), 'url_name': 'topup_withdrawal'},
-#     {'title': _('Портфолио'), 'url_name': 'portfolio'},
-#     {'title': _('Заказы'), 'url_name': 'contracts'},
-#     {'title': _('Конкурсы'), 'url_name': 'contests'},
-#     {'title': _('Разместить заказ'), 'url_name': 'place_contract'},
-#     {'title': _('Объявить конкурс'), 'url_name': 'announce_contest'},
-#     {'title': _('Поиск исполнителя'), 'url_name': 'search_contractor'},
-#     {'title': _('Чат'), 'url_name': 'chat'},
-#     {'title': _('Помощь'), 'url_name': 'support'},
-# ]
-
 
 class IndexView(TemplateView):
     template_name = 'app_users/home.html'
@@ -162,49 +149,89 @@ class ResetPasswordCompleteView(PasswordResetCompleteView):
 
 @login_required
 def balance(request):
-    return HttpResponse('Баланс')
+    return render(
+        request,
+        'app_users/profile/balance.html',
+        {'user': request.user, 'title': _('Баланс'), 'current_elem': 'balance'}
+    )
 
 
 @login_required
 def topup_withdrawal(request):
-    return HttpResponse('Пополнение / Вывод')
+    return render(
+        request,
+        'app_users/profile/topup_withdrawal.html',
+        {'user': request.user, 'title': _('Пополнение / Вывод'), 'current_elem': 'topup_withdrawal'}
+    )
 
 
 @login_required
 def portfolio(request):
-    return HttpResponse('Портфолио')
+    return render(
+        request,
+        'app_users/profile/portfolio.html',
+        {'user': request.user, 'title': _('Портфолио'), 'current_elem': 'portfolio'}
+    )
 
 
 @login_required
 def contracts(request):
-    return HttpResponse('Заказы')
+    return render(
+        request,
+        'app_users/profile/contracts.html',
+        {'user': request.user, 'title': _('Заказы'), 'current_elem': 'contracts'}
+    )
 
 
 @login_required
 def contests(request):
-    return HttpResponse('Конкурсы')
+    return render(
+        request,
+        'app_users/profile/contests.html',
+        {'user': request.user, 'title': _('Конкурсы'), 'current_elem': 'contests'}
+    )
 
 
 @login_required
 def place_contract(request):
-    return HttpResponse('Разместить заказ')
+    return render(
+        request,
+        'app_users/profile/place_contract.html',
+        {'user': request.user, 'title': _('Разместить заказ'), 'current_elem': 'place_contract'}
+    )
 
 
 @login_required
 def announce_contest(request):
-    return HttpResponse('Объявить конкурс')
+    return render(
+        request,
+        'app_users/profile/announce_contest.html',
+        {'user': request.user, 'title': _('Объявить конкурс'), 'current_elem': 'announce_contest'}
+    )
 
 
 @login_required
 def search_contractor(request):
-    return HttpResponse('Поиск исполнителя')
+    return render(
+        request,
+        'app_users/profile/search_contractor.html',
+        {'user': request.user, 'title': _('Поиск исполнителя'), 'current_elem': 'search_contractor'}
+    )
 
 
 @login_required
 def chat(request):
-    return HttpResponse('Чат')
+    return render(
+        request,
+        'app_users/profile/chat.html',
+        {'user': request.user, 'title': _('Чат'), 'current_elem': 'chat'}
+    )
 
 
 @login_required
 def support(request):
-    return HttpResponse('Помощь')
+    return render(
+        request,
+        'app_users/profile/support.html',
+        {'user': request.user, 'title': _('Помощь'), 'current_elem': 'support'}
+    )
