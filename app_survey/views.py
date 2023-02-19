@@ -1,3 +1,4 @@
+from django.contrib.auth import get_user_model
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.core.exceptions import ObjectDoesNotExist, PermissionDenied
@@ -9,6 +10,8 @@ from django.utils.translation import gettext_lazy as _
 from django.views.generic import ListView, DetailView
 
 from app_survey.models import Question, Choice, Answer
+
+User = get_user_model()
 
 
 class PollListView(ListView):
@@ -53,11 +56,8 @@ class PollResultsView(LoginRequiredMixin, DetailView):
         try:
             context['users_answer'] = self.request.user.answer_set.get(question=question)
         except ObjectDoesNotExist:
-            if self.request.user.is_core:
-                context['users_answer'] = _('Вы не успели проголосовать')
-            else:
-                context['users_answer'] = _('У вас нет права голоса')
-        context['is_finished'] = question.end_date < timezone.now()
+            context['users_answer'] = None
+        context['total_cores'] = User.objects.filter(is_core=True, date_joined__lt=question.end_date).count()
         return context
 
 

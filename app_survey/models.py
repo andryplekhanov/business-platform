@@ -1,7 +1,7 @@
 from django.db import models
 from django.urls import reverse
 from django.utils.translation import gettext_lazy as _
-
+from django.utils import timezone
 from DjBusinessPlatform import settings
 
 
@@ -21,6 +21,9 @@ class Question(models.Model):
 
     def get_choices(self):
         return self.choice_set.all()
+
+    def is_finished(self):
+        return self.end_date < timezone.now()
 
     def count_total_votes(self):
         result = 0

@@ -1,21 +1,37 @@
-{% extends 'app_users/_base.html' %}
+{% extends 'app_users/profile/_profile_base.html' %}
 {% load i18n %}
 {% load static %}
 
-{% block middle %}
-    <div>
-        {% trans 'Голосование' %}: {{ number_polls }} {% trans 'непросмотренных предложений, требующих вашего участия' %}
+{% block content %}
+    <div class="navi">
+        <a href="#">Главная</a>/<a href="#">ЛК</a>/Голосование
     </div>
-{% for poll in object_list %}
-    <div>
-        <div>
-            <a href="{{ poll.get_absolute_url }}">
-                {% if poll in new_polls %}NEW -- {% endif %}
-                {{ poll.title }}
-            </a>
+    <div class="vote">
+        <div class="top-text">
+            {% trans 'Голосование' %}: {{ number_polls }} {% trans 'непросмотренных предложений, требующих вашего участия' %}
         </div>
-        <div>{% trans 'Начало' %}: {{ poll.pub_date }}</div>
-        <div>{% trans 'Окончание' %}: {{ poll.end_date }}</div>
+        {% for poll in object_list %}
+            <div class="name">
+                {{ poll.title }} {% if poll in new_polls %}<span style="color: #902b2b">(NEW)</span>{% endif %}
+            </div>
+            <div class="date">
+                <div>{{ poll.pub_date|date }}</div>
+                {% if poll.is_finished %}
+                    <div>{% trans 'Завершён' %}</div>
+                {% else %}
+                    <div>{% trans 'Завершится' %}: {{ poll.end_date }}</div>
+                {% endif %}
+            </div>
+            {% if poll.is_finished %}
+                <button onclick='window.location.href = "{% url 'polls-results' poll.pk %}";'>
+                    {% trans 'Посмотреть результат' %}
+                </button>
+            {% else %}
+                <button onclick='window.location.href = "{{ poll.get_absolute_url }}";'>
+                    {% trans 'Принять участие' %}
+                </button>
+            {% endif %}
+            <div class="line"></div>
+        {% endfor %}
     </div>
-{% endfor %}
 {% endblock %}

@@ -2001,6 +2001,11 @@ main {
   background: #D3DAD7;
   margin: 20px 0 30px;
 }
+.cabinet-page .vote .line {
+  height: 2px;
+  background: #D3DAD7;
+  margin: 20px 0 30px;
+}
 .cabinet-page .cabinet-content {
   width: 74%;
 }
@@ -3630,6 +3635,13 @@ main {
 .cabinet-page .cabinet-content .vote .top-text {
   margin-bottom: 30px;
   font-weight: 500;
+}
+.cabinet-page .cabinet-content .vote .vote-text {
+  margin-bottom: 30px;
+  font-size: 17px;
+  font-weight: 500;
+  line-height: 130%;
+  color: rgba(52, 53, 65, 0.7);
 }
 .cabinet-page .cabinet-content .vote .date {
   font-weight: 600;
