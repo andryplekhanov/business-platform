@@ -3,17 +3,17 @@ from django.contrib.auth import get_user_model
 from django.contrib.auth import logout, login, authenticate
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin
-from django.contrib.auth.views import LogoutView, LoginView, PasswordResetView, PasswordResetDoneView, \
+from django.contrib.auth.views import LogoutView, PasswordResetView, PasswordResetDoneView, \
     PasswordResetConfirmView, PasswordResetCompleteView
 from django.core.exceptions import PermissionDenied, ObjectDoesNotExist
-from django.http import HttpResponse
+from django.http import HttpResponseRedirect
 from django.shortcuts import render, redirect
 from django.urls import reverse_lazy, reverse
 from django.utils.translation import gettext_lazy as _
 from django.views import generic
 from django.views.generic import TemplateView, UpdateView
 
-from .forms import CustomUserCreationForm, UserLoginForm, PasswordSetForm, CustomUserChangeForm, ResetPasswordForm
+from .forms import CustomUserCreationForm, PasswordSetForm, CustomUserChangeForm, ResetPasswordForm
 
 User = get_user_model()
 
@@ -63,11 +63,16 @@ class SignUp(generic.CreateView):
         return super().post(request, *args, **kwargs)
 
 
-class LogInView(LoginView):
-    template_name = 'app_users/profile/login.html'
-    authentication_form = UserLoginForm
-    next_page = reverse_lazy('home')
-    extra_context = {'title': _('Вход'), 'current_elem': 'login'}
+def login_user(request):
+    if request.method == 'POST':
+        username = request.POST['username']
+        password = request.POST['password']
+        user = authenticate(username=username, password=password)
+        if user is not None:
+            login(request, user)
+            return HttpResponseRedirect(reverse('profile'))
+        else:
+            return HttpResponseRedirect(reverse('home'))
 
 
 @login_required

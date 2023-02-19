@@ -1,8 +1,6 @@
 {% load flatpages %}
 {% load static %}
 {% load i18n %}
-{% load mptt_tags %}
-{% load app_users_tags %}
 {% get_flatpages '/referral-program/' as referral_program %}
 {% get_flatpages '/about-platform/' as about_platform %}
 {% get_flatpages '/working-rules/' as working_rules %}
@@ -127,6 +125,8 @@
     {% if request.user.is_authenticated %}
         <a href="{% url 'logout' %}" class="logout"></a>
     {% else %}
-        <button class="login-btn" onclick='window.location.href = "{% url 'login' %}";'>{% trans "Вход" %}</button>
+        <button class="login-btn" onclick="loginPopup()">{% trans "Вход" %}</button>
     {% endif %}
+
+
 </header>

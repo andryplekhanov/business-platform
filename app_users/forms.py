@@ -34,11 +34,6 @@ class CustomUserChangeForm(UserChangeForm):
         fields = ('email', 'full_name', 'avatar', 'phone_number', 'password1', 'password2')
 
 
-class UserLoginForm(AuthenticationForm):
-    class Meta:
-        model = User
-
-
 class ResetPasswordForm(PasswordResetForm):
     email = forms.EmailField(max_length=250, required=True,
                              widget=forms.TextInput(attrs={

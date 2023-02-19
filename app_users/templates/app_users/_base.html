@@ -16,16 +16,16 @@
     </head>
 
     <body>
-
+        {% include 'app_users/login_modal.html' %}
         {% include 'app_users/header.html' %}
+
 
         {% block middle %}
         {% endblock middle %}
 
         {% include 'app_users/footer.html' %}
 
-{#        Если тут нужно подключать скрипты, то делаем это так:#}
-{#        <script src="{% static 'assets/js/common.js' %}"></script>#}
-{#        <script src="{% static 'assets/js/common.js' %}"></script>#}
+
+        <script src="{% static 'assets/js/login_popup.js' %}"> </script>
     </body>
 </html>
