@@ -1,6 +1,7 @@
 {% extends 'app_users/profile/_profile_base.html' %}
 {% load i18n %}
 {% load static %}
+{% load app_users_tags %}
 
 {% block content %}
     <div>
@@ -20,7 +21,7 @@
         {% if user.status == '2' %}
             <div>
                 <p>{% trans 'Ваша ссылка-приглашение:' %}</p>
-                <input type="url" value="{{ protocol }}://{{ domain }}{{ user.get_referral_url }}" id="refLink" readonly>
+                <input type="url" value="http://{{ request|get_domain }}{{ user.get_referral_url }}" id="refLink" readonly>
                 <p id="copySuccess">{% trans 'Ссылка скопирована' %}</p>
             </div>
             <button onclick="copyLink()">{% trans 'Скопировать ссылку' %}</button>
