@@ -1,20 +1,31 @@
 {% load static %}
 {% load i18n %}
-
+{% load flatpages %}
+{% get_flatpages '/referral-program/' as referral_program %}
+{% get_flatpages '/about-platform/' as about_platform %}
+{% get_flatpages '/working-rules/' as working_rules %}
+{% get_flatpages '/regulation/' as regulation %}
+{% get_flatpages '/entry-agreement/' as entry_agreement %}
+{% get_flatpages '/audit-commission/' as audit_commission %}
+{% get_flatpages '/contributions-and-funds/' as contributions_and_funds %}
+{% get_flatpages '/loans/' as loans %}
 
 <footer class="footer">
     <div class="flex">
 
         <!--    ЛЕВАЯ КОЛОНКА ССЫЛОК begin  -->
-        {% if footer_pages_left.footer_pages.all %}
-            <ul>
-                {% for page in footer_pages_left.footer_pages.all %}
-                    <li>
-                        <a href="{{ page.flatpage.get_absolute_url }}">{{ page.flatpage.title }}</a>
-                    </li>
-                {% endfor %}
-            </ul>
-        {% endif %}
+        <ul>
+            <li><a href="#">{% trans 'Услуги' %}</a></li>
+            <li><a href="#">{% trans 'Заказы' %}</a></li>
+            <li><a href="#">{% trans 'Конкурсы' %}</a></li>
+            <li><a href="#">{% trans 'Фрилансеры' %}</a></li>
+            <li><a href="{{ about_platform.first.url }}">{% trans 'О платформе' %}</a></li>
+            <li><a href="#">{% trans 'Безопасность' %}</a></li>
+            <li><a href="{{ working_rules.first.url }}">{% trans 'Правила работы' %}</a></li>
+            <li><a href="{{ referral_program.first.url }}">{% trans 'Реферальная программа' %}</a></li>
+            <li><a href="#">{% trans 'Помощь' %}</a></li>
+            <li><a href="#">{% trans 'Поиск' %}</a></li>
+        </ul>
         <!--    ЛЕВАЯ КОЛОНКА ССЫЛОК finish  -->
 
         <!--    ФОРМА ОБРАТНОЙ СВЯЗИ begin  -->
@@ -30,15 +41,13 @@
         <!--    ФОРМА ОБРАТНОЙ СВЯЗИ finish  -->
 
         <!--    ПРАВАЯ КОЛОНКА ССЫЛОК begin  -->
-        {% if footer_pages_right.footer_pages.all %}
-            <ul class="tar">
-                {% for page in footer_pages_right.footer_pages.all %}
-                    <li>
-                        <a href="{{ page.flatpage.get_absolute_url }}">{{ page.flatpage.title }}</a>
-                    </li>
-                {% endfor %}
-            </ul>
-        {% endif %}
+        <ul class="tar">
+            <li><a href="{{ regulation.first.url }}">{% trans 'Устав' %}</a></li>
+            <li><a href="{{ entry_agreement.first.url }}">{% trans 'Договор о вступлении' %}</a></li>
+            <li><a href="{{ audit_commission.first.url }}">{% trans 'О ревизионной комиссии' %}</a></li>
+            <li><a href="{{ contributions_and_funds.first.url }}">{% trans 'О взносах и фондах' %}</a></li>
+            <li><a href="{{ loans.first.url }}">{% trans 'О займах' %}</a></li>
+        </ul>
         <!--    ПРАВАЯ КОЛОНКА ССЫЛОК finish  -->
 
     </div>

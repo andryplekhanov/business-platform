@@ -47,26 +47,26 @@ class CompanySettings(SingletonModel):
         verbose_name_plural = _('компания')
 
 
-class FooterPagesRightSet(SingletonModel):
-    footer_pages = models.ManyToManyField('app_static_pages.StaticPage', verbose_name=_('статичные страницы для футера (справа)'))
-
-    class Meta:
-        verbose_name = _('статичные страницы для футера (справа)')
-        verbose_name_plural = _('статичные страницы для футера (справа)')
-
-    def __str__(self):
-        return f'Pages set right'
-
-
-class FooterPagesLeftSet(SingletonModel):
-    footer_pages = models.ManyToManyField('app_static_pages.StaticPage', verbose_name=_('статичные страницы для футера (слева)'))
-
-    class Meta:
-        verbose_name = _('статичные страницы для футера (слева)')
-        verbose_name_plural = _('статичные страницы для футера (слева)')
-
-    def __str__(self):
-        return f'Pages set left'
+# class FooterPagesRightSet(SingletonModel):
+#     footer_pages = models.ManyToManyField('app_static_pages.StaticPage', verbose_name=_('статичные страницы для футера (справа)'))
+#
+#     class Meta:
+#         verbose_name = _('статичные страницы для футера (справа)')
+#         verbose_name_plural = _('статичные страницы для футера (справа)')
+#
+#     def __str__(self):
+#         return f'Pages set right'
+#
+#
+# class FooterPagesLeftSet(SingletonModel):
+#     footer_pages = models.ManyToManyField('app_static_pages.StaticPage', verbose_name=_('статичные страницы для футера (слева)'))
+#
+#     class Meta:
+#         verbose_name = _('статичные страницы для футера (слева)')
+#         verbose_name_plural = _('статичные страницы для футера (слева)')
+#
+#     def __str__(self):
+#         return f'Pages set left'
 
 
 class SocialMedia(SingletonModel):

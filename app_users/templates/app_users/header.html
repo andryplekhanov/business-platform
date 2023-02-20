@@ -78,9 +78,9 @@
 
         <div class="name">
             {% if request.user.avatar %}
-                <div class="header-avatar" style="background-image: url('{{ request.user.avatar.url }}')"></div>
+                <div><img src="{% static 'assets/img/avatar.png' %}"></div>
             {% else %}
-                <div class="header-avatar" style="background-image: url('{% static 'assets/img/avatar4.png' %}')"></div>
+                <div><img src="{% static 'assets/img/avatar.png' %}"></div>
             {% endif %}
 
             <div>
@@ -97,11 +97,15 @@
             <div class="window">
                 <div class="avatar">
                     {% if request.user.avatar %}
-                        <div class="header-avatar2"
-                             style="background-image: url('{{ request.user.avatar.url }}')"></div>
+                        <div class="avatar">
+                            <img src="{% static 'assets/img/avatar2.png' %}">
+                            <a href="#" class="edit"></a>
+                        </div>
                     {% else %}
-                        <div class="header-avatar2"
-                             style="background-image: url('{% static 'assets/img/avatar4.png' %}')"></div>
+                        <div class="avatar">
+                            <img src="{% static 'assets/img/avatar2.png' %}">
+                            <a href="#" class="edit"></a>
+                        </div>
                     {% endif %}
                     <a href="#" class="edit"></a>
                 </div>
