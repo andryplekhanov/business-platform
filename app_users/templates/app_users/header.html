@@ -85,8 +85,8 @@
 
             <div>
                 <a href="#">
-                    {% if request.user.full_name %}
-                        {{ request.user.full_name }}
+                    {% if request.user.last_name and request.user.first_name %}
+                        {{ request.user.first_name }} {{ request.user.last_name }}
                     {% else %}
                         {% trans "Личный кабинет" %}
                     {% endif %}

@@ -4933,3 +4933,28 @@ main {
     max-width: 100px;
   }
 }
+
+/*EXTRA STYLES*/
+
+.index-first-block .blocks span a {
+  text-decoration: none;
+  color: #fff;
+}
+
+.index-first-block .blocks span a:hover {
+  color: #00CCFF;
+}
+
+.cabinet-page .vote .line {
+  height: 2px;
+  background: #D3DAD7;
+  margin: 20px 0 30px;
+}
+
+.cabinet-page .cabinet-content .vote .vote-text {
+  margin-bottom: 30px;
+  font-size: 17px;
+  font-weight: 500;
+  line-height: 130%;
+  color: rgba(52, 53, 65, 0.7);
+}

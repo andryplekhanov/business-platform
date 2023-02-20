@@ -8,7 +8,7 @@ from mptt.fields import TreeForeignKey
 from mptt.models import MPTTModel
 
 from .managers import CustomUserManager
-from .validators import avatar_size_validate
+from .validators import avatar_size_validate, document_size_validate
 
 
 class CustomUser(AbstractBaseUser, MPTTModel, PermissionsMixin):
@@ -17,9 +17,27 @@ class CustomUser(AbstractBaseUser, MPTTModel, PermissionsMixin):
         ("1", _("Кандидат")),
         ("2", _("Участник Фрилансер")),
     )
+    image_validator = FileExtensionValidator(
+        allowed_extensions=['png', 'jpg', 'gif'],
+        message=_('Ошибка загрузки: допускаются только файлы с расширением .jpg .gif .png')
+    )
+    document_validator = FileExtensionValidator(
+        allowed_extensions=['png', 'jpg', 'pdf'],
+        message=_('Ошибка загрузки: допускаются только файлы с расширением .jpg .pdf .png')
+    )
 
     email = models.EmailField(_('email'), unique=True, db_index=True)
-    full_name = models.CharField(_('ФИО'), max_length=255, blank=True, db_index=True)
+    username = models.SlugField(max_length=55, db_index=True, unique=True, verbose_name=_('имя пользователя'), blank=True)
+    last_name = models.CharField(_('Фамилия'), max_length=55, blank=True, db_index=True)
+    first_name = models.CharField(_('Имя'), max_length=55, blank=True, db_index=True)
+    patronymic = models.CharField(_('Отчество'), max_length=55, blank=True, db_index=True)
+    country = models.CharField(_('Страна'), max_length=55, blank=True, db_index=True)
+    address = models.CharField(_('Адрес'), max_length=255, blank=True, db_index=True)
+    personal_number = models.BigIntegerField(_('ИНН или персональный номер'), blank=True, null=True, db_index=True)
+    document = models.FileField(_('документ'), upload_to='documents/', blank=True, validators=[document_validator, document_size_validate])
+    document_number = models.CharField(_('Серия и номер документа'), max_length=55, blank=True, db_index=True)
+    document_issued = models.CharField(_('Когда и кем выдан'), max_length=55, blank=True, db_index=True)
+    paid_entrance_fee = models.BooleanField(_('Оплатил вступительный взнос'), default=False)
     status = models.CharField(_('статус'), max_length=30, choices=STATUS_CHOICES, default="0", db_index=True)
     date_joined = models.DateTimeField(_('дата регистрации'), auto_now_add=True, db_index=True)
     is_active = models.BooleanField(_('является активным'), default=True)
@@ -27,17 +45,19 @@ class CustomUser(AbstractBaseUser, MPTTModel, PermissionsMixin):
     is_core = models.BooleanField(default=False, verbose_name=_('входит в ядро'), db_index=True)
     parent = TreeForeignKey('self', on_delete=models.PROTECT, null=True, blank=True, related_name='children',
                             db_index=True, verbose_name=_('родитель'))
-    image_validator = FileExtensionValidator(
-        allowed_extensions=['png', 'jpg', 'gif'],
-        message=_('Ошибка загрузки: допускаются только файлы с расширением .jpg .gif .png')
-    )
-    avatar = models.ImageField(upload_to='avatars/', null=True, blank=True,
-                               validators=[image_validator, avatar_size_validate])
-    phone_regex = RegexValidator(regex=r'^\+\d{11,15}',
-                                 message=_("Номер телефона должен быть в формате: '+79012345678'."))
-    phone_number = models.CharField(validators=[phone_regex], max_length=17, blank=True,
-                                    verbose_name=_('номер телефона'), db_index=True)
+
+    avatar = models.ImageField(upload_to='avatars/', null=True, blank=True, validators=[image_validator, avatar_size_validate])
+    phone_regex = RegexValidator(regex=r'^\+\d{11,15}', message=_("Номер телефона должен быть в формате: '+79012345678'."))
+    phone_number = models.CharField(validators=[phone_regex], max_length=17, blank=True, verbose_name=_('номер телефона'), db_index=True)
     balance = models.DecimalField(max_digits=10, decimal_places=2, default=0, verbose_name=_('баланс'), db_index=True)
+
+    bank_name = models.CharField(_('Наименование банка'), max_length=255, blank=True)
+    bank_address = models.CharField(_('Адрес банка'), max_length=255, blank=True)
+    bank_bic = models.BigIntegerField(_('БИК банка'), blank=True, null=True)
+    bank_correspondent_account = models.BigIntegerField(_('Корреспондентский счет банка'), blank=True, null=True)
+    payment_account = models.BigIntegerField(_('Расчетный счет'), blank=True, null=True)
+    recipients_name = models.CharField(_('Имя получателя платежа'), max_length=255, blank=True)
+
     USERNAME_FIELD = 'email'
     REQUIRED_FIELDS = []
     objects = CustomUserManager()
@@ -56,6 +76,9 @@ class CustomUser(AbstractBaseUser, MPTTModel, PermissionsMixin):
         if self.status == '2':
             return reverse('signup', args=[self.pk])
         return None
+    #
+    # def get_absolute_url(self):
+    #     return reverse('portfolio', args=[self.pk, self.username])
 
     @property
     def referrals(self):

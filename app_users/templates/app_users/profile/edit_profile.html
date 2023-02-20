@@ -36,12 +36,12 @@
                     </div>
                 </div>
                 <div>
-                    <label for="{{ form.full_name.id_for_full_name }}">
+                    <label for="{{ form.last_name.id_for_last_name }}">
                         {% trans 'ФИО' %}
                     </label>
-                    {{ form.full_name }}
-                    {% if form.full_name.errors %}
-                        {% for error in form.full_name.errors %}
+                    {{ form.last_name }}
+                    {% if form.last_name.errors %}
+                        {% for error in form.last_name.errors %}
                             <div>{{ error|escape }}</div>
                         {% endfor %}
                     {% endif %}
