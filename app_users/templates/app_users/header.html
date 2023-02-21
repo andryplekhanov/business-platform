@@ -62,7 +62,12 @@
         <ul>
             <li><a href="#">{% trans "Тикеты" %}</a></li>
             <li><a href="{% url 'news_list' %}">{% trans "Новости" %}</a></li>
-            <li><a href="{% url 'polls-list' %}">{% trans "Голосование" %}</a></li>
+            <li>
+                <a href="{% url 'polls-list' %}">
+                    {% trans "Голосование" %}
+                    {% if number_polls > 0 %}<sup id="unread-polls-number">{{ number_polls }}</sup>{% endif %}
+                </a>
+            </li>
             <li><a href="{{ referral_program.first.url }}">{% trans "Реферальная программа" %}</a></li>
         </ul>
 
@@ -112,10 +117,10 @@
 
                 <div class="links">
                     <a href="{% url 'profile' %}">{% trans "Личные данные" %}</a>
-                    <a href="#">{% trans "Верификация" %}</a>
-                    <a href="#">{% trans "Пароль и безопасность" %}</a>
-                    <a href="#">{% trans "Уведомления" %}</a>
-                    <a href="#">{% trans "Договор" %}</a>
+                    <a href="{% url 'verification' %}">{% trans "Верификация" %}</a>
+                    <a href="{% url 'password_and_security' %}">{% trans "Пароль и безопасность" %}</a>
+                    <a href="{% url 'notifications' %}">{% trans "Уведомления" %}</a>
+                    <a href="{% url 'agreement' %}">{% trans "Договор" %}</a>
                 </div>
 
                 <div class="bottom-link">

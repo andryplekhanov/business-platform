@@ -16,6 +16,10 @@ User = get_user_model()
 
 class PollListView(ListView):
     model = Question
+    extra_context = {
+        'title': _('Новости'), 'current_elem': 'polls-list',
+        'breadcrumbs': {_('Главная'): 'home', _('Все голосования'): 'polls-list'}
+    }
 
     def get_queryset(self):
         queryset = Question.objects.filter(visible=True, pub_date__lte=timezone.now()).only('id', 'title', 'pub_date', 'end_date')
@@ -24,6 +28,10 @@ class PollListView(ListView):
 
 class PollDetailView(DetailView):
     model = Question
+    extra_context = {
+        'title': _('Новости'), 'current_elem': 'polls-detail',
+        'breadcrumbs': {_('Главная'): 'home', _('Все голосования'): 'polls-list', _('Голосование'): 'polls-detail'}
+    }
 
     def get_queryset(self):
         queryset = Question.objects.filter(id=self.kwargs.get('pk'), visible=True, pub_date__lte=timezone.now())
@@ -49,6 +57,10 @@ class PollDetailView(DetailView):
 class PollResultsView(LoginRequiredMixin, DetailView):
     model = Question
     template_name = 'app_survey/question_results.html'
+    extra_context = {
+        'title': _('Новости'), 'current_elem': 'polls-results',
+        'breadcrumbs': {_('Главная'): 'home', _('Все голосования'): 'polls-list', _('Результаты голосования'): 'polls-results'}
+    }
 
     def get_context_data(self, **kwargs):
         context = super(PollResultsView, self).get_context_data(**kwargs)

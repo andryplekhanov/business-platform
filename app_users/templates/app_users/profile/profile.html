@@ -5,7 +5,8 @@
 
 {% block content %}
     <div>
-        <div>{{ user.last_name }}</div>
+        <h1>{{ user.last_name }} {{ user.first_name }} {{ user.patronymic }}</h1>
+        <h2>{{ user.get_status_display }}{% if user.is_core %} ({% trans "Основатель" %}){% endif %}</h2>
         <a href="{% url 'edit_profile' %}">{% trans 'Редактировать профиль' %}</a>
     </div>
     <div>

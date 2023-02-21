@@ -136,7 +136,11 @@ class EditProfileView(LoginRequiredMixin, UpdateView):
     model = User
     template_name = 'app_users/profile/edit_profile.html'
     success_url = reverse_lazy('profile')
-    extra_context = {'title': _('Редактировать профиль'), 'current_elem': 'edit_profile'}
+    extra_context = {
+        'title': _('Редактировать профиль'),
+        'current_elem': 'edit_profile',
+        'breadcrumbs': {_('Главная'): 'home', _('Личный кабинет'): 'profile', _('Личные данные'): 'edit_profile'}
+    }
 
     def get_success_url(self):
         return reverse('edit_profile')
@@ -192,89 +196,182 @@ class ResetPasswordCompleteView(PasswordResetCompleteView):
 
 @login_required
 def balance(request):
+    context = {
+        'user': request.user, 'title': _('Баланс'), 'current_elem': 'balance',
+        'breadcrumbs': {_('Главная'): 'home', _('Личный кабинет'): 'profile', _('Баланс'): 'balance'}
+    }
+
     return render(
         request,
-        'app_users/profile/balance.html',
-        {'user': request.user, 'title': _('Баланс'), 'current_elem': 'balance'}
+        'app_users/others/balance.html',
+        context=context
     )
 
 
 @login_required
 def topup_withdrawal(request):
+    context = {
+        'user': request.user, 'title': _('Пополнение / Вывод'), 'current_elem': 'topup_withdrawal',
+        'breadcrumbs': {_('Главная'): 'home', _('Личный кабинет'): 'profile', _('Пополнение / Вывод'): 'topup_withdrawal'}
+    }
     return render(
         request,
-        'app_users/profile/topup_withdrawal.html',
-        {'user': request.user, 'title': _('Пополнение / Вывод'), 'current_elem': 'topup_withdrawal'}
+        'app_users/others/topup_withdrawal.html',
+        context=context
     )
 
 
 @login_required
 def portfolio(request):
+    context = {
+        'user': request.user, 'title': _('Портфолио'), 'current_elem': 'portfolio',
+        'breadcrumbs': {_('Главная'): 'home', _('Личный кабинет'): 'profile', _('Портфолио'): 'portfolio'}
+    }
     return render(
         request,
-        'app_users/profile/portfolio.html',
-        {'user': request.user, 'title': _('Портфолио'), 'current_elem': 'portfolio'}
+        'app_users/others/portfolio.html',
+        context=context
     )
 
 
 @login_required
 def contracts(request):
+    context = {
+        'user': request.user, 'title': _('Заказы'), 'current_elem': 'contracts',
+        'breadcrumbs': {_('Главная'): 'home', _('Личный кабинет'): 'profile', _('Заказы'): 'contracts'}
+    }
     return render(
         request,
-        'app_users/profile/contracts.html',
-        {'user': request.user, 'title': _('Заказы'), 'current_elem': 'contracts'}
+        'app_users/others/contracts.html',
+        context=context
     )
 
 
 @login_required
 def contests(request):
+    context = {
+        'user': request.user, 'title': _('Конкурсы'), 'current_elem': 'contests',
+        'breadcrumbs': {_('Главная'): 'home', _('Личный кабинет'): 'profile', _('Конкурсы'): 'contests'}
+    }
     return render(
         request,
-        'app_users/profile/contests.html',
-        {'user': request.user, 'title': _('Конкурсы'), 'current_elem': 'contests'}
+        'app_users/others/contests.html',
+        context=context
     )
 
 
 @login_required
 def place_contract(request):
+    context = {
+        'user': request.user, 'title': _('Разместить заказ'), 'current_elem': 'place_contract',
+        'breadcrumbs': {_('Главная'): 'home', _('Личный кабинет'): 'profile', _('Разместить заказ'): 'place_contract'}
+    }
     return render(
         request,
-        'app_users/profile/place_contract.html',
-        {'user': request.user, 'title': _('Разместить заказ'), 'current_elem': 'place_contract'}
+        'app_users/others/place_contract.html',
+        context=context
     )
 
 
 @login_required
 def announce_contest(request):
+    context = {
+        'user': request.user, 'title': _('Объявить конкурс'), 'current_elem': 'announce_contest',
+        'breadcrumbs': {_('Главная'): 'home', _('Личный кабинет'): 'profile', _('Объявить конкурс'): 'announce_contest'}
+    }
     return render(
         request,
-        'app_users/profile/announce_contest.html',
-        {'user': request.user, 'title': _('Объявить конкурс'), 'current_elem': 'announce_contest'}
+        'app_users/others/announce_contest.html',
+        context=context
     )
 
 
 @login_required
 def search_contractor(request):
+    context = {
+        'user': request.user, 'title': _('Поиск исполнителя'), 'current_elem': 'search_contractor',
+        'breadcrumbs': {_('Главная'): 'home', _('Личный кабинет'): 'profile', _('Поиск исполнителя'): 'search_contractor'}
+    }
     return render(
         request,
-        'app_users/profile/search_contractor.html',
-        {'user': request.user, 'title': _('Поиск исполнителя'), 'current_elem': 'search_contractor'}
+        'app_users/others/search_contractor.html',
+        context=context
     )
 
 
 @login_required
 def chat(request):
+    context = {
+        'user': request.user, 'title': _('Чат'), 'current_elem': 'chat',
+        'breadcrumbs': {_('Главная'): 'home', _('Личный кабинет'): 'profile', _('Чат'): 'chat'}
+    }
     return render(
         request,
-        'app_users/profile/chat.html',
-        {'user': request.user, 'title': _('Чат'), 'current_elem': 'chat'}
+        'app_users/others/chat.html',
+        context=context
     )
 
 
 @login_required
 def support(request):
+    context = {
+        'user': request.user, 'title': _('Помощь'), 'current_elem': 'support',
+        'breadcrumbs': {_('Главная'): 'home', _('Личный кабинет'): 'profile', _('Помощь'): 'support'}
+    }
     return render(
         request,
-        'app_users/profile/support.html',
-        {'user': request.user, 'title': _('Помощь'), 'current_elem': 'support'}
+        'app_users/others/support.html',
+        context=context
+    )
+
+
+@login_required
+def account_notification_view(request):
+    context = {
+        'user': request.user, 'title': _('Уведомления'), 'current_elem': 'notifications',
+        'breadcrumbs': {_('Главная'): 'home', _('Личный кабинет'): 'profile', _('Уведомления'): 'notifications'}
+    }
+    return render(
+        request,
+        'app_users/profile/notifications.html',
+        context=context
+    )
+
+
+@login_required
+def account_verification_view(request):
+    context = {
+        'user': request.user, 'title': _('Верификация'), 'current_elem': 'verification',
+        'breadcrumbs': {_('Главная'): 'home', _('Личный кабинет'): 'profile', _('Верификация'): 'verification'}
+    }
+    return render(
+        request,
+        'app_users/profile/verification.html',
+        context=context
+    )
+
+
+@login_required
+def account_agreement_view(request):
+    context = {
+        'user': request.user, 'title': _('Договор'), 'current_elem': 'agreement',
+        'breadcrumbs': {_('Главная'): 'home', _('Личный кабинет'): 'profile', _('Договор'): 'agreement'}
+    }
+    return render(
+        request,
+        'app_users/profile/agreement.html',
+        context=context
+    )
+
+
+@login_required
+def account_security_view(request):
+    context = {
+        'user': request.user, 'title': _('Пароль и безопасность'), 'current_elem': 'password_and_security',
+        'breadcrumbs': {_('Главная'): 'home', _('Личный кабинет'): 'profile', _('Пароль и безопасность'): 'password_and_security'}
+    }
+    return render(
+        request,
+        'app_users/profile/password_security.html',
+        context=context
     )

@@ -63,7 +63,19 @@
                     </li>
                 </ul>
             </nav>
+
             <div class="cabinet-content">
+                <div class="navi">
+                    {% for name, link in breadcrumbs.items %}
+                        {% if current_elem == link %}
+                            <a>{{ name }}</a> /
+                        {% else %}
+                            <a href="{% url link %}">{{ name }}</a> /
+                        {% endif %}
+                    {% endfor %}
+                </div>
+
+
                 {% block content %}
                 {% endblock %}
             </div>

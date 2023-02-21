@@ -2,11 +2,8 @@
 {% load i18n %}
 {% load static %}
 {% load poll_result_tag %}
-{% block content %}
-    <div class="navi">
-        <a href="#">Главная</a>/<a href="#">ЛК</a>/Голосование
-    </div>
 
+{% block content %}
     <div class="vote">
         <div class="date">
             <div>{% trans 'Начало' %}: {{ object.pub_date|date }}</div>

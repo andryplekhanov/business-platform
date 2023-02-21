@@ -4,10 +4,6 @@
 
 {% block content %}
 
-    <div class="navi">
-        <a href="#">Главная</a>/<a href="#">ЛК</a>/Голосование
-    </div>
-
     <form class="vote" action="{% url 'polls-vote' object.id %}" method="post">
         {% csrf_token %}
         <div class="date">
