@@ -4,7 +4,7 @@ from app_users.views import *
 
 urlpatterns = [
     path("", IndexView.as_view(), name="home"),
-    path("signup/<int:pk>/", SignUp.as_view(), name="signup"),
+    path("signup/<int:personal_account>/", SignUp.as_view(), name="signup"),
     path("signup_error/", signup_error, name="signup_error"),
     path("login_user/", login_user, name="login_user"),
     path('logout/', LogOutView.as_view(), name='logout'),

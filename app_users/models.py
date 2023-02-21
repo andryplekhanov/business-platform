@@ -43,7 +43,7 @@ class CustomUser(AbstractBaseUser, MPTTModel, PermissionsMixin):
     date_joined = models.DateTimeField(_('дата регистрации'), auto_now_add=True, db_index=True)
     is_active = models.BooleanField(_('является активным'), default=True)
     is_staff = models.BooleanField(default=False, verbose_name=_('является сотрудником'))
-    is_core = models.BooleanField(default=False, verbose_name=_('входит в ядро'), db_index=True)
+    is_core = models.BooleanField(default=False, verbose_name=_('основатель'), db_index=True)
     parent = TreeForeignKey('self', on_delete=models.PROTECT, null=True, blank=True, related_name='children',
                             db_index=True, verbose_name=_('родитель'))
 
@@ -75,7 +75,7 @@ class CustomUser(AbstractBaseUser, MPTTModel, PermissionsMixin):
 
     def get_referral_url(self):
         if self.status == '2':
-            return reverse('signup', args=[self.pk])
+            return reverse('signup', args=[int(self.personal_account)])
         return None
     #
     # def get_absolute_url(self):
@@ -87,3 +87,8 @@ class CustomUser(AbstractBaseUser, MPTTModel, PermissionsMixin):
         level2 = CustomUser.objects.filter(parent__in=level1)
         level3 = CustomUser.objects.filter(parent__in=level2)
         return {'level1': level1, 'level2': level2, 'level3': level3}
+
+    @property
+    def personal_account(self):
+        """ лицевой счет """
+        return f"{self.date_joined.strftime('%y%m%d')}{self.pk}"

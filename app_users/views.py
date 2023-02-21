@@ -6,7 +6,6 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth.tokens import default_token_generator as token_generator
 from django.contrib.auth.views import LogoutView, PasswordResetView, PasswordResetDoneView, \
     PasswordResetConfirmView, PasswordResetCompleteView
-from django.core.exceptions import PermissionDenied, ObjectDoesNotExist
 from django.core.exceptions import ValidationError
 from django.http import HttpResponseRedirect
 from django.shortcuts import render, redirect
@@ -18,7 +17,7 @@ from django.views import generic
 from django.views.generic import TemplateView, UpdateView
 
 from .forms import CustomUserCreationForm, PasswordSetForm, CustomUserChangeForm, ResetPasswordForm
-from .utils import send_email_for_verify
+from .utils import send_email_for_verify, get_referrer
 
 User = get_user_model()
 
@@ -40,9 +39,8 @@ class SignUp(generic.CreateView):
     extra_context = {'title': _('Регистрация'), 'current_elem': 'signup'}
 
     def get(self, request, *args, **kwargs):
-        try:
-            referrer = User.objects.get(id=kwargs.get('pk'))
-        except ObjectDoesNotExist:
+        referrer = get_referrer(kwargs.get('personal_account'))
+        if not referrer:
             return redirect('signup_error')
 
         if referrer.status != '2' and not referrer.is_core:
@@ -55,9 +53,12 @@ class SignUp(generic.CreateView):
 
     def post(self, request, *args, **kwargs):
         form = CustomUserCreationForm(request.POST)
-        referrer = User.objects.get(id=kwargs.get('pk'))
+        referrer = get_referrer(kwargs.get('personal_account'))
+        if not referrer:
+            raise ValidationError(_('Данная ссылка-приглашение невалидна'))
         if referrer.status != '2' and not referrer.is_core:
-            raise PermissionDenied(_('Данная ссылка-приглашение невалидна'))
+            raise ValidationError(_('Данная ссылка-приглашение невалидна'))
+
         if form.is_valid():
             instance = form.save(commit=False)
             instance.parent = referrer

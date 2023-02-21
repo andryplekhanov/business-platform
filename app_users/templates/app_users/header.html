@@ -52,7 +52,7 @@
     {% if request.user.is_authenticated %}
         <div class="user">
             {% if request.user.is_core %}
-                {% trans "Участник ядра" %}
+                {% trans "Основатель" %}
             {% else %}
                 {{ request.user.get_status_display }}
             {% endif %}
