@@ -1,4 +1,5 @@
 {% extends 'app_users/_base.html' %}
+{% load variables_tag %}
 <!--
     Весь контент содержится в тегах flatpage. Им нельзя задать классы. Стили прописываются для тегов: <h1><p><ul><ol> и т.д.
     Обёрток можно добавлять сколько угодно.
@@ -6,7 +7,7 @@
 -->
 {% block middle %}
     <div>
-        {{ flatpage.staticpage.description|safe }}
-        {{ flatpage.staticpage.text_block|safe }} <!-- Может быть пустым -->
+        {{ flatpage.staticpage.description|replace_vars:request.user|safe|linebreaks }}
+        {{ flatpage.staticpage.text_block|replace_vars:request.user|safe|linebreaks }} <!-- Может быть пустым -->
     </div>
 {% endblock %}

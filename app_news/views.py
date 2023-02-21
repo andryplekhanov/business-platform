@@ -1,4 +1,5 @@
 from django.utils import timezone
+from django.utils.translation import gettext_lazy as _
 from django.views.generic import ListView
 
 from app_news.models import News
@@ -6,6 +7,10 @@ from app_news.models import News
 
 class NewsListView(ListView):
     model = News
+    extra_context = {
+        'title': _('Новости'), 'current_elem': 'news',
+        'breadcrumbs': {_('Главная'): 'home', _('Новости'): 'news'}
+    }
 
     def get_queryset(self):
 

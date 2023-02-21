@@ -1,18 +1,32 @@
-{% extends 'app_users/_base.html' %}
+{% extends 'app_users/profile/_profile_base.html' %}
 {% load i18n %}
 {% load static %}
 
-{% if error_message %}<p><strong>{{ error_message }}</strong></p>{% endif %}
+{% block content %}
 
-{% block middle %}
-    <form action="{% url 'polls-vote' object.id %}" method="post">
+    <form class="vote" action="{% url 'polls-vote' object.id %}" method="post">
         {% csrf_token %}
-        <h1>{{ object.title }}</h1>
-        <div>{{ object.text|linebreaks }}</div>
-        {% for choice in object.choice_set.all %}
-            <input type="radio" name="choice" id="choice{{ forloop.counter }}" value="{{ choice.id }}">
-            <label for="choice{{ forloop.counter }}">{{ choice.text }}</label><br>
-        {% endfor %}
+        <div class="date">
+            <div>{% trans 'Начало' %}: {{ object.pub_date|date }}</div>
+            {% if object.is_finished %}
+                <div>{% trans 'Завершён' %}</div>
+            {% else %}
+                <div>{% trans 'Окончание' %}: {{ object.end_date }}</div>
+            {% endif %}
+        </div>
+        <div class="name">
+            {{ object.title }}
+        </div>
+        <div class="vote-text">{{ object.text|linebreaks }}</div>
+        <div class="item">
+            {% for choice in object.choice_set.all %}
+                <input class="radio" type="radio" name="choice" id="choice{{ forloop.counter }}"
+                       value="{{ choice.id }}">
+                <label for="choice{{ forloop.counter }}">{{ choice.text }}</label>
+            {% endfor %}
+
+        </div>
         <input type="submit" value="{% trans 'Проголосовать' %}">
     </form>
+
 {% endblock %}

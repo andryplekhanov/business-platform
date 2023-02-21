@@ -1,0 +1,8 @@
+{% load i18n %}
+{% autoescape off %}
+
+{% trans 'Здравствуйте, вы зарегистрировались на сайте ' %}http://{{ domain }}
+{% trans 'Пожалуйста, перейдите по ссылке для завершения регистрации' %}:
+http://{{ domain }}{% url 'verify_email' uidb64=uid token=token %}
+
+{% endautoescape %}

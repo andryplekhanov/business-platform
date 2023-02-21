@@ -1,3 +1,4 @@
+from django.contrib.auth import get_user_model
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.core.exceptions import ObjectDoesNotExist, PermissionDenied
@@ -10,9 +11,15 @@ from django.views.generic import ListView, DetailView
 
 from app_survey.models import Question, Choice, Answer
 
+User = get_user_model()
+
 
 class PollListView(ListView):
     model = Question
+    extra_context = {
+        'title': _('Новости'), 'current_elem': 'polls-list',
+        'breadcrumbs': {_('Главная'): 'home', _('Все голосования'): 'polls-list'}
+    }
 
     def get_queryset(self):
         queryset = Question.objects.filter(visible=True, pub_date__lte=timezone.now()).only('id', 'title', 'pub_date', 'end_date')
@@ -21,6 +28,10 @@ class PollListView(ListView):
 
 class PollDetailView(DetailView):
     model = Question
+    extra_context = {
+        'title': _('Новости'), 'current_elem': 'polls-detail',
+        'breadcrumbs': {_('Главная'): 'home', _('Все голосования'): 'polls-list', _('Голосование'): 'polls-detail'}
+    }
 
     def get_queryset(self):
         queryset = Question.objects.filter(id=self.kwargs.get('pk'), visible=True, pub_date__lte=timezone.now())
@@ -46,6 +57,10 @@ class PollDetailView(DetailView):
 class PollResultsView(LoginRequiredMixin, DetailView):
     model = Question
     template_name = 'app_survey/question_results.html'
+    extra_context = {
+        'title': _('Новости'), 'current_elem': 'polls-results',
+        'breadcrumbs': {_('Главная'): 'home', _('Все голосования'): 'polls-list', _('Результаты голосования'): 'polls-results'}
+    }
 
     def get_context_data(self, **kwargs):
         context = super(PollResultsView, self).get_context_data(**kwargs)
@@ -53,11 +68,8 @@ class PollResultsView(LoginRequiredMixin, DetailView):
         try:
             context['users_answer'] = self.request.user.answer_set.get(question=question)
         except ObjectDoesNotExist:
-            if self.request.user.is_core:
-                context['users_answer'] = _('Вы не успели проголосовать')
-            else:
-                context['users_answer'] = _('У вас нет права голоса')
-        context['is_finished'] = question.end_date < timezone.now()
+            context['users_answer'] = None
+        context['total_cores'] = User.objects.filter(is_core=True, date_joined__lt=question.end_date).count()
         return context
 
 

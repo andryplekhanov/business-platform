@@ -1,19 +1,35 @@
-{% extends 'app_users/_base.html' %}
+{% extends 'app_users/profile/_profile_base.html' %}
 {% load i18n %}
 {% load static %}
+{% load poll_result_tag %}
 
-{% block middle %}
+{% block content %}
+    <div class="vote">
+        <div class="date">
+            <div>{% trans 'Начало' %}: {{ object.pub_date|date }}</div>
+            {% if object.is_finished %}
+                <div>{% trans 'Завершён' %}</div>
+            {% else %}
+                <div>{% trans 'Окончание' %}: {{ object.end_date }}</div>
+            {% endif %}
+        </div>
+        <div class="name">
+            {{ object.title }}
+        </div>
+        <div class="vote-text">{{ object.text|linebreaks }}</div>
+        <div class="results">
+            {% for choice in object.choice_set.all %}
+                <div class="result">
+                    {{ choice.count_votes|count_percents:object.count_total_votes }}%
+                    <span>{{ choice.text }} {% if users_answer.choice == choice %}<i class="check"></i>{% endif %}</span>
+                    <div class="line"
+                         style="width: {{ choice.count_votes|count_percents:object.count_total_votes }}%;"></div>
+                </div>
+            {% endfor %}
 
-    <h1>{{ object.title }}</h1>
-    <div>{{ object.text|linebreaks }}</div>
 
-    <ul>
-    {% for choice in object.choice_set.all %}
-        <li>{{ choice.text }} -- {{ choice.votes }}</li>
-    {% endfor %}
-    </ul>
-    <div>
-        {% if is_finished %}<p>{% trans 'Голосование окончено' %}</p>{% endif %}
-        {% trans 'Ваш голос' %}: {{ users_answer }}
+            <p>{{ object.count_total_votes|count_percents:total_cores }}% участия,
+                голосовало {{ object.count_total_votes }}</p>
+        </div>
     </div>
 {% endblock %}

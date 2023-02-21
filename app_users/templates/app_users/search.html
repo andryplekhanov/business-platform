@@ -2,35 +2,29 @@
 {% load i18n %}
 
 
-<div class="search-block">
-    <div>
+<div class="index-first-block">
+    <div class="wrap">
+
         <h1>{{ company_settings.company }}</h1>
-        <p>{{ company_settings.slogan }}</p>
-    </div>
+        <div class="top-text">{{ company_settings.slogan }}</div>
 
-    <form action="#" method="get">
-        <input id="id_name" name="name" type="text"
-               placeholder="{% trans 'введите запрос, что нужно сделать, для поиска исполнителя' %}"/>
-        <button type="submit" name="search" id="search">
-            {% trans 'Искать' %}
-        </button>
-    </form>
+        <form action="#" method="get">
+            <input type="text" placeholder="{% trans 'введите запрос, что нужно сделать, для поиска исполнителя' %}">
+            <button></button>
+            <a href="#" class="sound"></a>
+        </form>
 
-    <div>
-        {% trans 'или' %}
-        <a href="{% url 'place_contract' %}">{% trans 'сделать заказ' %}</a>
-        <a href="{% url 'announce_contest' %}">{% trans 'объявить конкурс' %}</a>
-        <a href="#">{% trans 'найти заказ' %}</a>
+        <div class="blocks">
+            <span>{% trans 'или' %}</span>
+            <span>
+                <img src="{% static 'assets/img/first-block1.svg' %}"> <a href="#">{% trans 'создать заказ' %}</a>
+            </span>
+            <span>
+                <img src="{% static 'assets/img/first-block2.svg' %}"> <a href="#">{% trans 'объявить конкурс' %}</a>
+            </span>
+            <span>
+                <img src="{% static 'assets/img/first-block3.svg' %}"> <a href="#">{% trans 'найти заказ' %}</a>
+            </span>
+        </div>
     </div>
 </div>
-
-<!--    !!! ВЕРСТАЛЬЩИКУ: удалить отсюда эти стили при вёрстке  -->
-<style>
-    .search-block {
-        min-height: 150px;
-        max-width: 1920px;
-        background-color: lightblue;
-        margin: 0 auto;
-    }
-</style>
-<!--    !!! ВЕРСТАЛЬЩИКУ: удалить отсюда эти стили при вёрстке  -->

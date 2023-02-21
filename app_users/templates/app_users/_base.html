@@ -5,45 +5,31 @@
 <html lang="ru">
 
     <head>
-        <title>Django Business Platform</title>
-        <meta name="description" content="Описание страницы">
-        <meta charset="utf-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0">
-        <link href="{% static 'assets/favicon.ico' %}" rel="shortcut icon">
-{#        <link rel="preload" href="{% static 'assets/fonts/Roboto/Roboto-Regular.woff' %}" as="font">#}
-{#        <link rel="stylesheet" href="{% static 'assets/css/basic.css' %}">#}
-{#        <script src="{% static 'assets/plg/CountDown/countdown.js' %}"></script>#}
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+        <link rel="stylesheet" href="{% static 'assets/css/style.css' %}">
+        <link rel="stylesheet" href="{% static 'assets/css/slick.css' %}">
+        <link rel="stylesheet" href="{% static 'assets/css/phonecode.css' %}">
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
+        <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+        <script type="text/javascript" src="{% static 'assets/js/slick.min.js' %}"></script>
+        <script src="{% static 'assets/js/common.js' %}"></script>
+        <script src="{% static 'assets/js/jquery-ui-1.10.4.custom.min.js' %}"></script>
+	    <script src="{% static 'assets/js/counties.js' %}"></script>
+	    <script src="{% static 'assets/js/phonecode.js' %}"></script>
     </head>
 
     <body>
-
+        {% include 'app_users/login_modal.html' %}
         {% include 'app_users/header.html' %}
+
 
         {% block middle %}
         {% endblock middle %}
-        <hr>
+
         {% include 'app_users/footer.html' %}
 
-{#        <script src="{% static 'assets/plg/jQuery/jquery-3.5.0.slim.min.js' %}"></script>#}
-{#        <script src="{% static 'assets/js/scripts.js' %}"></script>#}
 
-
-        <!--    !!! ВЕРСТАЛЬЩИКУ: удалить отсюда эти стили при вёрстке  -->
-        <style>
-            * {
-                box-sizing: border-box;
-                margin: 0;
-                padding: 0;
-            }
-
-            html,
-            body {
-                max-width: 1920px;
-                height: 100%;
-                margin: 0 auto;
-            }
-
-        </style>
-        <!--    !!! ВЕРСТАЛЬЩИКУ: удалить отсюда эти стили при вёрстке  -->
+        <script src="{% static 'assets/js/login_popup.js' %}"> </script>
     </body>
 </html>

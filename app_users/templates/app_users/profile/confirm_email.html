@@ -1,0 +1,9 @@
+{% extends 'app_users/_base.html' %}
+{% load i18n %}
+
+{% block middle %}
+    <div>
+        <p>{% trans 'Мы выслали на ваш email ссылку для подтверждения' %}.</p>
+        <p>{% trans 'Пожалуйста, перейдите по ссылке для завершения регистрации' %}.</p>
+    </div>
+{% endblock %}

@@ -1,0 +1,63 @@
+{% extends 'app_users/profile/_profile_base_edit.html' %}
+{% load i18n %}
+{% load static %}
+
+{% block settings %}
+    <div class="notifications">
+        <div class="top-text">
+            {% trans "Настроенная система уведомлений позволяет оперативно отслеживать поступление бонусов на ваш лицевой счет, а также выполнение транзакций по выводу средств. " %}
+            {% trans 'Вы также можете настроить отклики исполнителей, их отзывы, сведения о голосованиях, сообщениях в чате и новости.' %}
+        </div>
+        <div class="menu">
+            <a href="#" class="active">{% trans "УВЕДОМЛЕНИЯ ПО EMAIL" %}</a>
+            <a href="#">{% trans "УВЕДОМЛЕНИЯ ПО SMS" %}</a>
+        </div>
+        <div class="list-name">
+            {% trans "Уведомления будут поступать по EMAIL" %}
+        </div>
+        <div class="flex">
+            <div class="item">
+                <div class="name">
+                    <span>{% trans "ПОПОЛЕНИЕ СЧЕТА" %}</span>
+                </div>
+                <input type="checkbox" class="checkbox" id="ch1"><label for="ch1"></label>
+            </div>
+            <div class="item">
+                <div class="name">
+                    <span>{% trans "ОТЗЫВЫ" %}</span>
+                </div>
+                <input type="checkbox" class="checkbox" id="ch2"><label for="ch2"></label>
+            </div>
+            <div class="item">
+                <div class="name">
+                    <span>{% trans "ПОПОЛЕНИЕ СЧЕТА" %}</span>
+                </div>
+                <input type="checkbox" class="checkbox" id="ch3"><label for="ch3"></label>
+            </div>
+            <div class="item">
+                <div class="name">
+                    <span>{% trans "ОТЗЫВЫ" %}</span>
+                </div>
+                <input type="checkbox" class="checkbox" id="ch4"><label for="ch4"></label>
+            </div>
+            <div class="item">
+                <div class="name">
+                    <span>{% trans "ПОПОЛЕНИЕ СЧЕТА" %}</span>
+                </div>
+                <input type="checkbox" class="checkbox" id="ch5"><label for="ch5"></label>
+            </div>
+            <div class="item">
+                <div class="name">
+                    <span>{% trans "ОТЗЫВЫ" %}</span>
+                </div>
+                <input type="checkbox" class="checkbox" id="ch6"><label for="ch6"></label>
+            </div>
+            <div class="item">
+                <div class="name">
+                    <span>{% trans "ПОПОЛЕНИЕ СЧЕТА" %}</span>
+                </div>
+                <input type="checkbox" class="checkbox" id="ch7"><label for="ch7"></label>
+            </div>
+        </div>
+    </div>
+{% endblock %}

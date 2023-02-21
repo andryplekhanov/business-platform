@@ -1,114 +1,185 @@
-{% extends 'app_users/profile/_profile_base.html' %}
+{% extends 'app_users/profile/_profile_base_edit.html' %}
 {% load i18n %}
 {% load static %}
 
-{% block content %}
-    <div>
-        <form class="form Profile-form" method="post" enctype="multipart/form-data">
-            {% csrf_token %}
-            {% if form.non_field_errors %}
-                {% for error in form.non_field_errors %}
+
+{% block settings %}
+    <form class="personal" method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+
+        {% if messages %}
+            {% for message in messages %}
+                <div>{{ message }}</div>
+            {% endfor %}
+        {% endif %}
+
+        {% if form.non_field_errors %}
+            {% for error in form.non_field_errors %}
+                <div>{{ error|escape }}</div>
+            {% endfor %}
+        {% endif %}
+
+        {{ form.username }}
+        {% if form.username.errors %}
+            {% for error in form.username.errors %}
+                <div>{{ error|escape }}</div>
+            {% endfor %}
+        {% endif %}
+
+        {{ form.last_name }}
+        {% if form.last_name.errors %}
+            {% for error in form.last_name.errors %}
+                <div>{{ error|escape }}</div>
+            {% endfor %}
+        {% endif %}
+
+        {{ form.first_name }}
+        {% if form.first_name.errors %}
+            {% for error in form.first_name.errors %}
+                <div>{{ error|escape }}</div>
+            {% endfor %}
+        {% endif %}
+
+        {{ form.patronymic }}
+        {% if form.patronymic.errors %}
+            {% for error in form.patronymic.errors %}
+                <div>{{ error|escape }}</div>
+            {% endfor %}
+        {% endif %}
+
+        {{ form.country }}
+        {% if form.country.errors %}
+            {% for error in form.country.errors %}
+                <div>{{ error|escape }}</div>
+            {% endfor %}
+        {% endif %}
+
+        {{ form.address }}
+        {% if form.address.errors %}
+            {% for error in form.address.errors %}
+                <div>{{ error|escape }}</div>
+            {% endfor %}
+        {% endif %}
+
+        {{ form.personal_number }}
+        {% if form.personal_number.errors %}
+            {% for error in form.personal_number.errors %}
+                <div>{{ error|escape }}</div>
+            {% endfor %}
+        {% endif %}
+
+        <div class="doc">
+            {% trans 'Документ' %}:
+            {{ form.document }}
+            {% if form.document.errors %}
+                {% for error in form.document.errors %}
                     <div>{{ error|escape }}</div>
                 {% endfor %}
             {% endif %}
-            <div class="row-block">
-                <div>
-                    <label for="{{ form.avatar.id_for_avatar }}">
-                        {% trans 'Аватар' %}
-                    </label>
-                    <div>
-                        <div>
-                            {% if user.avatar %}
-                                <img src="{{ user.avatar.url }}" alt="profile_image"/>
-                            {% else %}
-                                <img src="{% static 'assets/img/no_img.jpg' %}" alt="profile_image"/>
-                            {% endif %}
-                        </div>
-                        <label for="{{ form.avatar.id_for_avatar }}">
-                            {% trans 'Выберите аватар' %}
-                        </label>
-                        {{ form.avatar }}
-                        {% if form.avatar.errors %}
-                            {% for error in form.avatar.errors %}
-                                <div>{{ error|escape }}</div>
-                            {% endfor %}
-                        {% endif %}
-                    </div>
-                </div>
-                <div>
-                    <label for="{{ form.full_name.id_for_full_name }}">
-                        {% trans 'ФИО' %}
-                    </label>
-                    {{ form.full_name }}
-                    {% if form.full_name.errors %}
-                        {% for error in form.full_name.errors %}
-                            <div>{{ error|escape }}</div>
-                        {% endfor %}
-                    {% endif %}
-                </div>
-            </div>
-            <div class="row-block">
-                <div>
-                    <label for="{{ form.phone_number.id_for_phone_number }}">
-                        {% trans 'Телефон' %}
-                    </label>
-                    {{ form.phone_number }}
-                    {% if form.phone_number.errors %}
-                        {% for error in form.phone_number.errors %}
-                            <div>{{ error|escape }}</div>
-                        {% endfor %}
-                    {% endif %}
-                </div>
-                <div>
-                    <label for="{{ form.email.id_for_email }}">E-mail</label>
-                    {{ form.email }}
-                    {% if form.email.errors %}
-                        {% for error in form.email.errors %}
-                            <div>{{ error|escape }}</div>
-                        {% endfor %}
-                    {% endif %}
-                </div>
-                <div>
-                    <label for="{{ form.password1.id_for_password1 }}">
-                        {% trans 'Пароль' %}
-                    </label>
-                    {{ form.password1 }}
-                    {% if form.password1.errors %}
-                        {% for error in form.password1.errors %}
-                            <div>{{ error|escape }}</div>
-                        {% endfor %}
-                    {% endif %}
-                </div>
-                <div>
-                    <label class="form-label" for="{{ form.password2.id_for_password2 }}">
-                        {% trans 'Подтверждение пароля' %}
-                    </label>
-                    {{ form.password2 }}
-                    {% if form.password2.errors %}
-                        {% for error in form.password2.errors %}
-                            <div>{{ error|escape }}</div>
-                        {% endfor %}
-                    {% endif %}
-                </div>
-                <div>
-                    <div>
-                        <button type="submit">{% trans 'Сохранить' %}</button>
-                    </div>
-                    {% if messages %}
-                        {% for message in messages %}
-                            <div>{{ message }}</div>
-                        {% endfor %}
-                    {% endif %}
-                </div>
-            </div>
-        </form>
-    </div>
+            *jpg,*png,*pdf
+        </div>
 
-    <!--    !!! ВЕРСТАЛЬЩИКУ: удалить отсюда эти стили при вёрстке  -->
-    <style>
-    div img {
-        width: 175px;
-    }
-    </style>
-    <!--    !!! ВЕРСТАЛЬЩИКУ: удалить отсюда эти стили при вёрстке  -->
+        <div class="flex">
+            {{ form.document_number }}
+            {% if form.document_number.errors %}
+                {% for error in form.document_number.errors %}
+                    <div>{{ error|escape }}</div>
+                {% endfor %}
+            {% endif %}
+
+            {{ form.document_issued }}
+            {% if form.document_issued.errors %}
+                {% for error in form.document_issued.errors %}
+                    <div>{{ error|escape }}</div>
+                {% endfor %}
+            {% endif %}
+
+            {{ form.phone_number }}
+            {% if form.phone_number.errors %}
+                {% for error in form.phone_number.errors %}
+                    <div>{{ error|escape }}</div>
+                {% endfor %}
+            {% endif %}
+
+            {{ form.email }}
+            {% if form.email.errors %}
+                {% for error in form.email.errors %}
+                    <div>{{ error|escape }}</div>
+                {% endfor %}
+            {% endif %}
+        </div>
+
+        {{ form.bank_name }}
+        {% if form.bank_name.errors %}
+            {% for error in form.bank_name.errors %}
+                <div>{{ error|escape }}</div>
+            {% endfor %}
+        {% endif %}
+
+        {{ form.bank_address }}
+        {% if form.bank_address.errors %}
+            {% for error in form.bank_address.errors %}
+                <div>{{ error|escape }}</div>
+            {% endfor %}
+        {% endif %}
+
+        {{ form.bank_bic }}
+        {% if form.bank_bic.errors %}
+            {% for error in form.bank_bic.errors %}
+                <div>{{ error|escape }}</div>
+            {% endfor %}
+        {% endif %}
+
+        {{ form.bank_correspondent_account }}
+        {% if form.bank_correspondent_account.errors %}
+            {% for error in form.bank_correspondent_account.errors %}
+                <div>{{ error|escape }}</div>
+            {% endfor %}
+        {% endif %}
+
+        {{ form.payment_account }}
+        {% if form.payment_account.errors %}
+            {% for error in form.payment_account.errors %}
+                <div>{{ error|escape }}</div>
+            {% endfor %}
+        {% endif %}
+
+        {{ form.recipients_name }}
+        {% if form.recipients_name.errors %}
+            {% for error in form.recipients_name.errors %}
+                <div>{{ error|escape }}</div>
+            {% endfor %}
+        {% endif %}
+
+{#        <select>#}
+{#            <option>Сфера деятельности</option>#}
+{#            <option>Сфера деятельности</option>#}
+{#            <option>Сфера деятельности</option>#}
+{#        </select>#}
+{#        <select>#}
+{#            <option>Специальность</option>#}
+{#            <option>Специальность</option>#}
+{#            <option>Специальность</option>#}
+{#        </select>#}
+        <div class="agree">
+            <input type="checkbox" class="checkbox" id="ch1" value="yes" required>
+            <label for="ch1">
+                {% trans 'Я даю согласие на обработку персональных данных для формирования' %}
+                <a href="{% url 'agreement' %}">{% trans 'Договора пайщика - члена Клуба' %}</a>
+            </label>
+        </div>
+        <div class="flex">
+{#            <div class="col">#}
+{#                <input type="checkbox" class="checkbox" id="ch2"><label for="ch2">Фрилансер</label>#}
+{#                <input type="checkbox" class="checkbox" id="ch3"><label for="ch3">Заказчик</label>#}
+{#            </div>#}
+{#            <div class="col">#}
+{#                <input type="checkbox" class="checkbox" id="ch4"><label for="ch4">Фрилансер юр. лицо</label>#}
+{#                <input type="checkbox" class="checkbox" id="ch5"><label for="ch5">Заказчик юр. лицо</label>#}
+{#            </div>#}
+            <div class="col">
+                <button type="submit">{% trans 'Сохранить' %}</button>
+            </div>
+        </div>
+    </form>
 {% endblock %}

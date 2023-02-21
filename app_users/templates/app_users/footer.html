@@ -1,111 +1,65 @@
 {% load static %}
 {% load i18n %}
+{% load flatpages %}
+{% get_flatpages '/referral-program/' as referral_program %}
+{% get_flatpages '/about-platform/' as about_platform %}
+{% get_flatpages '/working-rules/' as working_rules %}
+{% get_flatpages '/regulation/' as regulation %}
+{% get_flatpages '/entry-agreement/' as entry_agreement %}
+{% get_flatpages '/audit-commission/' as audit_commission %}
+{% get_flatpages '/contributions-and-funds/' as contributions_and_funds %}
+{% get_flatpages '/loans/' as loans %}
 
-<footer>
+<footer class="footer">
+    <div class="flex">
 
-    <!--    ЛЕВАЯ КОЛОНКА ССЫЛОК begin  -->
-    <div>
-        {% if footer_pages_left.footer_pages.all %}
+        <!--    ЛЕВАЯ КОЛОНКА ССЫЛОК begin  -->
         <ul>
-            {% for page in footer_pages_left.footer_pages.all %}
-                <li>
-                    <a href="{{ page.flatpage.get_absolute_url }}">{{ page.flatpage.title }}</a>
-                </li>
-            {% endfor %}
+            <li><a href="#">{% trans 'Услуги' %}</a></li>
+            <li><a href="#">{% trans 'Заказы' %}</a></li>
+            <li><a href="#">{% trans 'Конкурсы' %}</a></li>
+            <li><a href="#">{% trans 'Фрилансеры' %}</a></li>
+            <li><a href="{{ about_platform.first.url }}">{% trans 'О платформе' %}</a></li>
+            <li><a href="#">{% trans 'Безопасность' %}</a></li>
+            <li><a href="{{ working_rules.first.url }}">{% trans 'Правила работы' %}</a></li>
+            <li><a href="{{ referral_program.first.url }}">{% trans 'Реферальная программа' %}</a></li>
+            <li><a href="#">{% trans 'Помощь' %}</a></li>
+            <li><a href="#">{% trans 'Поиск' %}</a></li>
         </ul>
-        {% endif %}
-    </div>
-    <!--    ЛЕВАЯ КОЛОНКА ССЫЛОК finish  -->
+        <!--    ЛЕВАЯ КОЛОНКА ССЫЛОК finish  -->
 
-
-    <!--    ФОРМА ОБРАТНОЙ СВЯЗИ begin  -->
-    <div>
-        {% trans 'Форма обратной связи' %}
+        <!--    ФОРМА ОБРАТНОЙ СВЯЗИ begin  -->
+        <!--    пока не работает  -->
         <form action="#" method="post">
-            <input name="name" type="text" placeholder="{% trans 'Ваше имя' %}"/>
-            <input name="email" type="text" placeholder="{% trans 'Ваш email' %}"/>
-            <input name="message" type="text" placeholder="{% trans 'Ваше сообщение' %}"/>
-            <button type="submit">
-                {% trans 'Отправить' %}
-            </button>
+            {% csrf_token %}
+            <p>{% trans 'ФОРМА ОБРАТНОЙ СВЯЗИ' %}</p>
+            <input name="name" type="text" placeholder="{% trans 'Введите имя' %}">
+            <input name="email" type="text" placeholder="{% trans 'Ваш E-mail' %}">
+            <textarea name="message" placeholder="{% trans 'Ваше сообщение' %}"></textarea>
+            <button type="submit">{% trans 'Отправить' %}</button>
         </form>
-    </div>
-    <!--    ФОРМА ОБРАТНОЙ СВЯЗИ finish  -->
+        <!--    ФОРМА ОБРАТНОЙ СВЯЗИ finish  -->
 
-
-    <!--    ПРАВАЯ КОЛОНКА ССЫЛОК begin  -->
-    <div>
-        {% if footer_pages_right.footer_pages.all %}
-        <ul>
-            {% for page in footer_pages_right.footer_pages.all %}
-                <li>
-                    <a href="{{ page.flatpage.get_absolute_url }}">{{ page.flatpage.title }}</a>
-                </li>
-            {% endfor %}
+        <!--    ПРАВАЯ КОЛОНКА ССЫЛОК begin  -->
+        <ul class="tar">
+            <li><a href="{{ regulation.first.url }}">{% trans 'Устав' %}</a></li>
+            <li><a href="{{ entry_agreement.first.url }}">{% trans 'Договор о вступлении' %}</a></li>
+            <li><a href="{{ audit_commission.first.url }}">{% trans 'О ревизионной комиссии' %}</a></li>
+            <li><a href="{{ contributions_and_funds.first.url }}">{% trans 'О взносах и фондах' %}</a></li>
+            <li><a href="{{ loans.first.url }}">{% trans 'О займах' %}</a></li>
         </ul>
-        {% endif %}
+        <!--    ПРАВАЯ КОЛОНКА ССЫЛОК finish  -->
+
     </div>
-    <!--    ПРАВАЯ КОЛОНКА ССЫЛОК finish  -->
-
-
-    <!--    ССЫЛКА ДЛЯ ВХОДА begin  -->
-    <div>
-        <a href="{% url 'login' %}">
-            {% trans "Вход" %}
-        </a>
-    </div>
-    <!--    ССЫЛКА ДЛЯ ВХОДА finish  -->
-
 
     <!--    ССЫЛКИ НА СОЦСЕТИ begin  -->
-    <div>
+    <div class="social">
         {% if social_media.social_media_item.all %}
-        <ul>
             {% for item in social_media.social_media_item.all %}
-                <li>
-                    <a title="{{ item.name }}" target="_blank" href="{{ item.link }}">
-                        <img alt="{{ item.name }}-logo" src="{{ item.icon.url }}">
-                    </a>
-                </li>
+                <a title="{{ item.name }}" target="_blank" href="{{ item.link }}"><img alt="{{ item.name }}-logo" src="{{ item.icon.url }}"></a>
             {% endfor %}
-        </ul>
         {% endif %}
     </div>
     <!--    ССЫЛКИ НА СОЦСЕТИ finish  -->
 
 </footer>
-
-
-<!--    !!! ВЕРСТАЛЬЩИКУ: удалить отсюда нижеследующие стили при вёрстке  -->
-<style>
-    footer {
-        background-color: lightblue;
-    }
-
-    footer div {
-        display: inline-block;
-        margin: 20px;
-    }
-
-    footer div:last-child {
-        display: block;
-    }
-
-    footer div ul {
-        list-style: none;
-    }
-
-    footer div:last-child ul li {
-        display: inline-block;
-    }
-
-    footer div form input {
-        display: block;
-    }
-
-    footer div ul li a img {
-        width: 32px;
-        height: 32px;
-    }
-</style>
-<!--    !!! ВЕРСТАЛЬЩИКУ: удалить отсюда эти стили при вёрстке  -->

@@ -1,0 +1,52 @@
+{% load static %}
+{% load i18n %}
+
+<div class="popup" id="loginPopup">
+    <div class="window">
+        <a class="close"></a>
+        <form action="{% url 'login_user' %}" method="post">
+            {% csrf_token %}
+
+            {% if form.non_field_errors %}
+                {% for error in form.non_field_errors %}
+                    <div><img src="{% static 'assets/img/att.svg' %}"></div>
+                    <div>{% trans "Некорректный логин или пароль" %}</div>
+                {% endfor %}
+            {% endif %}
+
+            <div class="name">
+                {% trans "Вход в личный кабинет" %}
+            </div>
+
+            <p><label for="{{ form.username.id_for_username }}">E-mail</label></p>
+            <input type="text" placeholder="" name="username">
+
+            <p>
+                <label for="{{ form.password.id_for_password }}">
+                    {% trans 'Пароль' %}
+                </label>
+            </p>
+            <div class="field">
+                <input type="password" placeholder="" name="password">
+            </div>
+
+            <button type="submit">{% trans 'Войти' %}</button>
+
+            <div class="bottom-text">
+                <p>
+                    {% trans "Забыли пароль?" %}
+                    <a href="{% url 'password_reset' %}">{% trans "Нажмите" %}</a>
+                    {% trans "для отправки ссылки восстановления доступа" %}
+                </p>
+                <p>
+                    {% trans "Фрилансеру для регистрации нужна" %}
+                    <a href="#">{% trans "Реферальная ссылка" %}</a>
+                </p>
+                <p>
+                    {% trans "Заказчик регистрируется в момент" %}
+                    <a href="#">{% trans "Заказа" %}</a>
+                </p>
+            </div>
+        </form>
+    </div>
+</div>

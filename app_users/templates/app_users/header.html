@@ -1,163 +1,141 @@
 {% load flatpages %}
 {% load static %}
 {% load i18n %}
-{% load mptt_tags %}
-{% load app_users_tags %}
 {% get_flatpages '/referral-program/' as referral_program %}
+{% get_flatpages '/about-platform/' as about_platform %}
+{% get_flatpages '/working-rules/' as working_rules %}
 
-<header>
-    <div>
-        <div>
-            <a href="{% url 'home' %}">logo</a>
+{#        <div>#}
+{#            <a href="{% url 'polls-list' %}">#}
+{#                {% trans "Голосование" %}#}
+{#                {% if number_polls > 0 %}({{ number_polls }}){% endif %}#}
+{#            </a>#}
+{#        </div>#}
+
+{#        <div>#}
+{#            <form action="{% url 'set_language' %}" method="post">#}
+{#                {% csrf_token %}#}
+{#                {% get_current_language as LANGUAGE_CODE %}#}
+{#                {% get_available_languages as LANGUAGES %}#}
+{#                {% get_language_info_list for LANGUAGES as languages %}#}
+{#                {% for language in languages %}#}
+{#                    <div>#}
+{#                        <input type="radio" id="language" name="language" value="{{ language.code }}"#}
+{#                                {% if language.code == LANGUAGE_CODE %} checked{% endif %} onclick="submit()">#}
+{#                        <label for="language">{{ language.code }}</label>#}
+{#                    </div>#}
+{#                {% endfor %}#}
+{#            </form>#}
+{#        </div>#}
+
+<header class="header flex">
+    <div class="logo">
+        <a href="{% url 'home' %}"><img src="{% static 'assets/img/logo.svg' %}"></a>
+        <a class="menu-button"></a>
+        <ul>
+            <li><a href="{% url 'home' %}">{% trans "ГЛАВНАЯ" %}</a></li>
+            <li><a href="#">{% trans "ВСЕ УСЛУГИ" %}</a></li>
+            <li><a href="#">{% trans "ЗАКАЗЫ" %}</a></li>
+            <li><a href="#">{% trans "СОЗДАТЬ ЗАКАЗ" %}</a></li>
+            <li><a href="#">{% trans "КОНКУРСЫ" %}</a></li>
+            <li><a href="#">{% trans "ОБЪЯВИТЬ КОНКУРС" %}</a></li>
+            <li><a href="#">{% trans "ФРИЛАНСЕРЫ" %}</a></li>
+            <li><a href="{{ about_platform.first.url }}">{% trans "О ПЛАТФОРМЕ" %}</a></li>
+            <li><a href="{{ referral_program.first.url }}">{% trans "РЕФЕРАЛЬНАЯ ПРОГРАММА" %}</a></li>
+            <li><a href="{{ working_rules.first.url }}">{% trans "ПРАВИЛА РАБОТЫ" %}</a></li>
+            <li><a href="{% url 'profile' %}">{% trans "ЛИЧНЫЙ КАБИНЕТ" %}</a></li>
+            <li><a href="{% url 'support' %}">{% trans "ПОМОЩЬ" %}</a></li>
+            <li><a href="#">{% trans "ПОИСК" %}</a></li>
+        </ul>
+    </div>
+
+    {% if request.user.is_authenticated %}
+        <div class="user">
+            {% if request.user.is_core %}
+                {% trans "Основатель" %}
+            {% else %}
+                {{ request.user.get_status_display }}
+            {% endif %}
+            <a class="play"></a> <a class="round"></a> <i>{% trans "отпуск" %}</i>
         </div>
 
-        <details>
-            <summary>menu</summary>
-            {% load_menu as main_menu %}
-            {% recursetree main_menu.main_menu %}
-                <div id="main_menu">
-                    <a href="#">
-                        {{ node.name }}
-                    </a>
+        <ul>
+            <li><a href="#">{% trans "Тикеты" %}</a></li>
+            <li><a href="{% url 'news_list' %}">{% trans "Новости" %}</a></li>
+            <li>
+                <a href="{% url 'polls-list' %}">
+                    {% trans "Голосование" %}
+                    {% if number_polls > 0 %}<sup id="unread-polls-number">{{ number_polls }}</sup>{% endif %}
+                </a>
+            </li>
+            <li><a href="{{ referral_program.first.url }}">{% trans "Реферальная программа" %}</a></li>
+        </ul>
 
-                    {% if not node.is_leaf_node %}
-                        <a href="#"></a>
-                        <div>
-                            {{ children }}
-                        </div>
+        <div class="langs-block">
+            <a href="#" class="lang">RU <i class="fa fa-angle-down"></i></a>
+            <div class="window">
+                <a href="#">RU</a>
+                <a href="#">EN</a>
+            </div>
+        </div>
+
+        <a class="search-link"></a>
+
+        <div class="name">
+            {% if request.user.avatar %}
+                <div><img src="{% static 'assets/img/avatar.png' %}"></div>
+            {% else %}
+                <div><img src="{% static 'assets/img/avatar.png' %}"></div>
+            {% endif %}
+
+            <div>
+                <a href="#">
+                    {% if request.user.last_name and request.user.first_name %}
+                        {{ request.user.first_name }} {{ request.user.last_name }}
+                    {% else %}
+                        {% trans "Личный кабинет" %}
                     {% endif %}
-                </div>
-            {% endrecursetree %}
-        </details>
+                    <i class="fa fa-angle-down"></i>
+                </a>
+            </div>
 
-        <div>
-            {% if request.user.is_authenticated %}
-                <div>
+            <div class="window">
+                <div class="avatar">
                     {% if request.user.avatar %}
-                        <div class="header-avatar">
+                        <div class="avatar">
+                            <img src="{% static 'assets/img/avatar2.png' %}">
+                            <a href="#" class="edit"></a>
                         </div>
                     {% else %}
-                        <div class="header-avatar">
+                        <div class="avatar">
+                            <img src="{% static 'assets/img/avatar2.png' %}">
+                            <a href="#" class="edit"></a>
                         </div>
                     {% endif %}
+                    <a href="#" class="edit"></a>
                 </div>
-                {% if request.user.is_core %}
-                    <div>{% trans "Участник ядра" %}</div>
-                {% else %}
-                    <div>{{ request.user.get_status_display }}</div>
-                {% endif %}
-                <div>{{ request.user.id }}</div>
-            {% endif %}
-        </div>
-    </div>
 
-    <div>
-        <div>
-            <a href="#">{% trans "Тикеты" %}</a>
-        </div>
-
-        <div>
-            <a href="{% url 'news_list' %}">{% trans "Новости" %}</a>
-        </div>
-
-        <div>
-            <a href="{% url 'polls-list' %}">
-                {% trans "Голосование" %}
-                {% if number_polls > 0 %}({{ number_polls }}){% endif %}
-            </a>
-        </div>
-
-        <div>
-            <a href="{{ referral_program.first.url }}">{% trans "Реферальная программа" %}</a>
-        </div>
-
-        <div>
-            {% if request.user.is_authenticated %}
-                {% if request.user.full_name %}
-                    <a href="{% url 'profile' %}">
-                        {{ request.user.full_name }}
-                    </a>
-                {% else %}
-                    <a href="{% url 'profile' %}">
-                        {% trans "Личный кабинет" %}
-                    </a>
-                {% endif %}
-            {% endif %}
-        </div>
-
-        <div>
-            <form action="{% url 'set_language' %}" method="post">
-                {% csrf_token %}
-                {% get_current_language as LANGUAGE_CODE %}
-                {% get_available_languages as LANGUAGES %}
-                {% get_language_info_list for LANGUAGES as languages %}
-                {% for language in languages %}
-                    <div>
-                        <input type="radio" id="language" name="language" value="{{ language.code }}"
-                                {% if language.code == LANGUAGE_CODE %} checked{% endif %} onclick="submit()">
-                        <label for="language">{{ language.code }}</label>
-                    </div>
-                {% endfor %}
-            </form>
-        </div>
-
-        <div>
-            {% if request.user.is_authenticated %}
-                <div>
-                    <a href="{% url 'logout' %}">
-                        {% trans "Выйти" %}
-                    </a>
+                <div class="links">
+                    <a href="{% url 'profile' %}">{% trans "Личные данные" %}</a>
+                    <a href="{% url 'verification' %}">{% trans "Верификация" %}</a>
+                    <a href="{% url 'password_and_security' %}">{% trans "Пароль и безопасность" %}</a>
+                    <a href="{% url 'notifications' %}">{% trans "Уведомления" %}</a>
+                    <a href="{% url 'agreement' %}">{% trans "Договор" %}</a>
                 </div>
-            {% else %}
-                <div>
-                    <a href="{% url 'login' %}">
-                        {% trans "Вход" %}
-                    </a>
+
+                <div class="bottom-link">
+                    <a href="{% url 'logout' %}">{% trans "Выход" %}</a>
                 </div>
-            {% endif %}
+            </div>
         </div>
-    </div>
 
+    {% endif %}
 
-<!--    !!! ВЕРСТАЛЬЩИКУ: удалить отсюда нижеследующие стили при вёрстке  -->
-    <style>
-        header {
-            min-height: 100px;
-            max-width: 1920px;
-            width: 100%;
-            background-color: lightblue;
-            margin: 0 auto;
-        }
-
-        header div {
-            display: inline;
-            margin: 20px;
-        }
-
-        header details {
-            display: inline;
-            margin: 20px;
-        }
-
-        #main_menu {
-            display: block;
-        }
-
-        header div form {
-            display: inline;
-            margin: 20px;
-        }
-
-        .header-avatar {
-            width: 55px;
-            height: 55px;
-            border-radius: 50px;
-            background: url('{{ request.user.avatar.url }}');
-            background-size: auto 55px;
-        }
-
-    </style>
-<!--    !!! ВЕРСТАЛЬЩИКУ: удалить отсюда эти стили при вёрстке  -->
+    {% if request.user.is_authenticated %}
+        <a href="{% url 'logout' %}" class="logout"></a>
+    {% else %}
+        <button class="login-btn" onclick="loginPopup()">{% trans "Вход" %}</button>
+    {% endif %}
 
 
 </header>

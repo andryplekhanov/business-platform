@@ -7,10 +7,10 @@ from .models import CustomUser
 
 
 class CustomUserAdmin(admin.ModelAdmin):  # чтобы в админке отобразить древовидную структуру, нужно унаследовать от DjangoMpttAdmin
-    list_display = ('id', 'email', 'full_name', 'get_referer', 'status', 'is_core', 'balance', 'date_joined')
-    list_filter = ('date_joined', 'is_staff', 'is_active', 'is_core', 'status')
-    search_fields = ('id', 'email', 'full_name', 'parent__full_name', 'parent__email')
-    readonly_fields = ['date_joined', 'get_referrals', 'referral_url', 'parent', 'balance']
+    list_display = ('id', 'email', 'email_confirmed', 'last_name', 'first_name', 'get_referer', 'status', 'is_core', 'balance', 'date_joined', 'get_personal_account')
+    list_filter = ('date_joined', 'is_staff', 'is_active', 'email_confirmed', 'is_core', 'status', 'paid_entrance_fee')
+    search_fields = ('id', 'email', 'last_name', 'first_name', 'patronymic', 'parent__last_name', 'parent__email', 'personal_number')
+    readonly_fields = ['date_joined', 'get_referrals', 'referral_url', 'parent', 'balance', 'email_confirmed', 'get_personal_account']
     save_on_top = True
     actions = ['make_active', 'make_inactive']
 
@@ -37,6 +37,10 @@ class CustomUserAdmin(admin.ModelAdmin):  # чтобы в админке ото�
         link = reverse("admin:app_users_customuser_change", args=[obj.parent_id])
         return format_html('<a href="{}">{}</a>', link, obj.parent)
     get_referer.short_description = _('реферер')
+
+    def get_personal_account(self, obj):
+        return obj.personal_account
+    get_personal_account.short_description = _('лицевой счет')
 
 
 admin.site.register(CustomUser, CustomUserAdmin)
