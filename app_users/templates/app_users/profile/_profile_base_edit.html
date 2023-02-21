@@ -1,0 +1,18 @@
+{% extends 'app_users/profile/_profile_base.html' %}
+{% load i18n %}
+{% load static %}
+
+{% block content %}
+
+    <div class="nav flex">
+        <a href="{% url 'edit_profile' %}" {% if current_elem == 'edit_profile' %}class="active"{% endif %}>{% trans 'ЛИЧНЫЕ ДАННЫЕ' %}</a>
+        <a href="{% url 'verification' %}" {% if current_elem == 'verification' %}class="active"{% endif %}>{% trans 'ВЕРИФИКАЦИЯ' %}</a>
+        <a href="{% url 'password_and_security' %}" {% if current_elem == 'password_and_security' %}class="active"{% endif %}>{% trans 'ПАРОЛЬ И БЕЗОПАСНОСТЬ' %}</a>
+        <a href="{% url 'agreement' %}" {% if current_elem == 'agreement' %}class="active"{% endif %}>{% trans 'ДОГОВОР' %}</a>
+        <a href="{% url 'notifications' %}" {% if current_elem == 'notifications' %}class="active"{% endif %}>{% trans 'УВЕДОМЛЕНИЯ' %}</a>
+    </div>
+
+    {% block settings %}
+    {% endblock %}
+
+{% endblock %}

@@ -4958,3 +4958,23 @@ main {
   line-height: 130%;
   color: rgba(52, 53, 65, 0.7);
 }
+
+.cabinet-page .cabinet-content .personal-doc-button {
+  font-weight: 500;
+  font-size: 20px;
+  margin: 15px;
+  height: 36px;
+}
+
+.cabinet-page .cabinet-content .personal .doc a {
+  display: block;
+  height: 36px;
+}
+
+.cabinet-content .personal div {
+  color: red;
+}
+
+#unread-polls-number {
+  color: #00CCFF!important;
+}

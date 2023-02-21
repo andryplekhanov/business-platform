@@ -1,0 +1,42 @@
+{% extends 'app_users/profile/_profile_base_edit.html' %}
+{% load i18n %}
+{% load static %}
+
+{% block settings %}
+    <div class="verifications">
+        <div class="top-text">
+            {% trans "Верификация несложная и не займет много времени" %}.
+            {% trans "В среднем на проверку документов нам понадобится несколько часов, иногда чуть больше" %}.
+            {% trans "Вся предоставляемая вами информация защищена нашей политикой конфиденциальности" %}.
+        </div>
+        <div class="select flex">
+            <a id="verifications-phone" href="#" class="active">{% trans "Телефон" %}</a>
+            <a id="verifications-passport" href="#">{% trans "Паспорт/ID" %}</a>
+        </div>
+        <p>{% trans "Введите номер для верификации" %}</p>
+        <input type="text" id="phone">
+
+{#        <div class="passport">#}
+{#            <div class="upload">#}
+{#                <button>{% trans "Загрузить" %}</button>#}
+{#                *jpg,*png,*pdf#}
+{#            </div>#}
+{#            <div class="image">#}
+{#                <img src="{% static 'assets/img/passport.svg' %}">#}
+{#            </div>#}
+{#            <div class="buttons flex">#}
+{#                <button>{% trans "Сбросить" %}</button>#}
+{#                <button>{% trans "Отправить" %}</button>#}
+{#            </div>#}
+{#        </div>#}
+    </div>
+
+
+    <script>
+        $(function () {
+            $('#phone').phonecode({
+                preferCo: 'ru'
+            });
+        });
+    </script>
+{% endblock %}

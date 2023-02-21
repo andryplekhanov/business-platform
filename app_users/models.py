@@ -34,10 +34,10 @@ class CustomUser(AbstractBaseUser, MPTTModel, PermissionsMixin):
     patronymic = models.CharField(_('Отчество'), max_length=55, blank=True, db_index=True)
     country = models.CharField(_('Страна'), max_length=55, blank=True, db_index=True)
     address = models.CharField(_('Адрес'), max_length=255, blank=True, db_index=True)
-    personal_number = models.BigIntegerField(_('ИНН или персональный номер'), blank=True, null=True, db_index=True)
+    personal_number = models.CharField(_('ИНН или персональный номер'), max_length=17, blank=True, null=True, db_index=True)
     document = models.FileField(_('документ'), upload_to='documents/', blank=True, validators=[document_validator, document_size_validate])
     document_number = models.CharField(_('Серия и номер документа'), max_length=55, blank=True, db_index=True)
-    document_issued = models.CharField(_('Когда и кем выдан'), max_length=55, blank=True, db_index=True)
+    document_issued = models.CharField(_('Когда и кем выдан'), max_length=255, blank=True, db_index=True)
     paid_entrance_fee = models.BooleanField(_('Оплатил вступительный взнос'), default=False)
     status = models.CharField(_('статус'), max_length=30, choices=STATUS_CHOICES, default="0", db_index=True)
     date_joined = models.DateTimeField(_('дата регистрации'), auto_now_add=True, db_index=True)
@@ -54,9 +54,9 @@ class CustomUser(AbstractBaseUser, MPTTModel, PermissionsMixin):
 
     bank_name = models.CharField(_('Наименование банка'), max_length=255, blank=True)
     bank_address = models.CharField(_('Адрес банка'), max_length=255, blank=True)
-    bank_bic = models.BigIntegerField(_('БИК банка'), blank=True, null=True)
-    bank_correspondent_account = models.BigIntegerField(_('Корреспондентский счет банка'), blank=True, null=True)
-    payment_account = models.BigIntegerField(_('Расчетный счет'), blank=True, null=True)
+    bank_bic = models.CharField(_('БИК банка'), max_length=55, blank=True, null=True)
+    bank_correspondent_account = models.CharField(_('Корреспондентский счет банка'), max_length=55, blank=True, null=True)
+    payment_account = models.CharField(_('Расчетный счет'), max_length=55, blank=True, null=True)
     recipients_name = models.CharField(_('Имя получателя платежа'), max_length=255, blank=True)
 
     USERNAME_FIELD = 'email'
