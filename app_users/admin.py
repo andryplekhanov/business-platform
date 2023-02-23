@@ -9,7 +9,7 @@ from .models import CustomUser
 
 class TransactionInline(admin.TabularInline):
     model = Transaction
-    readonly_fields = ['datetime', ]
+    readonly_fields = ['datetime', 'balance_before', 'balance_after']
 
 
 class CustomUserAdmin(admin.ModelAdmin):  # чтобы в админке отобразить древовидную структуру, нужно унаследовать от DjangoMpttAdmin

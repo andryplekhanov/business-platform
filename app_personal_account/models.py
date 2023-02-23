@@ -9,6 +9,8 @@ class Transaction(models.Model):
     REASON_CHOICES = (
         ("NR", _("Нет причины")),  # No Reason
         ("СP", _("Оплата сделки")),  # Contract Payment
+        ("DF", _("Фонд развития")),  # Development Fund
+        ("CF", _("Фонд потребления")),  # Consumption Fund
         ("TUBT", _("Пополнение переводом (вручную)")),  # Top Up Bank Transfer
         ("WDBT", _("Вывод переводом (вручную)")),  # Withdrawal Bank Transfer
         ("TU", _("Пополнение")),  # Top Up
@@ -29,6 +31,8 @@ class Transaction(models.Model):
     reason = models.CharField(choices=REASON_CHOICES, max_length=5, default="NR", verbose_name=_('причина'))
     direction = models.CharField(choices=DIRECTION_CHOICES, max_length=5, verbose_name=_('тип операции'))
     amount = models.DecimalField(_('сумма'), default=0, max_digits=18, decimal_places=2)
+    balance_before = models.DecimalField(_('баланс до транзакции'), default=0, max_digits=18, decimal_places=2)
+    balance_after = models.DecimalField(_('баланс после транзакции'), default=0, max_digits=18, decimal_places=2)
     datetime = models.DateTimeField(_('дата транзакции'), auto_now_add=True, db_index=True)
 
     class Meta:
@@ -40,9 +44,15 @@ class Transaction(models.Model):
         return f'#{self.pk}: {self.user} {self.user.personal_account}'
 
     def save(self, *args, **kwargs):
+        user = User.objects.get(id=self.user.id)
+        old_balance = user.balance
+        self.balance_before = old_balance
         if self.direction == 'CRE':
-            self.user.increase_balance(self.amount)
-        elif self.direction == 'DEB':
-            self.user.reduce_balance(self.amount)
+            new_balance = old_balance + self.amount
+        else:
+            new_balance = old_balance - self.amount
+        self.balance_after = new_balance
+        user.balance = new_balance
+        user.save()
         super().save(*args, **kwargs)
 

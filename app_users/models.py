@@ -81,16 +81,6 @@ class CustomUser(AbstractBaseUser, MPTTModel, PermissionsMixin):
     # def get_absolute_url(self):
     #     return reverse('portfolio', args=[self.pk, self.username])
 
-    def reduce_balance(self, amount):
-        new_balance = self.balance - amount
-        self.balance = new_balance
-        self.save()
-
-    def increase_balance(self, amount):
-        new_balance = self.balance + amount
-        self.balance = new_balance
-        self.save()
-
     @property
     def referrals(self):
         level1 = CustomUser.objects.filter(parent=self)
