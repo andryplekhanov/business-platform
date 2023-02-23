@@ -9,8 +9,8 @@ class Transaction(models.Model):
     REASON_CHOICES = (
         ("NR", _("Нет причины")),  # No Reason
         ("СP", _("Оплата сделки")),  # Contract Payment
-        ("DF", _("Фонд развития")),  # Development Fund
-        ("CF", _("Фонд потребления")),  # Consumption Fund
+        ("DF", _("Фонд развития - вступительный взнос")),  # Development Fund
+        ("CF", _("Фонд потребления - вступительный взнос")),  # Consumption Fund
         ("TUBT", _("Пополнение переводом (вручную)")),  # Top Up Bank Transfer
         ("WDBT", _("Вывод переводом (вручную)")),  # Withdrawal Bank Transfer
         ("TU", _("Пополнение")),  # Top Up
@@ -34,6 +34,7 @@ class Transaction(models.Model):
     balance_before = models.DecimalField(_('баланс до транзакции'), default=0, max_digits=18, decimal_places=2)
     balance_after = models.DecimalField(_('баланс после транзакции'), default=0, max_digits=18, decimal_places=2)
     datetime = models.DateTimeField(_('дата транзакции'), auto_now_add=True, db_index=True)
+    comment = models.ForeignKey(User, on_delete=models.SET_NULL, verbose_name=_('комментарий'), null=True, blank=True)
 
     class Meta:
         ordering = ('-datetime',)
@@ -47,12 +48,14 @@ class Transaction(models.Model):
         user = User.objects.get(id=self.user.id)
         old_balance = user.balance
         self.balance_before = old_balance
+
+        new_balance = old_balance
         if self.direction == 'CRE':
             new_balance = old_balance + self.amount
-        else:
+        elif self.direction == 'DEB':
             new_balance = old_balance - self.amount
         self.balance_after = new_balance
         user.balance = new_balance
-        user.save()
+        user.save(update_fields=['balance', ])
         super().save(*args, **kwargs)
 
