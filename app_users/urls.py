@@ -18,8 +18,7 @@ urlpatterns = [
     path('verify_email/<uidb64>/<token>/', EmailVerify.as_view(), name='verify_email'),
     path('confirm_email/', TemplateView.as_view(template_name='app_users/profile/confirm_email.html'), name='confirm_email'),
 
-    path('profile/', account_view, name='profile'),
-    path('profile/edit/', EditProfileView.as_view(), name='edit_profile'),
+    path('profile/', EditProfileView.as_view(), name='edit_profile'),
     path('profile/notifications/', account_notification_view, name='notifications'),
     path('profile/verification/', account_verification_view, name='verification'),
     path('profile/agreement/', account_agreement_view, name='agreement'),

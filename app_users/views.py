@@ -113,15 +113,6 @@ def login_user(request):
             return HttpResponseRedirect(reverse('home'))
 
 
-@login_required
-def account_view(request):
-    return render(
-        request,
-        'app_users/profile/profile.html',
-        {'user': request.user, 'title': _('Личный кабинет'), 'current_elem': 'profile'}
-    )
-
-
 def signup_error(request):
     return render(
         request,
@@ -139,7 +130,7 @@ class EditProfileView(LoginRequiredMixin, UpdateView):
     extra_context = {
         'title': _('Редактировать профиль'),
         'current_elem': 'edit_profile',
-        'breadcrumbs': {_('Главная'): 'home', _('Личный кабинет'): 'profile', _('Личные данные'): 'edit_profile'}
+        'breadcrumbs': {_('Главная'): 'home', _('Личный кабинет'): 'edit_profile'}
     }
 
     def get_success_url(self):
@@ -198,7 +189,7 @@ class ResetPasswordCompleteView(PasswordResetCompleteView):
 def balance(request):
     context = {
         'user': request.user, 'title': _('Баланс'), 'current_elem': 'balance',
-        'breadcrumbs': {_('Главная'): 'home', _('Личный кабинет'): 'profile', _('Баланс'): 'balance'}
+        'breadcrumbs': {_('Главная'): 'home', _('Личный кабинет'): 'edit_profile', _('Баланс'): 'balance'}
     }
 
     return render(
@@ -212,7 +203,7 @@ def balance(request):
 def topup_withdrawal(request):
     context = {
         'user': request.user, 'title': _('Пополнение / Вывод'), 'current_elem': 'topup_withdrawal',
-        'breadcrumbs': {_('Главная'): 'home', _('Личный кабинет'): 'profile', _('Пополнение / Вывод'): 'topup_withdrawal'}
+        'breadcrumbs': {_('Главная'): 'home', _('Личный кабинет'): 'edit_profile', _('Пополнение / Вывод'): 'topup_withdrawal'}
     }
     return render(
         request,
@@ -225,7 +216,7 @@ def topup_withdrawal(request):
 def portfolio(request):
     context = {
         'user': request.user, 'title': _('Портфолио'), 'current_elem': 'portfolio',
-        'breadcrumbs': {_('Главная'): 'home', _('Личный кабинет'): 'profile', _('Портфолио'): 'portfolio'}
+        'breadcrumbs': {_('Главная'): 'home', _('Личный кабинет'): 'edit_profile', _('Портфолио'): 'portfolio'}
     }
     return render(
         request,
@@ -238,7 +229,7 @@ def portfolio(request):
 def contracts(request):
     context = {
         'user': request.user, 'title': _('Заказы'), 'current_elem': 'contracts',
-        'breadcrumbs': {_('Главная'): 'home', _('Личный кабинет'): 'profile', _('Заказы'): 'contracts'}
+        'breadcrumbs': {_('Главная'): 'home', _('Личный кабинет'): 'edit_profile', _('Заказы'): 'contracts'}
     }
     return render(
         request,
@@ -251,7 +242,7 @@ def contracts(request):
 def contests(request):
     context = {
         'user': request.user, 'title': _('Конкурсы'), 'current_elem': 'contests',
-        'breadcrumbs': {_('Главная'): 'home', _('Личный кабинет'): 'profile', _('Конкурсы'): 'contests'}
+        'breadcrumbs': {_('Главная'): 'home', _('Личный кабинет'): 'edit_profile', _('Конкурсы'): 'contests'}
     }
     return render(
         request,
@@ -264,7 +255,7 @@ def contests(request):
 def place_contract(request):
     context = {
         'user': request.user, 'title': _('Разместить заказ'), 'current_elem': 'place_contract',
-        'breadcrumbs': {_('Главная'): 'home', _('Личный кабинет'): 'profile', _('Разместить заказ'): 'place_contract'}
+        'breadcrumbs': {_('Главная'): 'home', _('Личный кабинет'): 'edit_profile', _('Разместить заказ'): 'place_contract'}
     }
     return render(
         request,
@@ -277,7 +268,7 @@ def place_contract(request):
 def announce_contest(request):
     context = {
         'user': request.user, 'title': _('Объявить конкурс'), 'current_elem': 'announce_contest',
-        'breadcrumbs': {_('Главная'): 'home', _('Личный кабинет'): 'profile', _('Объявить конкурс'): 'announce_contest'}
+        'breadcrumbs': {_('Главная'): 'home', _('Личный кабинет'): 'edit_profile', _('Объявить конкурс'): 'announce_contest'}
     }
     return render(
         request,
@@ -290,7 +281,7 @@ def announce_contest(request):
 def search_contractor(request):
     context = {
         'user': request.user, 'title': _('Поиск исполнителя'), 'current_elem': 'search_contractor',
-        'breadcrumbs': {_('Главная'): 'home', _('Личный кабинет'): 'profile', _('Поиск исполнителя'): 'search_contractor'}
+        'breadcrumbs': {_('Главная'): 'home', _('Личный кабинет'): 'edit_profile', _('Поиск исполнителя'): 'search_contractor'}
     }
     return render(
         request,
@@ -303,7 +294,7 @@ def search_contractor(request):
 def chat(request):
     context = {
         'user': request.user, 'title': _('Чат'), 'current_elem': 'chat',
-        'breadcrumbs': {_('Главная'): 'home', _('Личный кабинет'): 'profile', _('Чат'): 'chat'}
+        'breadcrumbs': {_('Главная'): 'home', _('Личный кабинет'): 'edit_profile', _('Чат'): 'chat'}
     }
     return render(
         request,
@@ -316,7 +307,7 @@ def chat(request):
 def support(request):
     context = {
         'user': request.user, 'title': _('Помощь'), 'current_elem': 'support',
-        'breadcrumbs': {_('Главная'): 'home', _('Личный кабинет'): 'profile', _('Помощь'): 'support'}
+        'breadcrumbs': {_('Главная'): 'home', _('Личный кабинет'): 'edit_profile', _('Помощь'): 'support'}
     }
     return render(
         request,
@@ -329,7 +320,7 @@ def support(request):
 def account_notification_view(request):
     context = {
         'user': request.user, 'title': _('Уведомления'), 'current_elem': 'notifications',
-        'breadcrumbs': {_('Главная'): 'home', _('Личный кабинет'): 'profile', _('Уведомления'): 'notifications'}
+        'breadcrumbs': {_('Главная'): 'home', _('Личный кабинет'): 'edit_profile', _('Уведомления'): 'notifications'}
     }
     return render(
         request,
@@ -342,7 +333,7 @@ def account_notification_view(request):
 def account_verification_view(request):
     context = {
         'user': request.user, 'title': _('Верификация'), 'current_elem': 'verification',
-        'breadcrumbs': {_('Главная'): 'home', _('Личный кабинет'): 'profile', _('Верификация'): 'verification'}
+        'breadcrumbs': {_('Главная'): 'home', _('Личный кабинет'): 'edit_profile', _('Верификация'): 'verification'}
     }
     return render(
         request,
@@ -355,7 +346,7 @@ def account_verification_view(request):
 def account_agreement_view(request):
     context = {
         'user': request.user, 'title': _('Договор'), 'current_elem': 'agreement',
-        'breadcrumbs': {_('Главная'): 'home', _('Личный кабинет'): 'profile', _('Договор'): 'agreement'}
+        'breadcrumbs': {_('Главная'): 'home', _('Личный кабинет'): 'edit_profile', _('Договор'): 'agreement'}
     }
     return render(
         request,
@@ -368,7 +359,7 @@ def account_agreement_view(request):
 def account_security_view(request):
     context = {
         'user': request.user, 'title': _('Пароль и безопасность'), 'current_elem': 'password_and_security',
-        'breadcrumbs': {_('Главная'): 'home', _('Личный кабинет'): 'profile', _('Пароль и безопасность'): 'password_and_security'}
+        'breadcrumbs': {_('Главная'): 'home', _('Личный кабинет'): 'edit_profile', _('Пароль и безопасность'): 'password_and_security'}
     }
     return render(
         request,

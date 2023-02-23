@@ -1,0 +1,230 @@
+{% load i18n %}
+{% load static %}
+{% load app_users_tags %}
+
+<table class="tbl1">
+    <thead>
+    <tr>
+        <td>Уровень структуры</td>
+        <td>Новые участники</td>
+        <td></td>
+        <td>Конкурсы</td>
+        <td>Кол-во участников</td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td>1 уровень</td>
+        <td>1000</td>
+        <td>1000</td>
+        <td>500</td>
+        <td>7</td>
+    </tr>
+    <tr>
+        <td>1 уровень</td>
+        <td>1000</td>
+        <td>1000</td>
+        <td>500</td>
+        <td>7</td>
+    </tr>
+    <tr>
+        <td>1 уровень</td>
+        <td>1000</td>
+        <td>1000</td>
+        <td>500</td>
+        <td>7</td>
+    </tr>
+    <tr>
+        <td>Итого</td>
+        <td>1000</td>
+        <td>1000</td>
+        <td>500</td>
+        <td>7</td>
+    </tr>
+    </tbody>
+</table>
+<div class="tbl1-result">
+    Итого: начислено за январь 2023: <span>8 200 р.</span>
+</div>
+
+<div class="link">
+    <p>Ваша реферальная ссылка для подключения новых участников Платформы:</p>
+    <input type="text" value="https://{{ request|get_domain }}{{ user.get_referral_url }}" id="refLink" readonly><br/>
+    <p id="copySuccess">{% trans 'Ссылка скопирована' %}</p>
+    <button onclick="copyLink()">{% trans 'Скопировать ссылку' %}</button>
+</div>
+
+<div class="text">
+    <div class="name">
+        Список кандидатов на получение реферальной ссылки
+    </div>
+    <p>Пожалуйста проверьте профпригодность кандидата и примите решение по добавлению этого кандидата в вашу структуру
+        или отказе ему в этом в течении 48 часов с момента его заявки.</p>
+    <p>При клике на кнопку «выслать» кандидат получит вашу реферальную ссылку и сможет пройти регистрацию. При отказе
+        кандидат получит сообщение, что его квалификация недостаточна для регистрации на нашей Платформе.</p>
+</div>
+<div class="tbl2">
+    <table>
+        <thead>
+        <tr>
+            <td>Время</td>
+            <td>Имя</td>
+            <td>E-mail</td>
+            <td>Ссылки на работы</td>
+            <td>Картинки работ</td>
+            <td>Решение <br/>Рекомендателя</td>
+        </tr>
+        </thead>
+        <tbody>
+        <tr>
+            <td>24.01_23:02</td>
+            <td>Анастасия</td>
+            <td><a href="#">maxi@mail.ru</a></td>
+            <td>
+                <div class="links">
+                    <a href="#"></a>
+                    <a href="#"></a>
+                    <a href="#"></a>
+                    <a href="#"></a>
+                    <a href="#"></a>
+                    <a href="#"></a>
+                </div>
+            </td>
+            <td>
+                <div class="images">
+                    <a href="#">1 .jpg</a>, <a href="#">2.jpg</a>, <a href="#">3.jpg</a>, <a href="#">4.jpg</a>, <a
+                        href="#">5.jpg</a>
+                </div>
+            </td>
+            <td>
+                <div class="buttons flex">
+                    <button><span></span> отказать</button>
+                    <button>выслать <span></span></button>
+                </div>
+            </td>
+        </tr>
+        <tr>
+            <td>24.01_23:02</td>
+            <td>Анастасия</td>
+            <td><a href="#">maxi@mail.ru</a></td>
+            <td>
+                <div class="links">
+                    <a href="#"></a>
+                    <a href="#"></a>
+                    <a href="#"></a>
+                    <a href="#"></a>
+                    <a href="#"></a>
+                    <a href="#"></a>
+                </div>
+            </td>
+            <td>
+                <div class="images">
+                    <a href="#">1 .jpg</a>, <a href="#">2.jpg</a>, <a href="#">3.jpg</a>, <a href="#">4.jpg</a>, <a
+                        href="#">5.jpg</a>
+                </div>
+            </td>
+            <td>
+                <div class="buttons flex">
+                    <button><span></span> отказать</button>
+                    <button>выслать <span></span></button>
+                </div>
+            </td>
+        </tr>
+        <tr>
+            <td>24.01_23:02</td>
+            <td>Анастасия</td>
+            <td><a href="#">maxi@mail.ru</a></td>
+            <td>
+                <div class="links">
+                    <a href="#"></a>
+                    <a href="#"></a>
+                    <a href="#"></a>
+                    <a href="#"></a>
+                    <a href="#"></a>
+                    <a href="#"></a>
+                </div>
+            </td>
+            <td>
+                <div class="images">
+                    <a href="#">1 .jpg</a>, <a href="#">2.jpg</a>, <a href="#">3.jpg</a>, <a href="#">4.jpg</a>, <a
+                        href="#">5.jpg</a>
+                </div>
+            </td>
+            <td>
+                <div class="buttons flex">
+                    <button><span></span> отказать</button>
+                    <button>выслать <span></span></button>
+                </div>
+            </td>
+        </tr>
+        <tr>
+            <td>24.01_23:02</td>
+            <td>Анастасия</td>
+            <td><a href="#">maxi@mail.ru</a></td>
+            <td>
+                <div class="links">
+                    <a href="#"></a>
+                    <a href="#"></a>
+                    <a href="#"></a>
+                    <a href="#"></a>
+                    <a href="#"></a>
+                    <a href="#"></a>
+                </div>
+            </td>
+            <td>
+                <div class="images">
+                    <a href="#">1 .jpg</a>, <a href="#">2.jpg</a>, <a href="#">3.jpg</a>, <a href="#">4.jpg</a>, <a
+                        href="#">5.jpg</a>
+                </div>
+            </td>
+            <td>
+                <div class="buttons flex">
+                    <button><span></span> отказать</button>
+                    <button>выслать <span></span></button>
+                </div>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+<div class="text">
+    <p>В случае, если вы не приняли решение по кандидату в течении 48 часов, заявка кандидата передается другому
+        фрилансеру. Вы же утрачиваете возможность участвовать в построении структуры благодаря кандидатам, пришедшим по
+        рекламе.</p>
+    <p>Для того, чтобы не попасть в такую ситуацию, когда, например, вы находитесь в отпуске, вы можете поставить работу
+        этой программы на «паузу» и в ваш кабинет не будут поступать кандидаты для проверки их профпригодности.</p>
+</div>
+<div class="status flex">
+    <p>Статус программы по проверке кандидатов на профпригодность</p>
+    <div class="check flex">
+        <input type="radio" class="radio" id="r1" name="r1" checked><label for="r1">вкл</label>
+        <input type="radio" class="radio" id="r2" name="r1"><label for="r2">выкл</label>
+    </div>
+</div>
+
+
+<!--    !!! ВЕРСТАЛЬЩИКУ: удалить отсюда эти скрипты и стили при вёрстке  -->
+<script>
+    function copyLink() {
+        /* Находим текстовое поле */
+        var copyText = document.getElementById("refLink");
+
+        /* Выбираем текстовое поле */
+        copyText.select();
+        copyText.setSelectionRange(0, 99999); /* Для мобильных устройств */
+
+        /* Копируем текст из текстового поля */
+        navigator.clipboard.writeText(copyText.value);
+
+        /* Выводим сообщение об успешном копировании */
+        document.getElementById("copySuccess").style.display = 'inline';
+    }
+</script>
+
+<style>
+    #copySuccess {
+        display: none;
+        color: green;
+    }
+</style>
+<!--    !!! ВЕРСТАЛЬЩИКУ: удалить отсюда эти скрипты и стили при вёрстке  -->

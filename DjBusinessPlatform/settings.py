@@ -51,7 +51,8 @@ INSTALLED_APPS = [
     'app_settings.apps.AppSettingsConfig',
     'app_survey.apps.AppSurveyConfig',
     'app_news.apps.AppNewsConfig',
-    'app_personal_account',
+    'app_personal_account.apps.AppPersonalAccountConfig',
+    'app_referral_program.apps.AppReferralProgramConfig',
 
 ]
 

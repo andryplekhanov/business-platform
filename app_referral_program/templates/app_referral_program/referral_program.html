@@ -1,0 +1,26 @@
+{% extends 'app_users/profile/_profile_base.html' %}
+{% load i18n %}
+{% load static %}
+
+{% block content %}
+    <div class="bonuses">
+        <div class="flex">
+            <div class="top-nav">
+                <a href="#">{% trans 'Начислено бонусов' %}</a>
+                <a href="#" class="active">{% trans 'Описание программы' %}</a>
+            </div>
+            {% if user.status == '2' and user.paid_entrance_fee %}
+                <div class="top-date">
+                    {% trans 'Расчет производится каждые 24 часа' %}
+                </div>
+            {% endif %}
+        </div>
+
+        {% if user.status == '2' and user.paid_entrance_fee %}
+            {% include 'app_referral_program/ref_for_approved.html' %}
+        {% else %}
+            {% include 'app_referral_program/ref_for_not_approved.html' %}
+        {% endif %}
+    </div>
+
+{% endblock %}
