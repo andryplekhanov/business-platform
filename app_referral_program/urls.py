@@ -4,6 +4,6 @@ from app_referral_program.views import *
 
 urlpatterns = [
     path("", referral_program, name="referral_program"),
-    # path("signup/<int:pk>/", SignUp.as_view(), name="signup"),
+    path("pay_ent_fee", pay_ent_fee, name="pay_ent_fee"),
 
 ]
