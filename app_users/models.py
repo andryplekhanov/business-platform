@@ -92,3 +92,14 @@ class CustomUser(AbstractBaseUser, MPTTModel, PermissionsMixin):
     def personal_account(self):
         """ лицевой счет """
         return f"{self.date_joined.strftime('%y%m%d')}{self.pk}"
+
+    def save(self, *args, **kwargs):
+        # потом добавить в модель поле 'прошел верификацию' и это поле добавить в список условий ниже
+        conditions = [
+            self.status == '1', self.is_active, self.paid_entrance_fee, self.email_confirmed, self.phone_number,
+            self.last_name, self.first_name, self.country, self.address, self.personal_number,
+            self.document, self.document_number, self.document_issued,
+        ]
+        if all(conditions):
+            self.status = '2'
+        super().save(*args, **kwargs)
