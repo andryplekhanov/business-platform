@@ -63,9 +63,6 @@ class SignUp(generic.CreateView):
             instance = form.save(commit=False)
             instance.parent = referrer
             instance.status = '1'
-            if User.objects.filter(is_core=True).count() < 500:
-                instance.is_core = True
-            instance.save()
             email = form.cleaned_data.get('email')
             password = form.cleaned_data.get('password1')
             user = authenticate(email=email, password=password)
@@ -108,7 +105,7 @@ def login_user(request):
                 send_email_for_verify(request, user)
                 return HttpResponseRedirect(reverse('confirm_email'))
             login(request, user)
-            return HttpResponseRedirect(reverse('profile'))
+            return HttpResponseRedirect(reverse('home'))
         else:
             return HttpResponseRedirect(reverse('home'))
 
