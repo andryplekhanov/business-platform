@@ -35,6 +35,7 @@ class Transaction(models.Model):
     balance_after = models.DecimalField(_('баланс после транзакции'), default=0, max_digits=18, decimal_places=2)
     datetime = models.DateTimeField(_('дата транзакции'), auto_now_add=True, db_index=True)
     comment = models.ForeignKey(User, on_delete=models.SET_NULL, verbose_name=_('комментарий'), null=True, blank=True)
+    exist = models.BooleanField(default=False)
 
     class Meta:
         ordering = ('-datetime',)
@@ -45,17 +46,19 @@ class Transaction(models.Model):
         return f'#{self.pk}: {self.user} {self.user.personal_account}'
 
     def save(self, *args, **kwargs):
-        user = User.objects.get(id=self.user.id)
-        old_balance = user.balance
-        self.balance_before = old_balance
+        if not self.exist:
+            user = User.objects.get(id=self.user.id)
+            old_balance = user.balance
+            self.balance_before = old_balance
 
-        new_balance = old_balance
-        if self.direction == 'CRE':
-            new_balance = old_balance + self.amount
-        elif self.direction == 'DEB':
-            new_balance = old_balance - self.amount
-        self.balance_after = new_balance
-        user.balance = new_balance
-        user.save(update_fields=['balance', ])
+            new_balance = old_balance
+            if self.direction == 'CRE':
+                new_balance = old_balance + self.amount
+            elif self.direction == 'DEB':
+                new_balance = old_balance - self.amount
+            self.balance_after = new_balance
+            user.balance = new_balance
+            user.save(update_fields=['balance', ])
+            self.exist = True
         super().save(*args, **kwargs)
 

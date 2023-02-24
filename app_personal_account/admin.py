@@ -9,7 +9,7 @@ class TransactionAdmin(admin.ModelAdmin):
     list_display = ('id', 'get_user', 'get_personal_account', 'balance_before', 'amount', 'direction', 'reason', 'datetime', 'balance_after')
     list_filter = ('direction', 'reason')
     search_fields = ('user__email', 'user__last_name' )
-    readonly_fields = ('balance_before', 'balance_after')
+    readonly_fields = ('balance_before', 'balance_after', 'exist')
 
     def get_user(self, obj):
         link = reverse("admin:app_users_customuser_change", args=[obj.user_id])

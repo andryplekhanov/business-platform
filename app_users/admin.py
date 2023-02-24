@@ -9,7 +9,7 @@ from .models import CustomUser
 
 class TransactionInline(admin.TabularInline):
     model = Transaction
-    readonly_fields = ['datetime', 'balance_before', 'balance_after']
+    readonly_fields = ['datetime', 'balance_before', 'balance_after', 'exist']
     fk_name = 'user'
 
 
