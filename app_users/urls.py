@@ -25,8 +25,8 @@ urlpatterns = [
     path('profile/password-security/', account_security_view, name='password_and_security'),
 
     path('profile/balance/', balance, name='balance'),
+    path('profile/balance/shareholders-book/', shareholders_book, name='shareholders_book'),
     path('profile/topup_withdrawal/', topup_withdrawal, name='topup_withdrawal'),
-    path('profile/portfolio/', portfolio, name='portfolio'),
     path('profile/contracts/', contracts, name='contracts'),
     path('profile/contests/', contests, name='contests'),
     path('profile/place_contract/', place_contract, name='place_contract'),

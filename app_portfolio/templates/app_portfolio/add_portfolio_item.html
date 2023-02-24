@@ -1,0 +1,99 @@
+{% extends 'app_portfolio/_portfolio_base.html' %}
+{% load i18n %}
+{% load static %}
+
+{% block portfolio %}
+    <div class="works">
+        <div class="item">
+            <p>{% trans 'Новая работа' %}</p>
+            &nbsp;
+        </div>
+        <div class="item">
+            <p>{% trans 'Название работы' %}</p>
+            <input type="text">
+        </div>
+        <div class="item">
+            <div class="select">
+                <input type="radio" class="radio" id="r1" name="r1"><label for="r1">{% trans 'Первая' %}</label>
+                <input type="radio" class="radio" id="r2" name="r1"><label for="r2">{% trans 'Последняя' %}</label>
+                <input type="radio" class="radio" id="r3" name="r1"><label for="r3">{% trans 'По счёту' %}</label>
+            </div>
+        </div>
+        <div class="item">
+            <p>{% trans 'Раздел' %}</p>
+            <span class="cat">Дизайн и Арт / Презентации</span>
+        </div>
+        <div class="item">
+            <div class="file">
+                <div class="top-text">
+                    {% trans 'Превью' %} <span>{% trans 'графическое' %}</span> {% trans 'текстовое' %}
+                </div>
+                <div class="cover">
+                    <div class="name">
+                        {% trans 'Обложка работы' %}
+                    </div>
+                    <button>{% trans 'ЗАГРУЗИТЬ КАРТИНКУ' %}</button>
+                    <div class="name">
+                        {% trans 'Требования к файлу' %}
+                    </div>
+                    {% trans 'Разрешается добавлять не более 1 файла объемом не более 10 MБ. Формат: jpg, jpeg, png Минимальный размер изображения 600x600px' %}
+                </div>
+                <div class="top-text">
+                    {% trans 'Основные файлы - максимум 4 файла, объемом не более 10 Мб каждый.' %}
+                </div>
+                <div class="upload">
+                    <div>
+                        {% trans 'Перетащите файл сюда' %}
+                        <span>{% trans 'или' %} {% trans 'выберите с диска' %}</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="item">
+            <p>{% trans 'Ссылка' %}</p>
+            <input type="text">
+        </div>
+        <div class="item">
+            <p>{% trans 'Видео' %}</p>
+            <input type="text">
+            <div class="input-text">
+                {% trans 'Вставьте в поле ссылку, которую вы получили на видео хостинге YouTube, RuTube или Vimeo.' %}
+            </div>
+        </div>
+        <div class="item">
+            <p>{% trans 'Описание' %}</p>
+            <textarea></textarea>
+            <div class="input-text">
+                {% trans 'Можно использовать теги' %} &lt;b&gt;&lt;i&gt;&lt;p&gt;&lt;ul&gt;&lt;li&gt;
+            </div>
+        </div>
+        <div class="item">
+            <p>{% trans 'Стоимость' %}</p>
+            <div class="fields">
+                <input type="text" value="0.00">
+                <select>
+                    <option>РУБ.</option>
+                    <option>РУБ.</option>
+                    <option>РУБ.</option>
+                </select>
+            </div>
+        </div>
+        <div class="item">
+            <p class="big">{% trans 'Потрачено времени' %}</p>
+            <div class="fields">
+                <input type="text" value="0">
+                <select>
+                    <option>в часах</option>
+                    <option>в часах</option>
+                    <option>в часах</option>
+                </select>
+            </div>
+        </div>
+        <div class="item">
+            <div class="button">
+                <button>{% trans 'ДОБАВИТЬ РАБОТУ' %}</button>
+                <a href="{% url 'add_portfolio_item' %}">{% trans 'или' %} {% trans 'Отменить' %}</a>
+            </div>
+        </div>
+    </div>
+{% endblock %}

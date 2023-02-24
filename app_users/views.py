@@ -43,7 +43,7 @@ class SignUp(generic.CreateView):
         if not referrer:
             return redirect('signup_error')
 
-        if referrer.status != '2' and not referrer.is_core:
+        if referrer.status != '2':
             return redirect('signup_error')
 
         if request.user.id == referrer.id:
@@ -209,19 +209,7 @@ def topup_withdrawal(request):
     )
 
 
-@login_required
-def portfolio(request):
-    context = {
-        'user': request.user, 'title': _('Портфолио'), 'current_elem': 'portfolio',
-        'breadcrumbs': {_('Главная'): 'home', _('Личный кабинет'): 'edit_profile', _('Портфолио'): 'portfolio'}
-    }
-    return render(
-        request,
-        'app_users/others/portfolio.html',
-        context=context
-    )
-
-
+# в отдельное приложение
 @login_required
 def contracts(request):
     context = {
@@ -235,6 +223,7 @@ def contracts(request):
     )
 
 
+# в отдельное приложение
 @login_required
 def contests(request):
     context = {
@@ -248,6 +237,7 @@ def contests(request):
     )
 
 
+# в отдельное приложение
 @login_required
 def place_contract(request):
     context = {
@@ -261,6 +251,7 @@ def place_contract(request):
     )
 
 
+# в отдельное приложение
 @login_required
 def announce_contest(request):
     context = {
@@ -274,6 +265,7 @@ def announce_contest(request):
     )
 
 
+# в отдельное приложение
 @login_required
 def search_contractor(request):
     context = {
@@ -287,6 +279,7 @@ def search_contractor(request):
     )
 
 
+# в отдельное приложение
 @login_required
 def chat(request):
     context = {
@@ -361,5 +354,17 @@ def account_security_view(request):
     return render(
         request,
         'app_users/profile/password_security.html',
+        context=context
+    )
+
+
+@login_required
+def shareholders_book(request):
+    context = {
+        'user': request.user, 'title': _('Электронная книжка Пайщика'),
+    }
+    return render(
+        request,
+        'app_users/others/shareholders_book.html',
         context=context
     )

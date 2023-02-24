@@ -26,7 +26,9 @@ urlpatterns = [
     path("polls/", include("app_survey.urls")),  # голосование
     path("news/", include("app_news.urls")),  # новости
     path("referral/", include("app_referral_program.urls")),  # Реферальная программа
-    # path("", include("django.contrib.auth.urls")),
+    path("tickets/", include("app_tickets.urls")),  # Тикеты
+    path("", include("app_portfolio.urls")),  # Портфолио
+
 ]
 
 if settings.DEBUG:

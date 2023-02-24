@@ -3,5 +3,80 @@
 {% load static %}
 
 {% block content %}
-    Баланс
+    <div class="ballanse">
+        <div class="top-info">
+            <p>Л/с {{ user.personal_account }} - {{ user.balance }} р.</p>
+            <p>История операций</p>
+            <div class="select">
+                <a>Период <i class="fa fa-angle-down"></i></a>
+                <ul>
+                    <li><a href="#">Месяц</a></li>
+                    <li><a href="#">Последняя неделя</a></li>
+                    <li><a href="#">Две недели</a></li>
+                    <li><a href="#">Три недели</a></li>
+                    <li><a href="#">Квартал</a></li>
+                    <li><a href="#">Полгода</a></li>
+                    <li><a href="#">Год</a></li>
+                    <li><a href="#">Период с... по ...</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="history">
+            История операций
+            <div class="select">
+                Недели: <a>по неделям: <i class="fa fa-angle-down"></i></a>
+                <ul>
+                    <li><a href="#">по дням</a></li>
+                    <li><a href="#">по неделям</a></li>
+                    <li><a href="#">по месяцам</a></li>
+                    <li><a href="#">поквартально</a></li>
+                    <li><a href="#">по годам</a></li>
+                </ul>
+            </div>
+        </div>
+        <table>
+            <thead>
+            <tr>
+                <td>Начислено</td>
+                <td>Заказы</td>
+                <td>Конкурсы</td>
+                <td>Итоги за период</td>
+                <td>Выведено за период</td>
+            </tr>
+            </thead>
+            <tbody>
+            <tr>
+                <td>1 уровень</td>
+                <td>1000</td>
+                <td>1000</td>
+                <td>500</td>
+                <td>7</td>
+            </tr>
+            <tr>
+                <td>1 уровень</td>
+                <td>1000</td>
+                <td>1000</td>
+                <td>500</td>
+                <td>7</td>
+            </tr>
+            <tr>
+                <td>1 уровень</td>
+                <td>1000</td>
+                <td>1000</td>
+                <td>500</td>
+                <td>7</td>
+            </tr>
+            <tr>
+                <td>Итого</td>
+                <td>1000</td>
+                <td>1000</td>
+                <td>500</td>
+                <td>7</td>
+            </tr>
+            </tbody>
+        </table>
+        <div class="bottom-links">
+            Электронная книжка Пайщика <a href="{% url 'shareholders_book' %}"></a><a href="{% url 'shareholders_book' %}"></a>
+        </div>
+    </div>
 {% endblock %}

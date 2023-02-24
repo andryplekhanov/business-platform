@@ -1,0 +1,73 @@
+{% extends 'app_users/profile/_profile_base.html' %}
+{% load i18n %}
+{% load static %}
+
+{% block content %}
+    <div class="ticket">
+        <div class="block-name">
+            Помощь
+        </div>
+        <div class="top-text">
+            <span>Тикет-система</span>
+            В любое время вы можете задать интересующий вас вопрос, или обратиться для решения возникшей проблемы в нашу
+            службу поддержки.
+        </div>
+        <div class="top-link">
+            <a href="#"><span>Часто задаваемые вопросы</span></a>
+        </div>
+{#        <div class="top-link">#}
+{#            <a href="#"><span>СВЕРНУТЬ ОТВЕТЫ</span></a>#}
+{#        </div>#}
+        <div class="links">
+            <input type="text" placeholder="Что вас интересует?">
+            <ul>
+                <li><a href="#">Начало работы и верификация</a></li>
+                <li><a href="#">Вывод средств</a></li>
+                <li><a href="#">BItCoIn и электронные валюты</a></li>
+                <li><a href="#">Прием платежей на сайте и API</a></li>
+                <li><a href="#">Разное</a></li>
+                <li><a href="#">Сберегательные криптокошельки</a></li>
+                <li><a href="#">IBAN</a></li>
+            </ul>
+        </div>
+        <div class="flex">
+            <div class="menu">
+                <a href="#" class="active">ВХОДЯЩИЕ</a>
+                <a href="#">ОТПРАВЛЕННЫЕ</a>
+            </div>
+            <button class="create">СОЗДАТЬ ТИКЕТ</button>
+        </div>
+        <div class="empty">
+            <div class="text">
+                <span>Ваш ящик пуст</span>
+                Наша служба поддержки работает всегда!
+            </div>
+        </div>
+        <form>
+            <div class="name">
+                Тикет-система
+            </div>
+            <p>Тема</p>
+            <input type="text">
+            <p>Тема</p>
+            <select>
+                <option>Общие вопросы</option>
+                <option>Общие вопросы</option>
+                <option>Общие вопросы</option>
+            </select>
+            <p>Текст</p>
+            <textarea></textarea>
+            <div class="upload">
+                <p>ПРИКРЕПЛЕННЫЕ ФАЙЛЫ</p>
+                <button>ЗАГРУЗИТЬ</button>
+                <div>
+                    <p>(JPG, JPEG, GIF, PNG, HEIC, PDG, не более 8 MB)</p>
+                    <p>Вы можете загрузить до 2-ух файлов </p>
+                </div>
+            </div>
+            <div class="button">
+                <button>ОТПРАВИТЬ</button>
+            </div>
+        </form>
+    </div>
+{% endblock %}
