@@ -1,0 +1,82 @@
+{% extends 'app_portfolio/_portfolio_base.html' %}
+{% load i18n %}
+{% load static %}
+
+{% block portfolio %}
+    <div class="works">
+
+        <div class="item">
+            <p>{% trans 'Название работы' %}</p>
+            <div>{{ object.title }}</div>
+        </div>
+
+        <div class="item">
+            <p>{% trans 'Раздел' %}</p>
+            <div>{% if object.category.parent %}{{ object.category.parent }} / {% endif %}{{ object.category }}</div>
+        </div>
+
+        <div class="item">
+            <p>{% trans 'Описание' %}</p>
+        </div>
+        {% autoescape off %}
+            {{ object.description|safe }}
+        {% endautoescape %}
+
+        <div class="item">
+            <p>{% trans 'Обложка работы' %}</p>
+            {% if object.image %}
+                <img src="{{ object.image.url }}">
+            {% else %}
+                <img src="{% static 'assets/img/no_img.jpg' %}">
+            {% endif %}
+        </div>
+
+        {% if object.price %}
+            <div class="item">
+                <p>{% trans 'Стоимость' %}</p>
+                <div>{{ object.price }} {{ object.get_price_currency_display }}</div>
+            </div>
+        {% endif %}
+
+        {% if object.time_spent %}
+            <div class="item">
+                <p class="big">{% trans 'Потрачено времени' %}</p>
+                <div>{{ object.time_spent }} {{ object.get_time_type_display }}</div>
+            </div>
+        {% endif %}
+
+        {% if object.link %}
+            <div class="item">
+                <p>{% trans 'Ссылка' %}</p>
+                <div>{{ object.link }}</div>
+            </div>
+        {% endif %}
+
+        {% if object.video %}
+            <div class="item">
+                <p>{% trans 'Видео' %}</p>
+                <div>{{ object.video }}</div>
+            </div>
+        {% endif %}
+
+        {% if object.files.all %}
+            <div class="item">
+                <p>{% trans 'Файлы' %}</p>
+                {% for file in object.files.all %}
+                    <div><a href="{{ file.file.url }}" target="_blank">{{ file }}</a></div>
+                {% endfor %}
+            </div>
+        {% endif %}
+
+        {% if object.user == request.user %}
+            <div class="item">
+                <div class="button">
+                    <button onclick='window.location.href = "{% url 'edit_work' object.pk %}";'>
+                        {% trans 'Редактировать' %}
+                    </button>
+                </div>
+            </div>
+        {% endif %}
+
+    </div>
+{% endblock %}
