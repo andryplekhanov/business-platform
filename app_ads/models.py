@@ -20,7 +20,7 @@ class Category(MPTTModel):
     slug = models.SlugField(max_length=255, db_index=True, unique=True, verbose_name=_('url-адрес'))
     parent = TreeForeignKey('self', on_delete=models.PROTECT, null=True, blank=True, related_name='children',
                             db_index=True, verbose_name=_('родительская категория'))
-    image = models.ImageField(blank=True, upload_to='category/', verbose_name=_('изображение'), db_index=True,
+    image = models.ImageField(blank=True, upload_to='category/%Y/%m/%d/', verbose_name=_('изображение'), db_index=True,
                               validators=[image_validator, image_size_validate])
 
     class MPTTMeta:

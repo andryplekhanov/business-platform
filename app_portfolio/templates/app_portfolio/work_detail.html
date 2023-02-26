@@ -59,20 +59,31 @@
             </div>
         {% endif %}
 
-        {% if object.files.all %}
-            <div class="item">
-                <p>{% trans 'Файлы' %}</p>
-                {% for file in object.files.all %}
-                    <div><a href="{{ file.file.url }}" target="_blank">{{ file }}</a></div>
-                {% endfor %}
-            </div>
-        {% endif %}
+        <div class="item">
+            <p>{% trans 'Файлы' %}</p>
+
+            {% if object.file1 %}
+                <div><a href="{{ object.file1.url }}" target="_blank">{{ object.file1 }}</a></div>
+            {% endif %}
+            {% if object.file2 %}
+                <div><a href="{{ object.file2.url }}" target="_blank">{{ object.file2 }}</a></div>
+            {% endif %}
+            {% if object.file3 %}
+                <div><a href="{{ object.file3.url }}" target="_blank">{{ object.file3 }}</a></div>
+            {% endif %}
+            {% if object.file4 %}
+                <div><a href="{{ object.file4.url }}" target="_blank">{{ object.file4 }}</a></div>
+            {% endif %}
+        </div>
 
         {% if object.user == request.user %}
             <div class="item">
                 <div class="button">
                     <button onclick='window.location.href = "{% url 'edit_work' object.pk %}";'>
                         {% trans 'Редактировать' %}
+                    </button>
+                    <button onclick='window.location.href = "{% url 'delete_work' object.pk %}";'>
+                        {% trans 'Удалить работу' %}
                     </button>
                 </div>
             </div>

@@ -47,7 +47,7 @@ class CustomUser(AbstractBaseUser, MPTTModel, PermissionsMixin):
     parent = TreeForeignKey('self', on_delete=models.PROTECT, null=True, blank=True, related_name='children',
                             db_index=True, verbose_name=_('родитель'))
 
-    avatar = models.ImageField(upload_to='avatars/', null=True, blank=True, validators=[image_validator, avatar_size_validate])
+    avatar = models.ImageField(upload_to='avatars/%Y/%m/%d/', null=True, blank=True, validators=[image_validator, avatar_size_validate])
     phone_regex = RegexValidator(regex=r'^\+\d{11,15}', message=_("Номер телефона должен быть в формате: '+79012345678'."))
     phone_number = models.CharField(validators=[phone_regex], max_length=17, blank=True, verbose_name=_('номер телефона'), db_index=True)
     balance = models.DecimalField(max_digits=10, decimal_places=2, default=0, verbose_name=_('баланс'), db_index=True)

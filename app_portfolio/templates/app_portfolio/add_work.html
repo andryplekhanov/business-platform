@@ -20,6 +20,11 @@
         {% endif %}
 
         <div class="item">
+            <p>{% trans 'Новая работа' %}</p>
+            &nbsp;
+        </div>
+
+        <div class="item">
             <p>{% trans 'Название работы' %}</p>
             {{ form.title }}
             {% if form.title.errors %}
@@ -80,7 +85,6 @@
                     </div>
                     {% trans 'Разрешается добавлять не более 1 файла объемом не более 10 MБ. Формат: jpg, jpeg, png Минимальный размер изображения 600x600px' %}
                 </div>
-
 
                 <div class="top-text">
                     {% trans 'Основные файлы - максимум 4 файла, объемом не более 10 Мб каждый.' %}
@@ -212,11 +216,8 @@
 
         <div class="item">
             <div class="button">
-                <button type="submit">{% trans 'СОХРАНИТЬ ИЗМЕНЕНИЯ' %}</button>
+                <button type="submit">{% trans 'ДОБАВИТЬ РАБОТУ' %}</button>
                 <a href="{% url 'portfolio_best' %}">{% trans 'или' %} {% trans 'Отменить' %}</a>
-            </div>
-            <div class="button">
-                <a href="{% url 'delete_work' object.pk %}">{% trans 'Удалить работу' %}</a>
             </div>
         </div>
 

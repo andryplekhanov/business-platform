@@ -8,6 +8,7 @@ User = get_user_model()
 class Transaction(models.Model):
     REASON_CHOICES = (
         ("NR", _("Нет причины")),  # No Reason
+        ("ERR", _("Ошибка")),  # Error
         ("СP", _("Оплата сделки")),  # Contract Payment
         ("DF", _("Фонд развития - вступительный взнос")),  # Development Fund
         ("CF", _("Фонд потребления - вступительный взнос")),  # Consumption Fund
