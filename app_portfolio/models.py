@@ -13,7 +13,7 @@ User = get_user_model()
 class Work(models.Model):
     CURRENCY_CHOICES = (
         ("USD", _("$")),
-        ("RUB", _("₽")),
+        ("RUB", _("Р")),
         ("EUR", _("€")),
     )
     TIME_CHOICES = (

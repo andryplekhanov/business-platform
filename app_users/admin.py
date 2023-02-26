@@ -3,14 +3,14 @@ from django.urls import reverse
 from django.utils.html import format_html
 from django.utils.translation import gettext_lazy as _
 
-from app_personal_account.models import Transaction
+# from app_personal_account.models import Transaction
 from .models import CustomUser
 
 
-class TransactionInline(admin.TabularInline):
-    model = Transaction
-    readonly_fields = ['datetime', 'balance_before', 'balance_after', 'exist']
-    fk_name = 'user'
+# class TransactionInline(admin.TabularInline):
+#     model = Transaction
+#     readonly_fields = ['datetime', 'balance_before', 'balance_after', 'exist']
+#     fk_name = 'user'
 
 
 class CustomUserAdmin(admin.ModelAdmin):  # чтобы в админке отобразить древовидную структуру, нужно унаследовать от DjangoMpttAdmin
@@ -20,7 +20,7 @@ class CustomUserAdmin(admin.ModelAdmin):  # чтобы в админке ото�
     readonly_fields = ['date_joined', 'get_referrals', 'referral_url', 'parent', 'balance', 'get_personal_account']
     save_on_top = True
     actions = ['make_active', 'make_inactive']
-    inlines = [TransactionInline]
+    # inlines = [TransactionInline]
 
     def make_active(self, request, queryset):
         queryset.update(is_active=True)
