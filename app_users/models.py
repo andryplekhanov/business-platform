@@ -47,7 +47,7 @@ class CustomUser(AbstractBaseUser, MPTTModel, PermissionsMixin):
     parent = TreeForeignKey('self', on_delete=models.PROTECT, null=True, blank=True, related_name='children',
                             db_index=True, verbose_name=_('родитель'))
 
-    avatar = models.ImageField(upload_to='avatars/', null=True, blank=True, validators=[image_validator, avatar_size_validate])
+    avatar = models.ImageField(upload_to='avatars/%Y/%m/%d/', null=True, blank=True, validators=[image_validator, avatar_size_validate])
     phone_regex = RegexValidator(regex=r'^\+\d{11,15}', message=_("Номер телефона должен быть в формате: '+79012345678'."))
     phone_number = models.CharField(validators=[phone_regex], max_length=17, blank=True, verbose_name=_('номер телефона'), db_index=True)
     balance = models.DecimalField(max_digits=10, decimal_places=2, default=0, verbose_name=_('баланс'), db_index=True)
@@ -92,3 +92,14 @@ class CustomUser(AbstractBaseUser, MPTTModel, PermissionsMixin):
     def personal_account(self):
         """ лицевой счет """
         return f"{self.date_joined.strftime('%y%m%d')}{self.pk}"
+
+    def save(self, *args, **kwargs):
+        # потом добавить в модель поле 'прошел верификацию' и это поле добавить в список условий ниже
+        conditions = [
+            self.status == '1', self.is_active, self.paid_entrance_fee, self.email_confirmed, self.phone_number,
+            self.last_name, self.first_name, self.country, self.address, self.personal_number,
+            self.document, self.document_number, self.document_issued,
+        ]
+        if all(conditions):
+            self.status = '2'
+        super().save(*args, **kwargs)

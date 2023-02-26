@@ -36,7 +36,9 @@ class CompanySettings(SingletonModel):
     slogan = models.TextField(null=True, blank=True, verbose_name=_('слоган'))
     description = models.TextField(null=True, blank=True, verbose_name=_('краткое описание'))
     email = models.EmailField('email', null=True, blank=True)
-    phone_number = models.CharField(max_length=20, null=True, blank=True, verbose_name=_('номер телефона'))
+    phone_number1 = models.CharField(max_length=20, null=True, blank=True, verbose_name=_('номер телефона1'))
+    phone_number2 = models.CharField(max_length=20, null=True, blank=True, verbose_name=_('номер телефона2'))
+    phone_number3 = models.CharField(max_length=20, null=True, blank=True, verbose_name=_('номер телефона3'))
     address = models.CharField(max_length=150, null=True, blank=True, verbose_name=_('адрес'))
 
     def __str__(self):

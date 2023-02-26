@@ -1,0 +1,19 @@
+{% load i18n %}
+{% load static %}
+<div class="referal flex">
+    <div></div>
+    <div class="txt">
+        <p>{% trans 'Ваша реферальная ссылка для подключения новых участников Платформы' %}: <br/>
+        {% trans 'будет доступна после заполнения' %} <a href="{% url 'edit_profile' %}">{% trans 'Личных данных' %} >>></a></p>
+        {% if not user.paid_entrance_fee %}
+            <p>{% trans 'и после оплаты Вступления в наш Клуб в сумме' %} 2000 руб. <br/></p>
+            {% if user.balance >= 2000 %}
+                <button onclick='window.location.href = "{% url 'pay_ent_fee' %}";'>{% trans 'Оплатить' %}</button>
+            {% else %}
+                <p>{% trans 'Недостаточно средств на балансе для оплаты Вступительного взноса' %}.<br/>
+                {% trans 'Пожалуйста, пополните свой счёт' %}.</p>
+                <button onclick='window.location.href = "{% url 'topup_withdrawal' %}";'>{% trans 'Пополнить счёт' %}</button>
+            {% endif %}
+        {% endif %}
+    </div>
+</div>

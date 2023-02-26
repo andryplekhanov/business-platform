@@ -50,7 +50,11 @@ INSTALLED_APPS = [
     'app_static_pages.apps.AppStaticPagesConfig',
     'app_settings.apps.AppSettingsConfig',
     'app_survey.apps.AppSurveyConfig',
-    'app_news',
+    'app_news.apps.AppNewsConfig',
+    'app_personal_account.apps.AppPersonalAccountConfig',
+    'app_referral_program.apps.AppReferralProgramConfig',
+    'app_tickets.apps.AppTicketsConfig',
+    'app_portfolio.apps.AppPortfolioConfig',
 
 ]
 
