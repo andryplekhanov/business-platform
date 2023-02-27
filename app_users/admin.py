@@ -14,8 +14,8 @@ from .models import CustomUser
 
 
 class CustomUserAdmin(admin.ModelAdmin):  # чтобы в админке отобразить древовидную структуру, нужно унаследовать от DjangoMpttAdmin
-    list_display = ('id', 'email', 'email_confirmed', 'get_personal_account', 'last_name', 'first_name', 'get_referer', 'status', 'is_core', 'balance', 'date_joined')
-    list_filter = ('date_joined', 'is_staff', 'is_active', 'email_confirmed', 'is_core', 'status', 'paid_entrance_fee')
+    list_display = ('id', 'email', 'email_confirmed', 'get_personal_account', 'last_name', 'first_name', 'get_referer', 'status', 'is_core', 'on_vacation', 'balance', 'date_joined')
+    list_filter = ('date_joined', 'is_staff', 'is_active', 'on_vacation', 'email_confirmed', 'is_core', 'status', 'paid_entrance_fee')
     search_fields = ('id', 'email', 'last_name', 'first_name', 'patronymic', 'parent__last_name', 'parent__email', 'personal_number')
     readonly_fields = ['date_joined', 'get_referrals', 'referral_url', 'parent', 'balance', 'get_personal_account']
     save_on_top = True
