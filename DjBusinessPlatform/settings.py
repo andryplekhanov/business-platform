@@ -44,6 +44,7 @@ INSTALLED_APPS = [
     'ckeditor_uploader',
     'mptt',
     'django_mptt_admin',
+    'django_celery_beat',  # планировщик задач
 
     'app_users.apps.AppUsersConfig',
     'app_ads.apps.AppAdsConfig',
@@ -57,7 +58,7 @@ INSTALLED_APPS = [
     'app_portfolio.apps.AppPortfolioConfig',
 
 ]
-
+CELERY_BEAT_SCHEDULER = 'django_celery_beat.schedulers:DatabaseScheduler'  # планировщик задач
 SITE_ID = 1  # это нужно для корректной работы flatpages.
 
 MIDDLEWARE = [

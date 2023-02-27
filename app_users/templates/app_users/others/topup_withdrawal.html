@@ -3,106 +3,106 @@
 {% load static %}
 
 {% block content %}
-    <div class="money-out">
-        <div class="block-name">
-            Вывод средств
-        </div>
-        <p>Сумма и валюта вывода средств</p>
-        <div class="field">
-            <input type="text" value="0.00">
-            <select>
-                <option>РУБ.</option>
-                <option>РУБ.</option>
-                <option>РУБ.</option>
-            </select>
-        </div>
-        <button>Вывести</button>
-        <div class="tbl-name">
-            Банковские карты
-        </div>
-        <div class="tbl">
-            <table>
-                <tr>
-                    <td></td>
-                    <td>Тип карты</td>
-                    <td>Комиссия %</td>
-                    <td>Комиссия сумма</td>
-                    <td>Срок зачисления</td>
-                    <td>Будет списано</td>
-                    <td></td>
-                </tr>
-                <tr>
-                    <td><img src="{% static 'assets/img/payment1.png' %}"></td>
-                    <td>Visa</td>
-                    <td>3.50%</td>
-                    <td>0.00 руб.</td>
-                    <td>Моментально</td>
-                    <td>0.00 руб.</td>
-                    <td>
-                        <button>ПОПОЛНИТЬ</button>
-                    </td>
-                </tr>
-                <tr>
-                    <td><img src="{% static 'assets/img/payment2.png' %}"></td>
-                    <td>Mastercard</td>
-                    <td>3.50%</td>
-                    <td>0.00 руб.</td>
-                    <td>Моментально</td>
-                    <td>0.00 руб.</td>
-                    <td>
-                        <button>ПОПОЛНИТЬ</button>
-                    </td>
-                </tr>
-            </table>
-        </div>
-        <div class="tbl-name">
-            Банковские карты
-        </div>
-        <div class="tbl">
-            <table>
-                <tr>
-                    <td></td>
-                    <td>Тип карты</td>
-                    <td>Комиссия %</td>
-                    <td>Комиссия сумма</td>
-                    <td>Срок зачисления</td>
-                    <td>Будет списано</td>
-                    <td></td>
-                </tr>
-                <tr>
-                    <td><img src="{% static 'assets/img/payment1.png' %}"></td>
-                    <td>Visa</td>
-                    <td>3.50%</td>
-                    <td>0.00 руб.</td>
-                    <td>Моментально</td>
-                    <td>0.00 руб.</td>
-                    <td>
-                        <button>ПОПОЛНИТЬ</button>
-                    </td>
-                </tr>
-                <tr>
-                    <td><img src="{% static 'assets/img/payment2.png' %}"></td>
-                    <td>Mastercard</td>
-                    <td>3.50%</td>
-                    <td>0.00 руб.</td>
-                    <td>Моментально</td>
-                    <td>0.00 руб.</td>
-                    <td>
-                        <button>ПОПОЛНИТЬ</button>
-                    </td>
-                </tr>
-                <tr>
-                    <td><img src="{% static 'assets/img/payment1.png' %}"></td>
-                    <td>Visa</td>
-                    <td>3.50%</td>
-                    <td>0.00 руб.</td>
-                    <td>Моментально</td>
-                    <td>0.00 руб.</td>
-                    <td>
-                        <button>ПОПОЛНИТЬ</button>
-                    </td>
-                </tr>
-            </table>
-        </div>
-    </div>
+{#    <div class="money-out">#}
+{#        <div class="block-name">#}
+{#            Вывод средств#}
+{#        </div>#}
+{#        <p>Сумма и валюта вывода средств</p>#}
+{#        <div class="field">#}
+{#            <input type="text" value="0.00">#}
+{#            <select>#}
+{#                <option>РУБ.</option>#}
+{#                <option>РУБ.</option>#}
+{#                <option>РУБ.</option>#}
+{#            </select>#}
+{#        </div>#}
+{#        <button>Вывести</button>#}
+{#        <div class="tbl-name">#}
+{#            Банковские карты#}
+{#        </div>#}
+{#        <div class="tbl">#}
+{#            <table>#}
+{#                <tr>#}
+{#                    <td></td>#}
+{#                    <td>Тип карты</td>#}
+{#                    <td>Комиссия %</td>#}
+{#                    <td>Комиссия сумма</td>#}
+{#                    <td>Срок зачисления</td>#}
+{#                    <td>Будет списано</td>#}
+{#                    <td></td>#}
+{#                </tr>#}
+{#                <tr>#}
+{#                    <td><img src="{% static 'assets/img/payment1.png' %}"></td>#}
+{#                    <td>Visa</td>#}
+{#                    <td>3.50%</td>#}
+{#                    <td>0.00 руб.</td>#}
+{#                    <td>Моментально</td>#}
+{#                    <td>0.00 руб.</td>#}
+{#                    <td>#}
+{#                        <button>ПОПОЛНИТЬ</button>#}
+{#                    </td>#}
+{#                </tr>#}
+{#                <tr>#}
+{#                    <td><img src="{% static 'assets/img/payment2.png' %}"></td>#}
+{#                    <td>Mastercard</td>#}
+{#                    <td>3.50%</td>#}
+{#                    <td>0.00 руб.</td>#}
+{#                    <td>Моментально</td>#}
+{#                    <td>0.00 руб.</td>#}
+{#                    <td>#}
+{#                        <button>ПОПОЛНИТЬ</button>#}
+{#                    </td>#}
+{#                </tr>#}
+{#            </table>#}
+{#        </div>#}
+{#        <div class="tbl-name">#}
+{#            Банковские карты#}
+{#        </div>#}
+{#        <div class="tbl">#}
+{#            <table>#}
+{#                <tr>#}
+{#                    <td></td>#}
+{#                    <td>Тип карты</td>#}
+{#                    <td>Комиссия %</td>#}
+{#                    <td>Комиссия сумма</td>#}
+{#                    <td>Срок зачисления</td>#}
+{#                    <td>Будет списано</td>#}
+{#                    <td></td>#}
+{#                </tr>#}
+{#                <tr>#}
+{#                    <td><img src="{% static 'assets/img/payment1.png' %}"></td>#}
+{#                    <td>Visa</td>#}
+{#                    <td>3.50%</td>#}
+{#                    <td>0.00 руб.</td>#}
+{#                    <td>Моментально</td>#}
+{#                    <td>0.00 руб.</td>#}
+{#                    <td>#}
+{#                        <button>ПОПОЛНИТЬ</button>#}
+{#                    </td>#}
+{#                </tr>#}
+{#                <tr>#}
+{#                    <td><img src="{% static 'assets/img/payment2.png' %}"></td>#}
+{#                    <td>Mastercard</td>#}
+{#                    <td>3.50%</td>#}
+{#                    <td>0.00 руб.</td>#}
+{#                    <td>Моментально</td>#}
+{#                    <td>0.00 руб.</td>#}
+{#                    <td>#}
+{#                        <button>ПОПОЛНИТЬ</button>#}
+{#                    </td>#}
+{#                </tr>#}
+{#                <tr>#}
+{#                    <td><img src="{% static 'assets/img/payment1.png' %}"></td>#}
+{#                    <td>Visa</td>#}
+{#                    <td>3.50%</td>#}
+{#                    <td>0.00 руб.</td>#}
+{#                    <td>Моментально</td>#}
+{#                    <td>0.00 руб.</td>#}
+{#                    <td>#}
+{#                        <button>ПОПОЛНИТЬ</button>#}
+{#                    </td>#}
+{#                </tr>#}
+{#            </table>#}
+{#        </div>#}
+{#    </div>#}
 {% endblock %}

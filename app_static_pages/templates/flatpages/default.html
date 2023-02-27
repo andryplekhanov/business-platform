@@ -6,8 +6,27 @@
     Если нужен title, то он в теге flatpage.title
 -->
 {% block middle %}
-    <div>
-        {{ flatpage.staticpage.description|replace_vars:request.user|safe|linebreaks }}
-        {{ flatpage.staticpage.text_block|replace_vars:request.user|safe|linebreaks }} <!-- Может быть пустым -->
-    </div>
+
+{#<div class="popup" style="display: block">#}
+<div style="max-width: 900px; margin: 0 auto; margin-top: 10px">
+		<div class="window big">
+			<a class="close"></a>
+			<div class="program flex">
+				<nav>
+{#					<ul>#}
+{#						<li><a href="#">ЦЕЛЬ ПРОГРАММЫ</a></li>#}
+{#						<li><a href="#">УЧАСТНИКИ ПРОГРАММЫ</a></li>#}
+{#						<li><a href="#">ЯДРО ПРОГРАММЫ</a></li>#}
+{#						<li><a href="#">СТРУКТУРА</a></li>#}
+{#						<li><a href="#">ИСТОЧНИК БОНУСОВ</a></li>#}
+{#						<li><a href="#">ВЫПЛАТА БОНУСОВ</a></li>#}
+{#					</ul>#}
+				</nav>
+				<div class="text">
+					{{ flatpage.staticpage.description|replace_vars:request.user|safe|linebreaks }}
+				</div>
+			</div>
+		</div>
+	</div>
+
 {% endblock %}
