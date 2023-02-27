@@ -44,6 +44,7 @@ class CustomUser(AbstractBaseUser, MPTTModel, PermissionsMixin):
     is_active = models.BooleanField(_('является активным'), default=True)
     is_staff = models.BooleanField(default=False, verbose_name=_('является сотрудником'))
     is_core = models.BooleanField(default=False, verbose_name=_('основатель'), db_index=True)
+    on_vacation = models.BooleanField(default=False, verbose_name=_('в отпуске'), db_index=True)
     parent = TreeForeignKey('self', on_delete=models.PROTECT, null=True, blank=True, related_name='children',
                             db_index=True, verbose_name=_('родитель'))
 

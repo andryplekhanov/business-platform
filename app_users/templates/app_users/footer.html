@@ -42,11 +42,12 @@
 
         <!--    ПРАВАЯ КОЛОНКА ССЫЛОК begin  -->
         <ul class="tar">
-            <li><a href="{{ regulation.first.url }}">{% trans 'Устав' %}</a></li>
-            <li><a href="{{ entry_agreement.first.url }}">{% trans 'Договор о вступлении' %}</a></li>
-            <li><a href="{{ audit_commission.first.url }}">{% trans 'О ревизионной комиссии' %}</a></li>
-            <li><a href="{{ contributions_and_funds.first.url }}">{% trans 'О взносах и фондах' %}</a></li>
-            <li><a href="{{ loans.first.url }}">{% trans 'О займах' %}</a></li>
+            <li><a href="{% static 'documents/Regulation.pdf' %}" target="_blank">{% trans 'Устав' %}</a></li>
+{#            <li><a href="{% static 'documents/Regulation.pdf' %}" target="_blank">{% trans 'Договор о вступлении' %}</a></li>#}
+            <li><a href="{% static 'documents/Provision_on_terms_and_definitions.pdf' %}" target="_blank">{% trans 'О терминах и определениях' %}</a></li>
+            <li><a href="{% static 'documents/Regulations_on_the_Audit_Commission.pdf' %}" target="_blank">{% trans 'О ревизионной комиссии' %}</a></li>
+            <li><a href="{% static 'documents/Regulations_on_contributions_and_funds.pdf' %}" target="_blank">{% trans 'О взносах и фондах' %}</a></li>
+            <li><a href="{% static 'documents/Regulations_on_loans.pdf' %}" target="_blank">{% trans 'О займах' %}</a></li>
         </ul>
         <!--    ПРАВАЯ КОЛОНКА ССЫЛОК finish  -->
 

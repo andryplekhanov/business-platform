@@ -10,7 +10,7 @@
                     <li>
                         <a href="{% url 'balance' %}" {% if current_elem == 'balance' %}class="active"{% endif %}>
                             <img src="{% static 'assets/img/menu1.svg' %}"> {% trans 'Баланс' %}
-                            <span>{{ request.user.balance }}</span> ₽
+                            <span>{{ request.user.balance }}</span> Р
                         </a>
                     </li>
                     <li>

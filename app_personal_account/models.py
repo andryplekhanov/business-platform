@@ -29,8 +29,8 @@ class Transaction(models.Model):
     )
 
     user = models.ForeignKey(User, related_name='transactions', on_delete=models.SET_NULL, verbose_name=_('пользователь'), null=True)
-    reason = models.CharField(choices=REASON_CHOICES, max_length=5, default="NR", verbose_name=_('причина'))
-    direction = models.CharField(choices=DIRECTION_CHOICES, max_length=5, verbose_name=_('тип операции'))
+    reason = models.CharField(choices=REASON_CHOICES, max_length=9, default="NR", verbose_name=_('причина'))
+    direction = models.CharField(choices=DIRECTION_CHOICES, max_length=9, verbose_name=_('тип операции'))
     amount = models.DecimalField(_('сумма'), default=0, max_digits=18, decimal_places=2)
     balance_before = models.DecimalField(_('баланс до транзакции'), default=0, max_digits=18, decimal_places=2)
     balance_after = models.DecimalField(_('баланс после транзакции'), default=0, max_digits=18, decimal_places=2)

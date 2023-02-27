@@ -12,7 +12,7 @@
                 <p>{{ user.last_name }} {{ user.first_name }} {{ user.patronymic }}</p>
                 <p>{% trans 'Дата вступления' %}: {{ user.date_joined|date }}</p>
                 <p>{% trans 'Лицевой счет' %} № {{ user.personal_account }}</p>
-                <div class="ballanse">{% trans 'Баланс' %}: {{ user.balance }} ₽</div>
+                <div class="ballanse">{% trans 'Баланс' %}: {{ user.balance }} Р</div>
             </div>
             <div class="avatar">
                 {% if user.avatar %}
