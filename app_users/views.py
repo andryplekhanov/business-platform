@@ -63,6 +63,7 @@ class SignUp(generic.CreateView):
             instance = form.save(commit=False)
             instance.parent = referrer
             instance.status = '1'
+            instance.save()
             email = form.cleaned_data.get('email')
             password = form.cleaned_data.get('password1')
             user = authenticate(email=email, password=password)

@@ -4934,6 +4934,8 @@ main {
   }
 }
 
+
+
 /*EXTRA STYLES*/
 
 .index-first-block .blocks span a {
@@ -4977,4 +4979,24 @@ main {
 
 #unread-polls-number {
   color: #00CCFF!important;
+}
+
+.signup-window .signup input {
+  background: rgba(31, 87, 195, 0.15);
+  border-radius: 6px;
+  border: 1px black solid;
+  height: 42px;
+  padding: 0 15px;
+  margin: 5px;
+}
+
+.signup-window .signup button {
+  background: #1F57C3;
+  border-radius: 8px;
+  height: 53px;
+  color: white;
+  font-weight: 600;
+  font-size: 24px;
+  margin-top: 30px;
+  margin-bottom: 30px;
 }

@@ -5,7 +5,7 @@
 {% get_flatpages '/about-platform/' as about_platform %}
 {% get_flatpages '/working-rules/' as working_rules %}
 {% get_flatpages '/regulation/' as regulation %}
-{% get_flatpages '/entry-agreement/' as entry_agreement %}
+{% get_flatpages '/entry-agreement-rus1/' as entry_agreement %}
 {% get_flatpages '/audit-commission/' as audit_commission %}
 {% get_flatpages '/contributions-and-funds/' as contributions_and_funds %}
 {% get_flatpages '/loans/' as loans %}
@@ -43,7 +43,7 @@
         <!--    ПРАВАЯ КОЛОНКА ССЫЛОК begin  -->
         <ul class="tar">
             <li><a href="{% static 'documents/Regulation.pdf' %}" target="_blank">{% trans 'Устав' %}</a></li>
-{#            <li><a href="{% static 'documents/Regulation.pdf' %}" target="_blank">{% trans 'Договор о вступлении' %}</a></li>#}
+            <li><a href="{{ entry_agreement.first.url }}" target="_blank">{% trans 'Договор о вступлении' %}</a></li>
             <li><a href="{% static 'documents/Provision_on_terms_and_definitions.pdf' %}" target="_blank">{% trans 'О терминах и определениях' %}</a></li>
             <li><a href="{% static 'documents/Regulations_on_the_Audit_Commission.pdf' %}" target="_blank">{% trans 'О ревизионной комиссии' %}</a></li>
             <li><a href="{% static 'documents/Regulations_on_contributions_and_funds.pdf' %}" target="_blank">{% trans 'О взносах и фондах' %}</a></li>
