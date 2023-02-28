@@ -1,0 +1,48 @@
+{% extends 'app_portfolio/_portfolio_base.html' %}
+{% load i18n %}
+{% load static %}
+
+{% block portfolio %}
+    <div class="portfolio">
+        {% for work in object_list %}
+        <a href="{{ work.get_absolute_url }}">{{ work.title }}</a>
+    {% empty %}
+                <div class="Order-infoContent">{% trans 'Вы ещё не загрузили ни одной работы' %}</div>
+            {% endfor %}
+    </div>
+
+{#    <div class="portfolio2 flex">#}
+{#        <div class="item">#}
+{#            <img src="img/pf.png">#}
+{#            <a href="#">1. Победитель Конкурса</a>#}
+{#        </div>#}
+{#        <div class="item">#}
+{#            <img src="img/pf.png">#}
+{#            <a href="#">1. Победитель Конкурса</a>#}
+{#        </div>#}
+{#        <div class="item">#}
+{#            <img src="img/pf.png">#}
+{#            <a href="#">1. Победитель Конкурса</a>#}
+{#        </div>#}
+{#        <div class="item">#}
+{#            <img src="img/pf.png">#}
+{#            <a href="#">1. Победитель Конкурса</a>#}
+{#        </div>#}
+{#        <div class="item">#}
+{#            <img src="img/pf.png">#}
+{#            <a href="#">1. Победитель Конкурса</a>#}
+{#        </div>#}
+{#        <div class="item">#}
+{#            <img src="img/pf.png">#}
+{#            <a href="#">1. Победитель Конкурса</a>#}
+{#        </div>#}
+{#        <div class="item">#}
+{#            <img src="img/pf.png">#}
+{#            <a href="#">1. Победитель Конкурса</a>#}
+{#        </div>#}
+{#        <div class="item">#}
+{#            <img src="img/pf.png">#}
+{#            <a href="#">1. Победитель Конкурса</a>#}
+{#        </div>#}
+{#    </div>#}
+{% endblock %}

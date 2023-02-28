@@ -1,0 +1,224 @@
+{% extends 'app_portfolio/_portfolio_base.html' %}
+{% load i18n %}
+{% load static %}
+
+{% block portfolio %}
+    <form class="works" method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+        {% if form.non_field_errors %}
+            {% for error in form.non_field_errors %}
+                <div>{{ error|escape }}</div>
+            {% endfor %}
+        {% endif %}
+
+        {% if messages %}
+            <div class="item">
+                {% for message in messages %}
+                    <div>{{ message }}</div>
+                {% endfor %}
+            </div>
+        {% endif %}
+
+        <div class="item">
+            <p>{% trans 'Название работы' %}</p>
+            {{ form.title }}
+            {% if form.title.errors %}
+                {% for error in form.title.errors %}
+                    <div>{{ error|escape }}</div>
+                {% endfor %}
+            {% endif %}
+        </div>
+
+        <div class="item">
+            <div class="select">
+                {% for radio in form.ordering %}
+{#                <input type="radio" class="radio" id="ord{{ forloop.counter }}" name="ord{{ forloop.counter }}">#}
+                    <label>{{ radio.tag }} {{ radio.choice_label }}</label>
+                {% endfor %}
+            </div>
+            {% if form.ordering.errors %}
+                {% for error in form.ordering.errors %}
+                    <div>{{ error|escape }}</div>
+                {% endfor %}
+            {% endif %}
+        </div>
+
+        <div class="item">
+            <p>{% trans 'Раздел' %}</p>
+            <span class="cat">{{ form.category }}</span>
+            {% if form.category.errors %}
+                {% for error in form.category.errors %}
+                    <div>{{ error|escape }}</div>
+                {% endfor %}
+            {% endif %}
+        </div>
+
+        <div class="item">
+            <div class="file">
+                <div class="top-text">
+                    {% trans 'Превью' %}
+{#                    <span>{% trans 'графическое' %}</span> {% trans 'текстовое' %}#}
+                </div>
+                <div class="cover">
+                    <div class="name">
+                        {% trans 'Обложка работы' %}
+                    </div>
+                    {% if object.image %}
+                        <img src="{{ object.image.url }}" alt="image"/>
+                    {% else %}
+                        <img src="{% static 'assets/img/no_img.jpg' %}" alt="image"/>
+                    {% endif %}
+
+                    {{ form.image }}
+                    {% if form.image.errors %}
+                        {% for error in form.image.errors %}
+                            <div>{{ error|escape }}</div>
+                        {% endfor %}
+                    {% endif %}
+                    <div class="name">
+                        {% trans 'Требования к файлу' %}
+                    </div>
+                    {% trans 'Разрешается добавлять не более 1 файла объемом не более 10 MБ. Формат: jpg, jpeg, png Минимальный размер изображения 600x600px' %}
+                </div>
+
+
+                <div class="top-text">
+                    {% trans 'Основные файлы - максимум 4 файла, объемом не более 10 Мб каждый.' %}
+                </div>
+{#                <div class="upload">#}
+{#                    <div>#}
+{#                        {% trans 'Перетащите файл сюда' %}#}
+{#                        <span>{% trans 'или' %} {% trans 'выберите с диска' %}</span>#}
+{#                    </div>#}
+{#                </div>#}
+                <div class="upload">
+                    {{ form.file1 }}
+                    {% if form.file1.errors %}
+                        {% for error in form.file1.errors %}
+                            <div>{{ error|escape }}</div>
+                        {% endfor %}
+                    {% endif %}
+                </div>
+                <div class="upload">
+                    {{ form.file2 }}
+                    {% if form.file2.errors %}
+                        {% for error in form.file2.errors %}
+                            <div>{{ error|escape }}</div>
+                        {% endfor %}
+                    {% endif %}
+                </div>
+                <div class="upload">
+                    {{ form.file3 }}
+                    {% if form.file3.errors %}
+                        {% for error in form.file3.errors %}
+                            <div>{{ error|escape }}</div>
+                        {% endfor %}
+                    {% endif %}
+                </div>
+                <div class="upload">
+                    {{ form.file4 }}
+                    {% if form.file4.errors %}
+                        {% for error in form.file4.errors %}
+                            <div>{{ error|escape }}</div>
+                        {% endfor %}
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+
+        <div class="item">
+            <p>{% trans 'Ссылка' %}</p>
+            {{ form.link }}
+            {% if form.link.errors %}
+                {% for error in form.link.errors %}
+                    <div>{{ error|escape }}</div>
+                {% endfor %}
+            {% endif %}
+        </div>
+
+        <div class="item">
+            <p>{% trans 'Видео' %}</p>
+            {{ form.video }}
+            {% if form.video.errors %}
+                {% for error in form.video.errors %}
+                    <div>{{ error|escape }}</div>
+                {% endfor %}
+            {% endif %}
+            <div class="input-text">
+                {% trans 'Вставьте в поле ссылку, которую вы получили на видео хостинге YouTube, RuTube или Vimeo.' %}
+            </div>
+        </div>
+
+        <div class="item">
+            <p>{% trans 'Описание' %}</p>
+            {{ form.description }}
+            {% if form.description.errors %}
+                {% for error in form.description.errors %}
+                    <div>{{ error|escape }}</div>
+                {% endfor %}
+            {% endif %}
+            <div class="input-text">
+                {% trans 'Можно использовать теги' %} &lt;b&gt;&lt;i&gt;&lt;p&gt;&lt;ul&gt;&lt;li&gt;
+            </div>
+        </div>
+
+        <div class="item">
+            <p>{% trans 'Стоимость' %}</p>
+            <div class="fields">
+                {{ form.price }}
+                {% if form.price.errors %}
+                    {% for error in form.price.errors %}
+                        <div>{{ error|escape }}</div>
+                    {% endfor %}
+                {% endif %}
+                {{ form.price_currency }}
+                {% if form.price_currency.errors %}
+                    {% for error in form.price_currency.errors %}
+                        <div>{{ error|escape }}</div>
+                    {% endfor %}
+                {% endif %}
+            </div>
+        </div>
+
+        <div class="item">
+            <p class="big">{% trans 'Потрачено времени' %}</p>
+            <div class="fields">
+                {{ form.time_spent }}
+                {% if form.time_spent.errors %}
+                    {% for error in form.time_spent.errors %}
+                        <div>{{ error|escape }}</div>
+                    {% endfor %}
+                {% endif %}
+                {{ form.time_type }}
+                {% if form.time_type.errors %}
+                    {% for error in form.time_type.errors %}
+                        <div>{{ error|escape }}</div>
+                    {% endfor %}
+                {% endif %}
+            </div>
+        </div>
+
+        <div class="item">
+            <p class="big">{% trans 'Отображать на сайте' %}</p>
+            <div class="fields">
+                {{ form.is_active }}
+                {% if form.is_active.errors %}
+                    {% for error in form.is_active.errors %}
+                        <div>{{ error|escape }}</div>
+                    {% endfor %}
+                {% endif %}
+            </div>
+        </div>
+
+        <div class="item">
+            <div class="button">
+                <button type="submit">{% trans 'СОХРАНИТЬ ИЗМЕНЕНИЯ' %}</button>
+                <a href="{% url 'portfolio_best' %}">{% trans 'или' %} {% trans 'Отменить' %}</a>
+            </div>
+            <div class="button">
+                <a href="{% url 'delete_work' object.pk %}">{% trans 'Удалить работу' %}</a>
+            </div>
+        </div>
+
+    </form>
+{% endblock %}

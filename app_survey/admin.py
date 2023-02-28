@@ -5,6 +5,7 @@ from django.utils.translation import gettext_lazy as _
 
 class ChoiceInline(admin.TabularInline):
     model = Choice
+    readonly_fields = ['votes', ]
 
 
 class QuestionAdmin(admin.ModelAdmin):
@@ -16,7 +17,7 @@ class QuestionAdmin(admin.ModelAdmin):
     save_on_top = True
 
     def get_result(self, obj):
-        return 'здесь будет результат'
+        return 'здесь можно установить вывод результата'
     get_result.short_description = _('результат')
 
 
@@ -27,4 +28,4 @@ class AnswerAdmin(admin.ModelAdmin):
 
 
 admin.site.register(Question, QuestionAdmin)
-admin.site.register(Answer, AnswerAdmin)
+# admin.site.register(Answer, AnswerAdmin)

@@ -57,9 +57,9 @@ class Choice(models.Model):
 
 
 class Answer(models.Model):
-    user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.DO_NOTHING, verbose_name=_('пользователь'))
-    question = models.ForeignKey(Question, on_delete=models.DO_NOTHING, verbose_name=_('вопрос'))
-    choice = models.ForeignKey(Choice, on_delete=models.DO_NOTHING, verbose_name=_('выбор'))
+    user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, verbose_name=_('пользователь'))
+    question = models.ForeignKey(Question, on_delete=models.CASCADE, verbose_name=_('вопрос'))
+    choice = models.ForeignKey(Choice, on_delete=models.CASCADE, verbose_name=_('выбор'))
     created = models.DateTimeField(auto_now_add=True, verbose_name=_('дата'))
 
     def __str__(self):

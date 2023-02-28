@@ -1,0 +1,74 @@
+{% extends 'app_users/_base.html' %}
+{% load i18n %}
+{% load static %}
+
+{% block middle %}
+    <div class="e-book">
+        <div class="name">
+            {% trans 'Электронная книжка Пайщика' %}
+        </div>
+        <div class="flex">
+            <div class="info">
+                <p>{{ user.last_name }} {{ user.first_name }} {{ user.patronymic }}</p>
+                <p>{% trans 'Дата вступления' %}: {{ user.date_joined|date }}</p>
+                <p>{% trans 'Лицевой счет' %} № {{ user.personal_account }}</p>
+                <div class="ballanse">{% trans 'Баланс' %}: {{ user.balance }} Р</div>
+            </div>
+            <div class="avatar">
+                {% if user.avatar %}
+                        <img src="{{ user.avatar.url }}" alt="card.jpg"/>
+                    {% else %}
+                            <img src="{% static 'assets/img/avatar4.png' %}" alt="card.jpg"/>
+                    {% endif %}
+            </div>
+        </div>
+        <p class="history">
+            {% trans 'История операций за последн.' %} 3 недели:
+        </p>
+        <table>
+            <thead>
+            <tr>
+                <td>{% trans 'Уровень структуры' %}</td>
+                <td>{% trans 'Новые участники' %}</td>
+                <td></td>
+                <td>{% trans 'Конкурсы' %}</td>
+                <td>{% trans 'Кол-во участников' %}</td>
+            </tr>
+            </thead>
+            <tbody>
+            <tr>
+                <td>{% trans '1 уровень' %}</td>
+                <td>1000</td>
+                <td>1000</td>
+                <td>500</td>
+                <td>7</td>
+            </tr>
+            <tr>
+                <td>{% trans '1 уровень' %}</td>
+                <td>1000</td>
+                <td>1000</td>
+                <td>500</td>
+                <td>7</td>
+            </tr>
+            <tr>
+                <td>{% trans '1 уровень' %}</td>
+                <td>1000</td>
+                <td>1000</td>
+                <td>500</td>
+                <td>7</td>
+            </tr>
+            <tr>
+                <td>{% trans 'Итого' %}</td>
+                <td>1000</td>
+                <td>1000</td>
+                <td>500</td>
+                <td>7</td>
+            </tr>
+            </tbody>
+        </table>
+        <div class="bottom-links">
+            <a href="#"></a>
+            <a href="#"></a>
+        </div>
+    </div>
+{% endblock %}

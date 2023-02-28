@@ -1,0 +1,54 @@
+{% extends 'app_users/profile/_profile_base.html' %}
+{% load i18n %}
+{% load static %}
+
+{% block content %}
+    <div class="cabinet-top-links">
+        <div class="links flex">
+            <div>
+                <a href="{% url 'portfolio_best' %}"
+                   {% if current_section == 'portfolio_best' %}class="active"{% endif %}>
+                    {% trans 'Лучшие работы' %}
+                </a>
+            </div>
+            <div>
+                <a href="{% url 'portfolio_current' %}"
+                   {% if current_section == 'portfolio_current' %}class="active"{% endif %}>
+                    {% trans 'Текущие работы' %}
+                </a>
+            </div>
+            <div>
+                <a href="{% url 'portfolio_rating' %}"
+                   {% if current_section == 'portfolio_rating' %}class="active"{% endif %}>
+                    {% trans 'Рейтинг' %}
+                </a>
+            </div>
+            <div>
+                <a href="{% url 'portfolio_reviews' %}"
+                   {% if current_section == 'portfolio_reviews' %}class="active"{% endif %}>
+                    {% trans 'Отзывы' %}
+                </a>
+            </div>
+            <div>
+                <a href="{% url 'portfolio_settings' %}"
+                   {% if current_section == 'portfolio_settings' %}class="active"{% endif %}>
+                    {% trans 'Настройка страниц' %}
+                </a>
+            </div>
+        </div>
+
+        <div class="bottom-links flex">
+            {% if current_section == 'portfolio_best' or current_section == 'portfolio_current' %}
+            <ul>
+                <li><a href="#" class="active">{% trans 'Список' %}</a></li>
+                <li><a href="#">{% trans 'Картинки' %}</a></li>
+            </ul>
+            {% endif %}
+            <a href="{% url 'add_work' %}" class="add">+ {% trans 'Добавить работу' %}</a>
+        </div>
+    </div>
+
+    {% block portfolio %}
+    {% endblock %}
+
+{% endblock %}

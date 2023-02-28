@@ -44,16 +44,21 @@ INSTALLED_APPS = [
     'ckeditor_uploader',
     'mptt',
     'django_mptt_admin',
+    'django_celery_beat',  # планировщик задач
 
     'app_users.apps.AppUsersConfig',
     'app_ads.apps.AppAdsConfig',
     'app_static_pages.apps.AppStaticPagesConfig',
     'app_settings.apps.AppSettingsConfig',
     'app_survey.apps.AppSurveyConfig',
-    'app_news',
+    'app_news.apps.AppNewsConfig',
+    'app_personal_account.apps.AppPersonalAccountConfig',
+    'app_referral_program.apps.AppReferralProgramConfig',
+    'app_tickets.apps.AppTicketsConfig',
+    'app_portfolio.apps.AppPortfolioConfig',
 
 ]
-
+CELERY_BEAT_SCHEDULER = 'django_celery_beat.schedulers:DatabaseScheduler'  # планировщик задач
 SITE_ID = 1  # это нужно для корректной работы flatpages.
 
 MIDDLEWARE = [
@@ -97,8 +102,12 @@ WSGI_APPLICATION = 'DjBusinessPlatform.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': 'fl',
+        'USER': 'postgres',
+        'PASSWORD': 'postgres',
+        'HOST': 'localhost',
+        'PORT': '5432',
     }
 }
 
@@ -154,7 +163,9 @@ STATICFILES_DIRS = [
 
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media/')
 MEDIA_URL = '/media/'
-
+FIXTURE_DIRS = (
+    os.path.join(BASE_DIR, 'fixtures'),
+)
 
 # CKEditor Settings
 CKEDITOR_UPLOAD_PATH = 'uploads/'

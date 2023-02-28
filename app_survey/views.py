@@ -41,7 +41,7 @@ class PollDetailView(DetailView):
         question = self.get_object()
         if self.request.user.is_anonymous:
             return HttpResponseRedirect(reverse('polls-results', args=(kwargs.get('pk'),)))
-        if question.end_date < timezone.now() or not self.request.user.is_core:
+        if question.end_date < timezone.now() or not self.request.user.paid_entrance_fee:
             return HttpResponseRedirect(reverse('polls-results', args=(kwargs.get('pk'),)))
         try:
             answer = self.request.user.answer_set.get(question=question)
@@ -69,13 +69,13 @@ class PollResultsView(LoginRequiredMixin, DetailView):
             context['users_answer'] = self.request.user.answer_set.get(question=question)
         except ObjectDoesNotExist:
             context['users_answer'] = None
-        context['total_cores'] = User.objects.filter(is_core=True, date_joined__lt=question.end_date).count()
+        context['total_partners'] = User.objects.filter(paid_entrance_fee=True, date_joined__lt=question.end_date).count()
         return context
 
 
 @login_required
 def vote(request, question_id):
-    if not request.user.is_core:
+    if not request.user.paid_entrance_fee:
         raise PermissionDenied
     question = get_object_or_404(Question, pk=question_id)
     try:
