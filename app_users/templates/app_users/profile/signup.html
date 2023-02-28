@@ -5,7 +5,11 @@
 {% block title %}Sign Up{% endblock %}
 
 {% block middle %}
-    <form class="form Profile-form" enctype="multipart/form-data" method="post">
+
+<div class="signup-window" style="margin: 0 auto; max-width: 900px; margin-top: 15px;">
+<h1>{% trans 'Регистрация' %}</h1>
+
+    <form class="signup" method="post">
         {% csrf_token %}
         {% if form.non_field_errors %}
             {% for error in form.non_field_errors %}
@@ -46,16 +50,18 @@
             </div>
             <div>
                 <div>
-                    <button type="submit">{% trans 'Зарегистрироваться' %}</button>
-                </div>
-                <div>
                     <input type="radio" id="agreement" name="agreement" value="yes" required>
                     <label for="agreement">
                         {% trans 'Я даю согласие на обработку персональных данных для формирования' %}
                         <a href="#">{% trans 'Договора пайщика - члена Клуба' %}</a>
                     </label>
                 </div>
+                <div>
+                    <button type="submit">{% trans 'Зарегистрироваться' %}</button>
+                </div>
             </div>
         </div>
     </form>
+
+</div>
 {% endblock %}
